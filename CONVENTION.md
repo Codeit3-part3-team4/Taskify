@@ -33,25 +33,25 @@ design: css등 ui 변경
 remove: 파일 삭제
 
 # 기타
-public
- ㄴ next.svg
- ㄴ vercel.svg
- ㄴ images
-src
- ㄴ api
-    ㄴ api.ts ( fetch( url ) ) <--
-    ㄴ cardApi.ts
-    ㄴ dashboardApi. ts
- ㄴ app
-     ㄴ home
-         - page.tsx ( async function getApi() )
-         - layout.tsx
-         (dashboardComponents)
-          ㄴ dashboardContainer.tsx
- ㄴ components
-    ㄴ modal
-    ㄴ button
- ㄴ utils
+public  
+ - next.svg  
+ - vercel.svg  
+ - images  
+src  
+ - api  
+   - api.ts ( fetch( url ) ) <--  
+   - cardApi.ts  
+   - dashboardApi.ts  
+ - app  
+   - home  
+     - page.tsx ( async function getApi() )  
+     - layout.tsx  
+     - (dashboardComponents)  
+     - dashboardContainer.tsx  
+ - components  
+    - modal  
+    - button  
+ - utils  
  
 
 
