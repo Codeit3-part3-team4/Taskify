@@ -1,26 +1,33 @@
 'use client';
 import React from 'react';
 
-export default function Modal() {
+interface ModalProps {
+  isOpen: boolean; // 모달이 열려 있는지 여부를 나타내는 상태
+  onClose: () => void; // 모달을 닫을 때 호출될 함수
+  title: string; // 모달의 제목
+  children: React.ReactNode; // 모달 내부에 표시될 내용
+}
+
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+  if (!isOpen) return null;
+
   return (
-    <div>
-      <button
-        className="btn"
-        onClick={() => document.getElementById('my_modal_3').showModal()}
-      >
-        모달
-      </button>
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
-          <form method="dialog">
-            <button className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <h3 className="text-lg font-bold">Hello!</h3>
-          <p className="py-4">Press ESC key or click on ✕ button to close</p>
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+      <dialog className="modal" open>
+        <div className="modal-box relative">
+          <button
+            className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            ✕
+          </button>
+          <h3 className="text-lg font-bold">{title}</h3>
+          <div className="py-4">{children}</div>
         </div>
       </dialog>
     </div>
   );
-}
+};
+
+export default Modal;
