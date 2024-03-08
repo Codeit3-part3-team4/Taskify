@@ -1,12 +1,15 @@
-'use client';
-import TodoForm from '@/components/Todo/TodoForm';
-import React from 'react';
+import react from 'react';
+import Header from '@/components/header/Header';
+import Footer from './components/Footer';
+import Landing from './components/Landing';
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-4xl font-bold">Hello, world!</h1>
-      <TodoForm />
+    <div className="bg-black">
+      <Header theme="dark" />
+      <Landing />
+      <Footer />
+
     </div>
   );
 }
