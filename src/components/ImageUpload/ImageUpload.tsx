@@ -29,14 +29,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
   };
 
   return (
-    <div className="image-upload-container">
+    <div>
       {imagePreview && (
         <img
           src={imagePreview}
           alt="Preview"
           className="image-preview"
           onClick={handleButtonClick}
-          style={{ cursor: 'pointer', width: '100px', height: '100px' }}
+          style={{ cursor: 'pointer', width: '200px', height: '200px' }}
         />
       )}
       {!imagePreview && (

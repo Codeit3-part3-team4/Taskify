@@ -1,4 +1,3 @@
-import react from 'react';
 import Header from '@/components/header/Header';
 import Footer from './components/Footer';
 import Landing from './components/Landing';
@@ -9,7 +8,6 @@ export default function Home() {
       <Header theme="dark" />
       <Landing />
       <Footer />
-
     </div>
   );
 }
