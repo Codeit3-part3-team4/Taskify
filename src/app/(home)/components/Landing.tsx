@@ -21,17 +21,9 @@ export default function Landing() {
     )
   }
 
-  const Thumb = ({width, height}: {width: number, height: number}) => {
-    return (
-      <div className={`w-[${width}px] h-[${height}px] rounded-lg overflow-hidden bg-white`}>
-        <div className="w-full h-full" />
-      </div>
-    )
-  }
-
   const MainThumb = ({ title, desc, desc2, children }: { title: string, desc: string, desc2: string, children: React.ReactNode }) => {
     return (
-      <div className="flex flex-col justify-between w-[340px] h-[686px] rounded-lg overflow-hidden bg-gray-300/10">
+      <div className="flex flex-col justify-between w-343 h-686 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 rounded-lg overflow-hidden bg-gray-300/10">
         <div className="flex flex-col items-center mt-16">
           <span className="text-lg text-gray-400 mb-20">{title}</span>
           <strong className="text-3xl text-center">{desc}<br/>{desc2}</strong>
@@ -43,8 +35,8 @@ export default function Landing() {
 
   const MiniThumb = ({ title, desc}: { title: string, desc: string }) => {
     return (
-      <div className="w-[340px] h-[340px] rounded-lg overflow-hidden">
-        <div className="flex justify-center items-center w-full h-2/3 bg-gray-300/40">
+      <div className="w-[343px] h-[343px] rounded-lg overflow-hidden">
+        <div className="flex justify-center items-center w-full h-2/3 bg-gray-300/10">
           <div className="w-64 h-48 rounded-lg overflow-hidden bg-white"></div>
         </div>
         <div className="flex flex-col justify-between w-full h-1/3 bg-gray-500/40 px-5 py-7">
@@ -63,14 +55,18 @@ export default function Landing() {
       <section className="mb-16">
         <MainThumb title="Point 1" desc="일의 우선순위를" desc2="관리하세요">
           <div className="flex flex-row justify-end">
-            <Thumb width={296} height={248} />
+            <div className={`w-296 h-248 md:w-519 md:h-435 2xl:w-594 2xl:497 rounded-lg overflow-hidden bg-white`}>
+              <div className="w-full h-full" />
+            </div>
           </div>
         </MainThumb>
       </section>
       <section className="mb-24">
         <MainThumb title="Point 2" desc="해야 할 일을" desc2="등록하세요">
           <div className="flex flex-row justify-center">
-            <Thumb width={217} height={250} />
+            <div className={`w-217 h-250 md:w-360 md:h-415 2xl:w-436 2xl:502 rounded-lg overflow-hidden bg-white`}>
+              <div className="w-full h-full" />
+            </div>
           </div>
         </MainThumb>
       </section>
