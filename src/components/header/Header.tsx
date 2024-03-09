@@ -16,7 +16,7 @@ export default function Header({ theme }: HeaderProps) {
         className={`flex flex-row justify-between gap-4 text-sm ${theme === 'dark' ? 'text-white' : 'text-black'} md:text-base`}
       >
         <span>로그인</span>
-        <span>회원가</span>
+        <span>회원가입</span>
       </div>
     </nav>
   );
