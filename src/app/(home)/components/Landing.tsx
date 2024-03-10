@@ -3,19 +3,19 @@ import Image from "next/image";
 export default function Landing() {
   const Title = () => {
     return (
-      <div className="flex flex-col items-center vertical-middle text-center align-middle">
+      <div className="flex flex-col items-center vertical-middle text-center align-middle md:mb-44">
         <div className="mb-10">
-          <div className="w-[287px] h-[168px] rounded-lg overflow-hidden bg-white">
+          <div className="w-287 h-168 rounded-lg overflow-hidden bg-white md:w-537 md:h-314 2xl:w-722 2xl:h-423">
             <div className="w-full h-full"/>
           </div>
         </div>
-        <div className="flex flex-col items-center text-4xl letter leading-10 gap-1">
-          <strong className="mb-3">새로운 일정 관리</strong>
-          <strong className="text-5xl text-violet-500/90 mb-5 leading-12">Taskify</strong>
+        <div className="flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6">
+          <strong className="text-4xl mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
+          <strong className="text-5xl text-violet_5534DA mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
         </div>
-        <div className="text-xs mb-20">서비스의 메인 설명 들어갑니다</div>
-        <div className="flex justify-center items-center rounded-lg w-60 h-11 bg-violet-500/90">
-          <button className="w-full h-full">로그인하기</button>
+        <div className="text-xs mb-20 md:text-sm md:mb-16 2xl:text-base">서비스의 메인 설명 들어갑니다</div>
+        <div className="flex justify-center items-center rounded-lg w-60 h-11 bg-violet_5534DA md:w-72">
+          <button className="w-full h-full md:text-lg">로그인하기</button>
         </div>
       </div>
     )
@@ -25,7 +25,7 @@ export default function Landing() {
     return (
       <div className={`flex flex-col 2xl:flex-row justify-between w-343 h-686 rounded-lg overflow-hidden bg-gray-300/10 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 ${options}`}>
         <div className="flex flex-col w-full items-center md:items-start md:p-14 mt-16 md:mt-0 2xl:pt-32">
-          <span className="text-lg text-gray-400 mb-20">{title}</span>
+          <span className="text-lg text-gray_9FA6B2 mb-20">{title}</span>
           <strong className="text-3xl text-center md:text-start">{desc}<br/>{desc2}</strong>
         </div>
         {children}
