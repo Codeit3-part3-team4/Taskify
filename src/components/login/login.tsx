@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Login() {
+export default function Login({ onSubmit }) {
   const [userValues, setUserValues] = useState({
     email: '',
     password: '',
@@ -44,16 +44,17 @@ export default function Login() {
     return isValid;
   };
 
-  const onSubitForm = e => {
+  const onSubmitForm = e => {
     e.preventDefault();
     if (validateForm()) {
       console.log('로그인 시도:', userValues);
+      onSubmit(userValues);
     }
   };
 
   return (
     <div>
-      <form onSubmit={onSubitForm}>
+      <form onSubmit={onSubmitForm}>
         <div>
           <label htmlFor="email">이메일</label>
           <div>
