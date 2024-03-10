@@ -104,16 +104,33 @@ const Laptop = () => {
   const [degree, setDegree] = useState(0);
   const [isOnMac, setIsOnMac] = useState(false);
 
+  // html react-three/drei bug 임시조치
+  const [isOdd, setIsOdd] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  const deltaX = 0;
+  const deltaY = 1.53;
+  const deltaZ = -1.4;
+
   const endZ = 4.4;
   const endDegree = -105;
 
   const onClickThumb = (revert: boolean) => {
-    
     if(revert)
       setIsRevert(revert);
-
     revert ? setIsMoveMac(true) : setIsStart(true);
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1536 ? true : false)
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); 
 
   useEffect(() => {
     if (!isStart) return;
@@ -189,6 +206,23 @@ const Laptop = () => {
 
   }, [isMoveMac, isRevert, isOnMac, degree])
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if(window.innerWidth % 2 === 0)
+        setIsOdd(false)
+      else
+        setIsOdd(true)
+    });
+  }, [isOdd])
+
+  let iframeShow = false;
+  
+  // chrome에서 이렇게 동작, whale은 isOdd를 반대로해야 동작
+  if(!isOdd && !isDesktop)
+    iframeShow = true;
+  if(isOdd && isDesktop)
+    iframeShow = true;
+
   return (
     <>
       <Environment preset="warehouse" />
@@ -207,22 +241,23 @@ const Laptop = () => {
               }
             }
           }}>
-          <Html
+          {iframeShow && <Html
             wrapperClass="laptop"
-            position={[0, 1.53, -1.4]}
+            position={[deltaX, deltaY, deltaZ]}
             scale={[0.9, 1, 1]}
+            
             distanceFactor={1.0}
-            transform
             rotation-x={-0.25}
+            transform
             style={{ opacity: isOnMac ? "1" : "0", }}>
-            <iframe src="https://ohddang.github.io/this-is-FE" style={{ 
+            <iframe loading='lazy' allowFullScreen src="https://ohddang.github.io/this-is-FE"  style={{ 
                 width: '1280px', 
                 height: '800px',
                 position: 'relative',
                 top: '0', 
                 left: '0'
               }} />
-          </Html>
+          </Html> }
         </primitive>
         <MainThumb onClick={onClickThumb}/>
       </PresentationControls>
@@ -232,8 +267,8 @@ const Laptop = () => {
 
 export default function Canvas3DView() {
   return (
-    <Canvas camera={{ position: [0.6, 1.5, 5], fov: 45, near: 0.1, far: 1500 }} style={{ background: '#F1EFFD' }}>
-      <Laptop />
-    </Canvas>
+      <Canvas camera={{ position: [0.6, 1.5, 5], fov: 45, near: 0.1, far: 1500 }} style={{ background: '#F1EFFD' }}>
+        <Laptop />
+      </Canvas>
   )
 }
