@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@/components/Modal/Modal';
 import { useModal } from '@/components/hooks/useModal/useModal';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { createCards } from '@/api/cards/createCards';
+import { fetchMembers, Member } from '@/api/members/fetchMembers';
 
 export default function TodoForm() {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [formData, setFormData] = useState<{
-    assignee: string;
+    assigneeUserId: string;
     title: string;
     description: string;
     deadline: Date;
     tags: string;
     selectedImage: File | null;
   }>({
-    assignee: '',
+    assigneeUserId: '',
     title: '',
     description: '',
     deadline: new Date(),
     tags: '',
     selectedImage: null,
   });
+  const [members, setMembers] = useState<Member[]>([]);
 
-  const handleSelectAssignee = (name: string) => {
+  useEffect(() => {
+    const dashboardId = 1; // 예시 대시보드 ID
+    fetchMembers(dashboardId)
+      .then(members => setMembers(members))
+      .catch(error => console.error('멤버 조회 오류:', error));
+  }, []);
+
+  const handleSelectAssignee = (userId: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
-      assignee: name,
+      assigneeUserId: userId,
     }));
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -41,20 +55,36 @@ export default function TodoForm() {
   };
 
   const isFormValid = () => {
-    const { assignee, title, description, tags, deadline } = formData;
-    return assignee && title && description && tags && deadline;
+    const { assigneeUserId, title, description, tags, deadline } = formData;
+    return assigneeUserId && title && description && tags && deadline;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    closeModal();
-  };
+    if (isFormValid()) {
+      try {
+        const cardData = {
+          assigneeUserId: parseInt(formData.assigneeUserId),
+          dashboardId: 1, // 이 예시에서 사용된 대시보드 ID, 실제로는 적절한 값을 사용해야 함
+          columnId: 1, // 이 예시에서 사용된 컬럼 ID, 실제로는 적절한 값을 사용해야 함
+          title: formData.title,
+          description: formData.description,
+          dueDate: formData.deadline.toISOString(),
+          tags: formData.tags.split(',').map(tag => tag.trim()), // 태그 문자열을 배열로 변환
+          imageUrl: formData.selectedImage
+            ? '이미지 업로드 로직 구현 필요'
+            : '', // 이미지 업로드 후 URL 설정
+        };
 
-  const assignees = [
-    { id: 1, name: 'Jane Doe' },
-    { id: 2, name: 'John Smith' },
-    { id: 3, name: 'Alice Johnson' },
-  ];
+        await createCards(cardData);
+        closeModal(); // 모달 닫기
+      } catch (error) {
+        console.error('Error creating card:', error);
+      }
+    } else {
+      console.error('Form is not valid.');
+    }
+  };
 
   return (
     <div>
@@ -70,7 +100,10 @@ export default function TodoForm() {
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="assignee" className="block font-bold text-sm mb-1">
+            <label
+              htmlFor="assigneeUserId"
+              className="block font-bold text-sm mb-1"
+            >
               담당자
             </label>
             <div className="relative w-full">
@@ -79,19 +112,24 @@ export default function TodoForm() {
                   tabIndex={0}
                   className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white"
                 >
-                  {formData.assignee || '이름을 선택해 주세요'}
-                  <img src="/images/arrow_drop_down.svg" />
+                  {members.find(
+                    member =>
+                      member.userId.toString() === formData.assigneeUserId,
+                  )?.nickname || '이름을 선택해 주세요'}
+                  <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
                 </label>
                 <ul
                   tabIndex={0}
                   className="dropdown-content menu p-2 bg-base-100 rounded-box w-52"
                 >
-                  {assignees.map(assignee => (
+                  {members.map(member => (
                     <li
-                      key={assignee.id}
-                      onClick={() => handleSelectAssignee(assignee.name)}
+                      key={member.id}
+                      onClick={() =>
+                        handleSelectAssignee(member.userId.toString())
+                      }
                     >
-                      <a>{assignee.name}</a>
+                      <a>{member.nickname}</a>
                     </li>
                   ))}
                 </ul>

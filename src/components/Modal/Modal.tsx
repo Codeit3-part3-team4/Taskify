@@ -24,11 +24,11 @@ const Modal: React.FC<ModalProps> = ({
         <div className="modal-box relative">
           {showCloseButton && (
             <button
-              className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
+              className="absolute btn btn-sm btn-circle btn-ghost right-2 top-6"
               onClick={onClose}
               aria-label="Close modal"
             >
-              ✕
+              <img src="/images/cancel.svg" alt="Close modal" />
             </button>
           )}
           <h3 className="text-lg font-bold">{title}</h3>
