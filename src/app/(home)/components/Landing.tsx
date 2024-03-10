@@ -33,13 +33,13 @@ export default function Landing() {
     );
   }
 
-  const MiniThumb = ({ title, desc}: { title: string, desc: string }) => {
+  const MiniThumb = ({ title, desc, children}: { title: string, desc: string, children: React.ReactNode }) => {
     return (
-      <div className="w-[343px] h-[343px] rounded-lg overflow-hidden">
+      <div className="w-343 h-350 rounded-lg overflow-hidden md:w-378 md:h-384">
         <div className="flex justify-center items-center w-full h-2/3 bg-gray-300/10">
-          <div className="w-64 h-48 rounded-lg overflow-hidden bg-white"></div>
+          {children}
         </div>
-        <div className="flex flex-col justify-between w-full h-1/3 bg-gray-500/40 px-5 py-7">
+        <div className="flex flex-col justify-center w-full h-1/3 bg-gray-500/40 px-5 gap-4">
           <strong className="text-base">{title}</strong>
           <span className="text-sm">{desc}</span>
         </div>
@@ -67,18 +67,24 @@ export default function Landing() {
         </MainThumb>
       </section>
       <section className="mb-32">
-        <div className="mb-10 text-center">
-          <span className="text-xl">생산성을 높이는 다양한 설정 ⚡ </span>
+        <div className="mb-10 text-center 2xl:text-left">
+          <span className="text-xl md:text-2xl">생산성을 높이는 다양한 설정 ⚡ </span>
         </div>
-        <div>
+        <div className="2xl:flex 2xl:flex-row 2xl:justify-between 2xl:w-1200">
           <div className="mb-10">
-            <MiniThumb title="대시보드" desc="대시보드 사진과 이름을 변경할 수 있어요." />
+            <MiniThumb title="대시보드" desc="대시보드 사진과 이름을 변경할 수 있어요.">
+              <div className="w-64 h-24 rounded overflow-hidden bg-white md:w-72 md:h-32"></div>
+            </MiniThumb>
           </div>
           <div className="mb-10">
-            <MiniThumb title="초대" desc="새로운 팀원을 초대할 수 있어요." />
+            <MiniThumb title="초대" desc="새로운 팀원을 초대할 수 있어요.">
+              <div className="w-64 h-48 rounded overflow-hidden bg-white md:w-72 md:h-56"></div>
+            </MiniThumb>
           </div>
           <div>
-            <MiniThumb title="구성원" desc="구성원을 초대하고 내보낼 수 있어요."/>
+            <MiniThumb title="구성원" desc="구성원을 초대하고 내보낼 수 있어요.">
+              <div className="w-64 h-40 rounded overflow-hidden bg-white md:w-72 md:h-48"></div>
+            </MiniThumb>
           </div>
         </div>
       </section>
