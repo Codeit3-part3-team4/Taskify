@@ -1,5 +1,10 @@
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 
+export interface UserValues {
+  email: string;
+  pass;
+}
+
 export const loginApi = async userValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
