@@ -21,12 +21,12 @@ export default function Landing() {
     )
   }
 
-  const MainThumb = ({ title, desc, desc2, children }: { title: string, desc: string, desc2: string, children: React.ReactNode }) => {
+  const MainThumb = ({ title, desc, desc2, options = "", children }: { title: string, desc: string, desc2: string, options?: string, children: React.ReactNode }) => {
     return (
-      <div className="flex flex-col justify-between w-343 h-686 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 rounded-lg overflow-hidden bg-gray-300/10">
-        <div className="flex flex-col items-center mt-16">
+      <div className={`flex flex-col 2xl:flex-row justify-between w-343 h-686 rounded-lg overflow-hidden bg-gray-300/10 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 ${options}`}>
+        <div className="flex flex-col w-full items-center md:items-start md:p-14 mt-16 md:mt-0 2xl:pt-32">
           <span className="text-lg text-gray-400 mb-20">{title}</span>
-          <strong className="text-3xl text-center">{desc}<br/>{desc2}</strong>
+          <strong className="text-3xl text-center md:text-start">{desc}<br/>{desc2}</strong>
         </div>
         {children}
       </div>
@@ -54,19 +54,15 @@ export default function Landing() {
       </section>
       <section className="mb-16">
         <MainThumb title="Point 1" desc="일의 우선순위를" desc2="관리하세요">
-          <div className="flex flex-row justify-end">
-            <div className={`w-296 h-248 md:w-519 md:h-435 2xl:w-594 2xl:497 rounded-lg overflow-hidden bg-white`}>
-              <div className="w-full h-full" />
-            </div>
+          <div className="flex flex-row justify-end items-end w-full">
+            <div className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} />
           </div>
         </MainThumb>
       </section>
       <section className="mb-24">
-        <MainThumb title="Point 2" desc="해야 할 일을" desc2="등록하세요">
-          <div className="flex flex-row justify-center">
-            <div className={`w-217 h-250 md:w-360 md:h-415 2xl:w-436 2xl:502 rounded-lg overflow-hidden bg-white`}>
-              <div className="w-full h-full" />
-            </div>
+        <MainThumb title="Point 2" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
+          <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
+            <div className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`} />
           </div>
         </MainThumb>
       </section>
