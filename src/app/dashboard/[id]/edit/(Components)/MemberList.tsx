@@ -26,7 +26,7 @@ export default async function MemeberList() {
     return (
       <ul className="flex flex-col">
         {members.map((member) => {
-          return <MemberItem key={`${id}-${member.id}`} member={member} />
+          return <MemberItem key={`${id}-${member.userId}`} member={member} />
         })}
       </ul>
     )

@@ -34,6 +34,33 @@ export interface MembersInf {
   totalCount: number;
 }
 
+export interface Invitation {
+  id: number;
+  inviter: {
+    id: number;
+    email: string;
+    nickname: string;
+  };
+  teamId: string;
+  dashboard: {
+    id: number;
+    title: string;
+  };
+  invitee: {
+    id: number;
+    email: string;
+    nickname: string;
+  };
+  inviteAccepted: null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface InvitationsInf {
+  invitations: Invitation[];
+  totalCount: number;
+}
+
 export const addDashboradApi = async (title: string, color: string) => {
   const res = await fetch(`${BASE_URL}/3-4/dashboards`, {
     method: 'POST',
@@ -100,5 +127,27 @@ export const getDashboardMembersApi = async (id: number, page: number, size: num
       console.log(error)
       return null;
     })
+  return res;
+}
+
+export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
+  const res: InvitationsInf = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    }}).then((res) => {
+    if(res.status === 403) {
+      throw new Error(`403 Forbidden`)
+    }
+    else if(res.status === 404) {
+      throw new Error(`404 Not Found`)
+    }
+    return res.json();
+  }).catch((error) => { 
+    console.log(error)
+    return null;
+  })
+
   return res;
 }
