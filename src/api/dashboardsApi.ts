@@ -18,6 +18,22 @@ export interface DashboardsInf {
   cursorId: null | number;
 }
 
+export interface Member {
+  id: number;
+  email: string,
+  nickname: string,
+  profileImageUrl: string,
+  createdAt: string,
+  updatedAt: string,
+  isOwner: boolean,
+  userId: number,
+}
+
+export interface MembersInf {
+  members: Member[];
+  totalCount: number;
+}
+
 export const addDashboradApi = async (title: string, color: string) => {
   const res = await fetch(`${BASE_URL}/3-4/dashboards`, {
     method: 'POST',
@@ -68,3 +84,21 @@ export const getDashboardsByPaginationApi = async (
   );
   return await res.json();
 };
+
+export const getDashboardMembersApi = async (id: number, page: number, size: number) => {
+  const res: MembersInf = await fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    } }).then((res) => {
+      if(res.status === 404) {
+        throw new Error('404 not found')
+      }
+      return res.json();
+    }).catch((error) => {
+      console.log(error)
+      return null;
+    })
+  return res;
+}

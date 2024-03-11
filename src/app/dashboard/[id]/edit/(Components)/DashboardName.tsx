@@ -6,7 +6,8 @@ const getDashboardDetails = async () => {
 }
 
 export default async function DashboardName() {
-  const result = await getDashboardDetails();  
+  const result = await getDashboardDetails();
+  if(result === null) return;
 
   return (
     <div className="flex flex-col">
