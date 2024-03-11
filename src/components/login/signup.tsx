@@ -63,24 +63,6 @@ export default function SignUp({ onSubmit }) {
     if (validateForm()) {
       console.log('회원가입 시도:', newUserValues);
       onSubmit(newUserValues);
-      // try {
-      //   const res = await fetch(`${BASE_URL}/3-4/auth/signup`, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify(newUserValues),
-      //   });
-
-      //   if (!res.ok) {
-      //     throw new Error('회원가입 실패');
-      //   }
-
-      //   const data = await res.json();
-      //   console.log('회원가입 성공:', data);
-      // } catch (error) {
-      //   console.error('회원가입 에러:', error);
-      // }
     }
   };
 

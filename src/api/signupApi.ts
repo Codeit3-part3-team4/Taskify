@@ -17,6 +17,6 @@ export const signupApi = async newUserValues => {
     const data = await res.json();
     console.log('서버에서 받은 데이터:', data);
   } catch (error) {
-    console.error('로그인 에러:', error);
+    console.error('회원가입 에러:', error);
   }
 };
