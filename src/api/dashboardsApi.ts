@@ -18,6 +18,49 @@ export interface DashboardsInf {
   cursorId: null | number;
 }
 
+export interface Member {
+  id: number;
+  email: string,
+  nickname: string,
+  profileImageUrl: string,
+  createdAt: string,
+  updatedAt: string,
+  isOwner: boolean,
+  userId: number,
+}
+
+export interface MembersInf {
+  members: Member[];
+  totalCount: number;
+}
+
+export interface Invitation {
+  id: number;
+  inviter: {
+    id: number;
+    email: string;
+    nickname: string;
+  };
+  teamId: string;
+  dashboard: {
+    id: number;
+    title: string;
+  };
+  invitee: {
+    id: number;
+    email: string;
+    nickname: string;
+  };
+  inviteAccepted: null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface InvitationsInf {
+  invitations: Invitation[];
+  totalCount: number;
+}
+
 export const addDashboradApi = async (title: string, color: string) => {
   const res = await fetch(`${BASE_URL}/3-4/dashboards`, {
     method: 'POST',
@@ -33,6 +76,24 @@ export const addDashboradApi = async (title: string, color: string) => {
   });
   return res;
 };
+
+export const getDashboardDetailsApi = async (id: number) => {
+  const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    }}).then((res) => {
+    if(res.status === 404) {
+      throw new Error('404 not found')
+    }
+    return res.json();
+  }).catch((error) => {
+    console.log(error)
+    return null;
+  });
+  return res;
+}
 
 export const getDashboardsByPaginationApi = async (
   page: number,
@@ -50,3 +111,43 @@ export const getDashboardsByPaginationApi = async (
   );
   return await res.json();
 };
+
+export const getDashboardMembersApi = async (id: number, page: number, size: number) => {
+  const res: MembersInf = await fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    } }).then((res) => {
+      if(res.status === 404) {
+        throw new Error('404 not found')
+      }
+      return res.json();
+    }).catch((error) => {
+      console.log(error)
+      return null;
+    })
+  return res;
+}
+
+export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
+  const res: InvitationsInf = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    }}).then((res) => {
+    if(res.status === 403) {
+      throw new Error(`403 Forbidden`)
+    }
+    else if(res.status === 404) {
+      throw new Error(`404 Not Found`)
+    }
+    return res.json();
+  }).catch((error) => { 
+    console.log(error)
+    return null;
+  })
+
+  return res;
+}
