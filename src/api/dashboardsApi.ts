@@ -34,6 +34,24 @@ export const addDashboradApi = async (title: string, color: string) => {
   return res;
 };
 
+export const getDashboardDetailsApi = async (id: number) => {
+  const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    }}).then((res) => {
+    if(res.status === 404) {
+      throw new Error('404 not found')
+    }
+    return res.json();
+  }).catch((error) => {
+    console.log(error)
+    return null;
+  });
+  return res;
+}
+
 export const getDashboardsByPaginationApi = async (
   page: number,
   size: number,

@@ -1,6 +1,6 @@
 import { DashboardsInf } from '@/api/dashboardsApi';
-import AddDashboardButton from '@/app/mydashboard/components/MydashboardSection/AddDashboardButton';
-import DashboardCard from '@/app/mydashboard/components/MydashboardSection/DashboardCard';
+import AddDashboardButton from '@/app/dashboard/mydashboard/components/MydashboardSection/AddDashboardButton';
+import DashboardCard from '@/app/dashboard/mydashboard/components/MydashboardSection/DashboardCard';
 import Image from 'next/image';
 
 interface SideDashboardListProps {
