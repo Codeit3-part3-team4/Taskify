@@ -69,7 +69,7 @@ export default function Login({ onSubmit }) {
           </div>
         </div>
         <div>
-          <label>비밀번호</label>
+          <label htmlFor="password">비밀번호</label>
           <div>
             <input
               type="password"
@@ -78,13 +78,14 @@ export default function Login({ onSubmit }) {
               placeholder="비밀번호를 입력해 주세요"
               onChange={onChangeLoginSubmit}
             />
-            {errors.email && (
+            {errors.password && (
               <div style={{ color: 'red' }}>{errors.password}</div>
             )}
           </div>
         </div>
         <button type="submit">로그인</button>
       </form>
+      <div>회원이 아니신가요? 회원 가입하기</div>
     </div>
   );
 }
