@@ -151,3 +151,30 @@ export const getDashboardInvitationsApi = async (id: number, page: number, size:
 
   return res;
 }
+
+export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
+  const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+    },
+    body: JSON.stringify({
+      title: title,
+      color: color,
+    }),
+  }).then((res) => {
+    if(res.ok) {
+      return res.json();
+    } else {
+      console.log(res)
+      throw new Error('error')
+    }
+  }).catch((error) => {
+    console.log(error)
+    return null;
+  });
+
+  return res;
+}
