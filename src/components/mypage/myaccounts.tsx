@@ -1,9 +1,13 @@
 import { UserContext } from '@/context/UserContext';
 import { useContext } from 'react';
 import React from 'react';
+import Image from 'next/image';
+// import basicProfile from '../../../public/images/basic-profile.svg';
 
 const MyAccounts: React.FC = () => {
   const { data: userInfo } = useContext(UserContext);
+
+  console.log(userInfo);
 
   return (
     <div>
@@ -12,7 +16,15 @@ const MyAccounts: React.FC = () => {
         {userInfo && (
           <div>
             <div>
-              <img src={userInfo.profileImageUrl} alt="프로필 사진" />
+              {userInfo.profileImageUrl === null ? (
+                <Image
+                  src="/images/basic-profile.svg"
+                  width={182}
+                  height={182}
+                />
+              ) : (
+                <img src={userInfo.profileImageUrl} alt="프로필 사진" />
+              )}
               <div>
                 <div>이메일</div>
                 <input value={userInfo.email} />
