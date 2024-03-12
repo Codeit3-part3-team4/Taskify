@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Invitation, putInvitation } from '@/api/InvitationApi';
-import {
-  DashboardsInf,
-  getDashboardsByPaginationApi,
-} from '@/api/dashboardsApi';
+import { getDashboardsByPaginationApi } from '@/api/dashboardsApi';
+import { DashboardContext } from '@/context/dashboardContext';
 
 interface InvitationListProps {
   invitations: Invitation[];
   setInvitations: (invitations: Invitation[]) => void;
-  setData: (data: DashboardsInf) => void;
 }
 
 export default function InvitationList({
   invitations,
   setInvitations,
-  setData,
 }: InvitationListProps) {
+  const { setData } = useContext(DashboardContext);
+
   const handlePutInvitation = async (
     invitationId: number,
     isAccepted: boolean,

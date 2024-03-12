@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Invitation } from '@/api/InvitationApi';
 import { getInvitationList } from '@/api/InvitationApi';
@@ -5,13 +7,7 @@ import SearchForm from './SearchForm';
 import InvitationList from './InvitationList';
 import { DashboardsInf } from '@/api/dashboardsApi';
 
-interface InvitationDashboardProps {
-  setData: (data: DashboardsInf) => void;
-}
-
-export default function InvitationDashboard({
-  setData,
-}: InvitationDashboardProps) {
+export default function InvitationDashboard() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -75,7 +71,6 @@ export default function InvitationDashboard({
       <InvitationList
         invitations={invitations}
         setInvitations={setInvitations}
-        setData={setData}
       />
       <div ref={sentinelRef}></div> {/* Intersection Observer 타겟 */}
       {loading && <p>불러오는 중이에요!!!</p>}

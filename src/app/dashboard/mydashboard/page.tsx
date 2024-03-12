@@ -1,21 +1,9 @@
-import { getDashboardsByPaginationApi } from '@/api/dashboardsApi';
-import MyDashboardPage from './components/MydashboardSection/MyDashboardPage';
+import MyDashboardSection from './(components)/MydashboardSection/MyDashboardSection';
 
-export interface Dashboard {
-  id: number;
-  title: string;
-  color: string;
-  userId: number;
-  createdAt: string;
-  updatedAt: string;
-  createdByMe: boolean;
-}
-
-export default async function MyDashboard() {
-  const data = await getDashboardsByPaginationApi(1, 3000);
+export default function MyDashboard() {
   return (
     <div>
-      <MyDashboardPage initData={data} />
+      <MyDashboardSection />
     </div>
   );
 }

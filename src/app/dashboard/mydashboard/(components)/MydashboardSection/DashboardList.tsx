@@ -1,19 +1,19 @@
-import { useState } from 'react';
+'use client';
+
+import { useContext, useState } from 'react';
 import AddDashboardButton from './AddDashboardButton';
 import DashboardCard from './DashboardCard';
 import Pagination from './Pagination';
-import { Dashboard } from '../../page';
+import { DashboardContext } from '@/context/dashboardContext';
+import AddDashboardModal from '@/components/Modal/AddDashboardModal';
 
-interface DashboardListProps {
-  data: {
-    dashboards: Dashboard[];
-    totalCount: number;
-    cursorId: null | number;
-  };
-}
-
-export default function DashboardList({ data }: DashboardListProps) {
+export default function DashboardList() {
+  const { data } = useContext(DashboardContext);
   const [page, setPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  if (data === null) {
+    return null;
+  }
 
   const PAGE_SIZE = 5; // 페이지당 항목 수
 
@@ -27,6 +27,7 @@ export default function DashboardList({ data }: DashboardListProps) {
         <AddDashboardButton
           text="새로운 대시보드"
           img="/images/plus-icon.svg"
+          isModalOpen={setIsModalOpen}
         />
         {displayedDashboards.map(dashboard => (
           <DashboardCard
@@ -38,6 +39,7 @@ export default function DashboardList({ data }: DashboardListProps) {
         ))}
       </div>
       <Pagination count={data.totalCount} page={page} setPage={setPage} />
+      <AddDashboardModal isOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
 }
