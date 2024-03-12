@@ -15,11 +15,9 @@ export const loginApi = async userValues => {
       body: JSON.stringify(userValues),
     });
 
-    if (!res.ok) {
-      throw new Error('로그인 실패');
-    }
-
     const data = await res.json();
+    // 액세스토큰 로컬스토리지에 저장
+    localStorage.setItem('accessToken', data.accessToken);
     console.log('서버에서 받은 데이터:', data);
   } catch (error) {
     console.error('로그인 에러:', error);
