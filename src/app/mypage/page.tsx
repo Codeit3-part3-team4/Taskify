@@ -1,9 +1,11 @@
 'use client';
 
 import { UserInfo, getUserInfo } from '@/api/userApi';
+import Login from '@/components/login/login';
 import MyAccounts from '@/components/mypage/myaccounts';
 import { UserContext } from '@/context/UserContext';
 import { useEffect, useState } from 'react';
+import LoginPage from '../login/page';
 
 export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -27,7 +29,7 @@ export default function MyPage() {
   return (
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
-        <MyAccounts />
+        {userInfo ? <MyAccounts /> : <LoginPage />}
       </UserContext.Provider>
     </div>
   );
