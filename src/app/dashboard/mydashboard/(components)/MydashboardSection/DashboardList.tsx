@@ -38,7 +38,7 @@ export default function DashboardList() {
           />
         ))}
       </div>
-      <Pagination count={data?.totalCount} page={page} setPage={setPage} />
+      <Pagination count={data.totalCount} page={page} setPage={setPage} />
       <AddDashboardModal isOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
