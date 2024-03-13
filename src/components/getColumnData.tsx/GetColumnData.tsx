@@ -4,7 +4,6 @@ import { CardList, getCardListApi } from '@/api/getCardListApi';
 import { ColumnList, getColumnListApi } from '@/api/getColumnListApi';
 import React, { useEffect, useState } from 'react';
 import Column from '../column/Column';
-import GetCard from '../getCard/GetCard';
 
 const getColumnData = () => {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
@@ -15,8 +14,6 @@ const getColumnData = () => {
       try {
         const ColumnResult = await getColumnListApi();
         setColumnList(ColumnResult.data);
-        // setColumnList([...result.data].map(item => item.id));
-        // console.log([...ColumnResult.data].map(item => item.id));
 
         const cardResult = await getCardListApi();
         setCardList(cardResult.cards);
@@ -32,7 +29,6 @@ const getColumnData = () => {
       {columnList && cardList && (
         <div>
           <Column columnList={columnList} cardList={cardList} />
-          {/* <GetCard cardList={cardList} /> */}
         </div>
       )}
     </>
