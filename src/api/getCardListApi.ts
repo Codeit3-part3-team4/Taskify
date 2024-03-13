@@ -16,13 +16,17 @@ export interface CardList {
 }
 [];
 
-export const getCardListApi = async () => {
-  const res = await fetch(`${BASE_URL}/3-4/cards?size=10&columnId=15764`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-    },
-  });
-  return res.json();
-};
+export const getCardListApi = async () =>
+  // size: number,
+  // cursorId: number,
+  // columnId: number,
+  {
+    const res = await fetch(`${BASE_URL}/3-4/cards?size=10&columnId=15764`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        accept: 'application/json',
+      },
+    });
+    return res.json();
+  };
