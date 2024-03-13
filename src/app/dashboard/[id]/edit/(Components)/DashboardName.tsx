@@ -1,6 +1,7 @@
 "use client"
 
 import { getDashboardDetailsApi, putDashboardDetailsApi } from "@/api/dashboardsApi";
+import { MediaQueryType, UseMediaQuery } from "@/hooks/UseMediaQuery";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -14,6 +15,7 @@ const getDashboardDetails = async () => {
 export default function DashboardName() {
   const [color, setColor] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const mediaQuery = UseMediaQuery();
 
   const onClickColor = (color: string) => {
     setColor(color);
@@ -41,13 +43,13 @@ export default function DashboardName() {
     <form className="flex flex-col rounded-md p-5 bg-white" onSubmit={onSubmit}>
       <div className="flex flex-row justify-between items-center mb-6">
         <strong className="text-xl">{title}</strong>
-        <div className="flex flex-row items-center gap-1">{colorList.map((item) => {
+         <div className="flex flex-row items-center gap-1">{mediaQuery !== MediaQueryType.MOBILE && (colorList.map((item) => {
           return (
             <button className="flex justify-center items-center w-7 h-7 rounded-full" style={{ backgroundColor: item }} onClick={() => onClickColor(item)}>
-               {item === color && <Image src="/images/crown-icon.svg" width="16" height="16" alt="checker" />}
+               {item === color ? <Image src="/images/crown-icon.svg" width="16" height="16" alt="checker" /> : null}
             </button>
           )
-        })}
+        })) } 
           <input className="bg-transparent w-20 h-9" name="color"  type="color" value={color} onChange={(e) => setColor(e.target.value)} />
         </div>
       </div>

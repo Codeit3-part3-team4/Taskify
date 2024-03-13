@@ -1,5 +1,6 @@
 import { Member, getDashboardMembersApi } from '@/api/dashboardsApi';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useId } from 'react';
 
 const getDashboardMembers = async (dashboardId: number, pageIndex: number, size: number) => {
@@ -7,9 +8,11 @@ const getDashboardMembers = async (dashboardId: number, pageIndex: number, size:
   return result;
 }
 
-export default async function MemeberList({page}: {page: number}) {
+export default async function MemeberList({dashboardId, member, invite}: {dashboardId:string, member: string, invite: string}) {
   const showMemberCount = 8;
   const id = useId();
+  const page = Number(member);
+  const dashboard = Number(dashboardId);
 
   const MemberItem = ({member}: {member: Member}) => {
     const profileUrl = member.profileImageUrl ? member.profileImageUrl : '/images/crown-icon.svg';
@@ -25,7 +28,6 @@ export default async function MemeberList({page}: {page: number}) {
   }
 
   const MemberItems = ({members}: {members: Member[]}) => {
-    console.log(members);
     return (
       <ul className="flex flex-col gap-[1px]">
         {members.map((member) => {
@@ -35,22 +37,38 @@ export default async function MemeberList({page}: {page: number}) {
     )
   }
 
-  const result = await getDashboardMembers(4570, page, showMemberCount);
+  const result = await getDashboardMembers(dashboard, page, showMemberCount);
   if(result === null) return;
+
+  const maxPage = Math.ceil(result.totalCount / showMemberCount);
+  const disabledNext = page === maxPage ? "pointer-events-none" : "";
+  const disabledPrev = page === 1 ? "pointer-events-none" : "";
 
   return (
     <div className="flex flex-col rounded-md bg-white">
       <div className="flex flex-row justify-between items-center mb-6 pt-5 px-5">
         <strong className="text-xl">구성원</strong>
         <div className="flex flex-row items-center gap-3">
-          <div className="text-xs">{`${result.totalCount} 페이지 중 ${page}`}</div>
+          <div className="text-xs">{`${maxPage} 페이지 중 ${page}`}</div>
           <div className="flex flex-row rounded-md gap-[1px] border border-gary-D9D9D9 bg-gray-D9D9D9 overflow-hidden">
-            <button className="flex flex-row justify-center items-center w-9 h-9 bg-white active:bg-gray-D9D9D9">
-              <Image className="opacity-20 hover:opacity-100" src="/images/arrow-forward-left.svg" width="16" height="16" alt="arrow-left" />
-            </button>
-            <button className="flex flex-row justify-center items-center w-9 h-9 bg-white active:bg-gray-D9D9D9">
-              <Image className="opacity-20 hover:opacity-100" src="/images/arrow-forward-right.svg" width="16" height="16" alt="arrow-right" />
-            </button>
+            <Link className={`${disabledPrev} flex flex-row justify-center items-center w-9 h-9 bg-white  active:bg-gray-D9D9D9 group`} 
+              href = {
+                {
+                  pathname: `/dashboard/${dashboard}/edit`,
+                  query: {member: `${page - 1}`, invite: `${invite}`}
+                }
+              }>
+              <Image className="opacity-20 group-hover:opacity-100" src="/images/arrow-forward-left.svg" width="16" height="16" alt="arrow-left" />
+            </Link>
+            <Link className={`${disabledNext} flex flex-row justify-center items-center w-9 h-9 bg-white  active:bg-gray-D9D9D9 group`} 
+              href = {
+                {
+                  pathname: `/dashboard/${dashboard}/edit`,
+                  query: {member: `${page + 1}`, invite: `${invite}`}
+                }
+              }>
+              <Image className="opacity-20 group-hover:opacity-100" src="/images/arrow-forward-right.svg" width="16" height="16" alt="arrow-right" />
+            </Link>
           </div>
         </div>
       </div>
