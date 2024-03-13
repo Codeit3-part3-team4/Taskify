@@ -1,13 +1,41 @@
 import { UserContext } from '@/context/UserContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const MyAccounts: React.FC = () => {
   const { data: userInfo } = useContext(UserContext);
+  const [updateUserValues, setUpdateUserValues] = useState({
+    nickname: '',
+    profileImageUrl: '',
+  });
 
   console.log(userInfo);
+
+  useEffect(() => {
+    if (userInfo) {
+      setUpdateUserValues({
+        nickname: userInfo.nickname,
+        profileImageUrl: userInfo.profileImageUrl,
+      });
+    }
+  }, [userInfo]);
+
+  const onChangeUpdateUserValues = e => {
+    const id = e.target.id;
+    const value = e.target.value;
+    console.log(value);
+    setUpdateUserValues(updateUserValues => ({
+      ...updateUserValues,
+      [id]: value,
+    }));
+  };
+
+  const onSubmitForm = e => {
+    e.preventDefault();
+    console.log('업뎃:' + updateUserValues);
+  };
 
   return (
     <div>
@@ -22,6 +50,8 @@ const MyAccounts: React.FC = () => {
                     src="/images/basic-profile.svg"
                     width={182}
                     height={182}
+                    priority={true}
+                    alt="프로필 사진"
                   />
                 ) : (
                   <img src={userInfo.profileImageUrl} alt="프로필 사진" />
@@ -29,9 +59,16 @@ const MyAccounts: React.FC = () => {
                 <div>
                   <div>이메일</div>
                   <input value={userInfo.email} />
-                  <form>
-                    <div>닉네임</div>
-                    <input value={userInfo.nickname} />
+                  <form onSubmit={onSubmitForm}>
+                    <label htmlFor="newNickname">닉네임</label>
+                    <div>
+                      <input
+                        type="text"
+                        id="newNickname"
+                        value={updateUserValues.nickname}
+                        onChange={onChangeUpdateUserValues}
+                      />
+                    </div>
                   </form>
                 </div>
               </div>

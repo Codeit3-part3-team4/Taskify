@@ -25,3 +25,18 @@ export const getUserInfo = async (token: string): Promise<UserInfo> => {
     throw error;
   }
 };
+
+// 내 정보 수정
+// export const updateUserInfo = async (token) => {
+//   try {
+//     const res = await fetch(`${BASE_URL}/3-4/users/me`, {
+//       method:'PUT',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         accept: 'application/json',
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: JSON.stringify();
+//     }),
+//   }
+// }
