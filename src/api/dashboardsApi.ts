@@ -113,6 +113,8 @@ export const getDashboardsByPaginationApi = async (
 };
 
 export const getDashboardMembersApi = async (id: number, page: number, size: number) => {
+  console.log(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`);
+
   const res: MembersInf = await fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
     method: 'GET',
     headers: {

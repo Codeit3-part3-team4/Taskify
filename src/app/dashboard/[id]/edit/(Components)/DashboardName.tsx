@@ -38,25 +38,25 @@ export default function DashboardName() {
   }, [])
 
   return (
-    <form className="flex flex-col" onSubmit={onSubmit}>
-      <div className="flex flex-row justify-between mb-6">
-        <strong>{title}</strong>
+    <form className="flex flex-col rounded-md p-5 bg-white" onSubmit={onSubmit}>
+      <div className="flex flex-row justify-between items-center mb-6">
+        <strong className="text-xl">{title}</strong>
         <div className="flex flex-row items-center gap-1">{colorList.map((item) => {
           return (
             <button className="flex justify-center items-center w-7 h-7 rounded-full" style={{ backgroundColor: item }} onClick={() => onClickColor(item)}>
-               {item === color && <Image src="/images/crown-icon.svg" width="15" height="15" alt="checker" />}
+               {item === color && <Image src="/images/crown-icon.svg" width="16" height="16" alt="checker" />}
             </button>
           )
         })}
           <input className="bg-transparent w-20 h-9" name="color"  type="color" value={color} onChange={(e) => setColor(e.target.value)} />
         </div>
       </div>
-      <div className="mb-2">대시보드 이름</div>
-      <div className="w-full h-12 px-4 rounded-md outline outline-1 outline-gray-300/50 mb-4">
+      <strong className="mb-3">대시보드 이름</strong>
+      <div className="w-full h-12 px-4 rounded-md bg-white outline outline-1 outline-gray-300/50 mb-4">
         <input className="w-full h-full focus:outline-none" name="title" type="text" />
       </div>
       <div className="flex flex-row justify-end">
-        <button className="flex flex-row justify-center items-center w-20 h-8 bg-violet_5534DA text-white text-sm font-semibold rounded-md"
+        <button className="flex flex-row justify-center items-center w-20 h-8 bg-violet-5534DA text-white text-xs rounded-md"
           type="submit">변경</button>
       </div>
     </form>
