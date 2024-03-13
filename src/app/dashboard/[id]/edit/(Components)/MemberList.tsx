@@ -47,6 +47,7 @@ export default async function MemeberList({dashboardId, searchParams}: {dashboar
   }
 
   // TODO : query string 처리
+  // TODO : refactoring
 
   const result = await getMembers(dashboard, page, showMemberCount);
   if(result === null) return;

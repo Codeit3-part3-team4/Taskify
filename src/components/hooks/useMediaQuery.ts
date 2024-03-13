@@ -8,7 +8,7 @@ export enum MediaQueryType {
   DESKTOP = "DESKTOP",
 }
 
-export const UseMediaQuery = () => {
+export const useMediaQuery = () => {
   const [mediaQuery, setMediaQuery] = useState<MediaQueryType>(MediaQueryType.MOBILE);
 
   const handleMediaQuery = (event:MediaQueryListEvent, queryType: MediaQueryType) => {

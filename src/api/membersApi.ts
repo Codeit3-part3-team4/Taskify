@@ -36,3 +36,12 @@ export const getMembersApi = async (id: number, page: number, size: number) => {
     })
   return res;
 }
+
+export const deleteMemberApi = async (id: number, memberId: number) => {
+  const res = await fetch(`${BASE_URL}/3-4/members/${id}`, {
+    method: 'DELETE',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });}

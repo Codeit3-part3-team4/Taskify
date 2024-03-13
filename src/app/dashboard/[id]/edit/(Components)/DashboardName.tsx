@@ -1,7 +1,7 @@
 "use client"
 
 import { getDashboardDetailsApi, putDashboardDetailsApi } from "@/api/dashboardsApi";
-import { MediaQueryType, UseMediaQuery } from "@/hooks/UseMediaQuery";
+import { MediaQueryType, useMediaQuery } from "@/components/hooks/useMediaQuery";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ const getDashboardDetails = async () => {
 export default function DashboardName() {
   const [color, setColor] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const mediaQuery = UseMediaQuery();
+  const mediaQuery = useMediaQuery();
 
   const onClickColor = (color: string) => {
     setColor(color);

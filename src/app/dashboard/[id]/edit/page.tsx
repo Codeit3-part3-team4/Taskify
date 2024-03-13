@@ -13,7 +13,7 @@ export interface searchParamsProps {
 
 export default function Page({ params: {id}, searchParams }: { params: {id: string}, searchParams: searchParamsProps}) {  
   return (
-    <article className="flex flex-col w-full h-screen pt-4 px-3 pb-6 bg-gray-FAFAFA">
+    <article className="flex flex-col w-full h-screen pt-4 px-3 pb-6 max-w-[660px] bg-gray-FAFAFA">
       <section className="mb-5"><DashboardBack /></section>
       <section className="mb-3"><DashboardName /></section>
       <section className="mb-3"><MemeberList dashboardId={id} searchParams={searchParams} /></section>
