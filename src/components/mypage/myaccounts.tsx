@@ -4,36 +4,39 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const MyAccounts: React.FC = () => {
+const MyAccounts: React.FC = ({ onSubmit }) => {
   const { data: userInfo } = useContext(UserContext);
   const [updateUserValues, setUpdateUserValues] = useState({
-    nickname: '',
-    profileImageUrl: '',
+    // nickname: '',
+    // profileImageUrl: '',
+    nickname: userInfo?.nickname,
+    profileImageUrl: userInfo?.profileImageUrl,
   });
 
   console.log(userInfo);
 
-  useEffect(() => {
-    if (userInfo) {
-      setUpdateUserValues({
-        nickname: userInfo.nickname,
-        profileImageUrl: userInfo.profileImageUrl,
-      });
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     setUpdateUserValues({
+  //       nickname: userInfo.nickname,
+  //       profileImageUrl: userInfo.profileImageUrl,
+  //     });
+  //   }
+  // }, [userInfo]);
 
   const onChangeUpdateUserValues = e => {
     const id = e.target.id;
     const value = e.target.value;
     console.log(value);
-    setUpdateUserValues(updateUserValues => ({
+    setUpdateUserValues({
       ...updateUserValues,
       [id]: value,
-    }));
+    });
   };
 
   const onSubmitForm = e => {
     e.preventDefault();
+    onSubmit(updateUserValues);
     console.log('업뎃:' + updateUserValues);
   };
 
@@ -60,11 +63,11 @@ const MyAccounts: React.FC = () => {
                   <div>이메일</div>
                   <input value={userInfo.email} />
                   <form onSubmit={onSubmitForm}>
-                    <label htmlFor="newNickname">닉네임</label>
+                    <label htmlFor="nickname">닉네임</label>
                     <div>
                       <input
                         type="text"
-                        id="newNickname"
+                        id="nickname"
                         value={updateUserValues.nickname}
                         onChange={onChangeUpdateUserValues}
                       />
@@ -72,7 +75,7 @@ const MyAccounts: React.FC = () => {
                   </form>
                 </div>
               </div>
-              <button>저장</button>
+              <button onClick={onSubmitForm}>저장</button>
             </div>
             <div>
               <h2>비밀번호 변경</h2>

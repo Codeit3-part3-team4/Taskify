@@ -1,6 +1,6 @@
 'use client';
 
-import { UserInfo, getUserInfo } from '@/api/userApi';
+import { UserInfo, getUserInfo, updateUserInfo } from '@/api/userApi';
 import MyAccounts from '@/components/mypage/myaccounts';
 import { UserContext } from '@/context/UserContext';
 import { useEffect, useState } from 'react';
@@ -9,6 +9,14 @@ import LoginPage from '../login/page';
 export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const handleUpdateUserSubmit = async updateUserValues => {
+    try {
+      await updateUserInfo(updateUserValues);
+    } catch (error) {
+      console.error('유저 정보 저장 실패:', error);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -35,7 +43,11 @@ export default function MyPage() {
   return (
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
-        {userInfo ? <MyAccounts /> : <LoginPage />}
+        {userInfo ? (
+          <MyAccounts onSubmit={handleUpdateUserSubmit} />
+        ) : (
+          <LoginPage />
+        )}
       </UserContext.Provider>
     </div>
   );
