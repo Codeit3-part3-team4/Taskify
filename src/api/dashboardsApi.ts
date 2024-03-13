@@ -18,22 +18,6 @@ export interface DashboardsInf {
   cursorId: null | number;
 }
 
-export interface Member {
-  id: number;
-  email: string,
-  nickname: string,
-  profileImageUrl: string,
-  createdAt: string,
-  updatedAt: string,
-  isOwner: boolean,
-  userId: number,
-}
-
-export interface MembersInf {
-  members: Member[];
-  totalCount: number;
-}
-
 export interface Invitation {
   id: number;
   inviter: {
@@ -95,6 +79,54 @@ export const getDashboardDetailsApi = async (id: number) => {
   return res;
 }
 
+export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
+  const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+    },
+    body: JSON.stringify({
+      title: title,
+      color: color,
+    }),
+  }).then((res) => {
+    if(res.ok) {
+      return res.json();
+    } else {
+      console.log(res)
+      throw new Error('error')
+    }
+  }).catch((error) => {
+    console.log(error)
+    return null;
+  });
+
+  return res;
+}
+
+export const deleteDashboardApi = async (id: number) => {
+  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    method: 'DELETE',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    if(res.ok) {
+      return res.json();
+    } else {
+      throw new Error('error')
+    }
+  }).catch((error) => {
+    console.log(error)
+    return null;
+  });
+
+  return res;
+}
+
 export const getDashboardsByPaginationApi = async (
   page: number,
   size: number,
@@ -111,26 +143,6 @@ export const getDashboardsByPaginationApi = async (
   );
   return await res.json();
 };
-
-export const getDashboardMembersApi = async (id: number, page: number, size: number) => {
-  console.log(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`);
-
-  const res: MembersInf = await fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    } }).then((res) => {
-      if(res.status === 404) {
-        throw new Error('404 not found')
-      }
-      return res.json();
-    }).catch((error) => {
-      console.log(error)
-      return null;
-    })
-  return res;
-}
 
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
   const res: InvitationsInf = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
@@ -154,23 +166,17 @@ export const getDashboardInvitationsApi = async (id: number, page: number, size:
   return res;
 }
 
-export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
-  const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
-    method: 'PUT',
+export const getDashboardInvitationsCancelApi = async (id: number, invitationId: number) => {
+  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
+    method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
       accept: 'application/json',
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      title: title,
-      color: color,
-    }),
   }).then((res) => {
     if(res.ok) {
       return res.json();
     } else {
-      console.log(res)
       throw new Error('error')
     }
   }).catch((error) => {
