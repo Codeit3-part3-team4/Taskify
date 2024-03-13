@@ -12,7 +12,7 @@ export default function DashboardNameInput({
       <h2>대시보드 이름</h2>
       <input
         type="text"
-        placeholder="대시보드 이름"
+        placeholder="대시보드 이름을 적어주세요"
         value={dashboardName}
         onChange={e => setDashboardName(e.target.value)}
       />
