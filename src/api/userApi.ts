@@ -9,6 +9,8 @@ export interface UserInfo {
   createdAt: string;
   updatedAt: string;
 }
+
+// 유저 정보 가져오기
 export const getUserInfo = async (token: string): Promise<UserInfo> => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users/me`, {
@@ -26,7 +28,7 @@ export const getUserInfo = async (token: string): Promise<UserInfo> => {
   }
 };
 
-// 내 정보 수정
+// 유저 정보 수정
 export const updateUserInfo = async updateUserValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users/me`, {

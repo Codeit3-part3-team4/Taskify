@@ -15,14 +15,14 @@ const MyAccounts: React.FC = ({ onSubmit }) => {
 
   console.log(userInfo);
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     setUpdateUserValues({
-  //       nickname: userInfo.nickname,
-  //       profileImageUrl: userInfo.profileImageUrl,
-  //     });
-  //   }
-  // }, [userInfo]);
+  useEffect(() => {
+    if (userInfo) {
+      setUpdateUserValues({
+        nickname: userInfo.nickname,
+        profileImageUrl: userInfo.profileImageUrl,
+      });
+    }
+  }, []);
 
   const onChangeUpdateUserValues = e => {
     const id = e.target.id;
