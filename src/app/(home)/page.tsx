@@ -2,6 +2,7 @@
 import Header from '@/components/header/Header';
 import Footer from './components/Footer';
 import Landing from './components/Landing';
+import GetColumnData from '@/components/getColumnData.tsx/GetColumnData';
 
 import TodoCard from '@/components/Todo/TodoCard';
 import TodoForm from '@/components/Todo/TodoForm';
@@ -12,6 +13,7 @@ export default function Home() {
     <div className="bg-black">
       <Header theme="dark" />
       <Landing />
+      <GetColumnData />
       <Footer />
       <TodoCard />
       <TodoForm />
