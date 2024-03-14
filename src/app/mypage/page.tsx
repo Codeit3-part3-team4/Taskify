@@ -1,7 +1,7 @@
 'use client';
 
 import { UserInfo, getUserInfo, updateUserInfo } from '@/api/userApi';
-import MyAccounts from '@/components/mypage/myaccounts';
+import MyAccounts from '@/components/mypage/Myaccounts';
 import { UserContext } from '@/context/UserContext';
 import { useEffect, useState } from 'react';
 import LoginPage from '../login/page';

@@ -1,7 +1,7 @@
 'use client';
 
 import { loginApi } from '@/api/loginApi';
-import Login from '@/components/login/login';
+import Login from '@/components/login/Login';
 
 export default function LoginPage() {
   const handleLoginSubmit = async userValues => {

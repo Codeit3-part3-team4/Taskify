@@ -1,7 +1,7 @@
 'use client';
 
 import { signupApi } from '@/api/signupApi';
-import SignUp from '@/components/login/signup';
+import SignUp from '@/components/login/Signup';
 
 export default function SignUpPage() {
   const handleSignUpSubmit = async newUserValues => {
