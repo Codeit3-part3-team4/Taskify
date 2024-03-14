@@ -45,7 +45,7 @@ export interface InvitationsInf {
   totalCount: number;
 }
 
-export const addDashboradApi = async (title: string, color: string) => {
+export const addDashboardApi = async (title: string, color: string) => {
   const res = await fetch(`${BASE_URL}/3-4/dashboards`, {
     method: 'POST',
     headers: {
@@ -67,17 +67,20 @@ export const getDashboardDetailsApi = async (id: number) => {
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${token}`,
-    }}).then((res) => {
-    if(res.status === 404) {
-      throw new Error('404 not found')
-    }
-    return res.json();
-  }).catch((error) => {
-    console.log(error)
-    return null;
-  });
+    },
+  })
+    .then(res => {
+      if (res.status === 404) {
+        throw new Error('404 not found');
+      }
+      return res.json();
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
   return res;
-}
+};
 
 export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
   const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
