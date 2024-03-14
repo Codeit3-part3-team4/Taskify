@@ -1,11 +1,11 @@
 import {
-  addDashboradApi,
+  addDashboardApi,
   getDashboardsByPaginationApi,
 } from '@/api/dashboardsApi';
 import { ReactElement, useContext, useState } from 'react';
 import ColorPicker from './ColorPicker';
 import DashboardNameInput from './DashboardNameInput';
-import { DashboardContext } from '@/context/dashboardContext';
+import { DashboardContext } from '@/context/DashboardContext';
 
 interface DashboardMakerProps {
   setIsModalOpen: (b: boolean) => void;
@@ -18,7 +18,7 @@ export default function DashboardMaker({
   const [selectedColor, setSelectedColor] = useState('#7AC555');
   const { setData } = useContext(DashboardContext);
   const handleCreateDashboard = async () => {
-    const res = await addDashboradApi(dashboardName, selectedColor);
+    const res = await addDashboardApi(dashboardName, selectedColor);
     if (res.status === 201) {
       const data = await getDashboardsByPaginationApi(1, 3000);
       setData(data);
