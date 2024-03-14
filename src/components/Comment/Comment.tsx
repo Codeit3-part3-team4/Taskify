@@ -68,15 +68,23 @@ const Comments = ({ cardId }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <h3>댓글</h3>
-      <input
-        type="text"
-        value={newCommentContent}
-        onChange={e => setNewCommentContent(e.target.value)}
-        placeholder="댓글 추가..."
-      />
-      <button onClick={handleAddComment}>입력</button>
+      <div className="flex flex-col items-end relative">
+        <input
+          type="text"
+          className="input input-bordered w-full h-24"
+          value={newCommentContent}
+          onChange={e => setNewCommentContent(e.target.value)}
+          placeholder="댓글 작성하기"
+        />
+        <button
+          className="absolute w-20  right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary"
+          onClick={handleAddComment}
+        >
+          입력
+        </button>
+      </div>
       <ul>
         {comments.map(comment => (
           <li key={comment.id}>

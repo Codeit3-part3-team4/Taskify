@@ -40,25 +40,34 @@ export default function TodoCard() {
             </ul>
           </div>
         )}
-        <div className="absolute border p-3 w-200 h-155 top-20 right-4 gap-3">
-          <div>담당자</div>
-          <div>담당자 이름</div>
-          <div>마감일</div>
-          <div>마감 날짜</div>
+
+        <div className="flex flex-col gap-3 w-full">
+          <div className="flex gap-5">
+            <img src="/images/test1.svg" alt="test1" />
+            <div className="text-gray-300">|</div>
+            <img src="/images/test2.svg" alt="test2" />
+          </div>
+          <div className="flex">
+            <div>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Vestibulum finibus nibh arcu, quis consequat ante cursus eget.
+              Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros,
+              vel aliquet diam elit at leo.
+            </div>
+
+            <div className="flex flex-col border p-3 gap-3 w-96 h-40">
+              <div className="font-bold">담당자</div>
+              <div>하이요</div>
+              <div className="font-bold">마감일</div>
+              <div>2022.12.31 19:00</div>
+            </div>
+          </div>
+          <div>
+            <img src="/images/test3.svg" />
+          </div>
+
+          <Comment />
         </div>
-        <div className="gap-3">
-          <div>태그</div>
-          <div>설명</div>
-          <div>이미지</div>
-          <div>댓글</div>
-        </div>
-        <input
-          className="input input-bordered w-full h-24 "
-          type="text"
-          placeholder="댓글 작성하기"
-        ></input>
-        <div>댓글모음</div>
-        <Comment />
       </Modal>
     </div>
   );
