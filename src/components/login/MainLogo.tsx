@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function MainLogo() {
+export default function MainLogo({ title }) {
   return (
     <div>
       <Link href={'/'}>
@@ -12,6 +12,7 @@ export default function MainLogo() {
           height={279}
         />
       </Link>
+      <div>{title}</div>
     </div>
   );
 }

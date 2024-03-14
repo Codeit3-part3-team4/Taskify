@@ -15,7 +15,7 @@ export default function LoginPage() {
 
   return (
     <div>
-      <MainLogo />
+      <MainLogo title={'오늘도 만나서 반가워요!'} />
       <Login onSubmit={handleLoginSubmit} />
     </div>
   );
