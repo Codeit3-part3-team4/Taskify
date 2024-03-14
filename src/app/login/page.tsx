@@ -1,7 +1,8 @@
 'use client';
 
 import { loginApi } from '@/api/loginApi';
-import Login from '@/components/login/login';
+import Login from './components/login';
+import MainLogo from '@/components/login/MainLogo';
 
 export default function LoginPage() {
   const handleLoginSubmit = async userValues => {
@@ -14,6 +15,7 @@ export default function LoginPage() {
 
   return (
     <div>
+      <MainLogo />
       <Login onSubmit={handleLoginSubmit} />
     </div>
   );
