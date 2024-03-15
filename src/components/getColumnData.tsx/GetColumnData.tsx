@@ -1,7 +1,7 @@
 'use client';
 
-import { CardList, getCardListApi } from '@/api/getCardListApi';
-import { ColumnList, getColumnListApi } from '@/api/getColumnListApi';
+import { CardList, getCardListApi } from '@/api/cardApi';
+import { ColumnList, getColumnListApi } from '@/api/columnApi';
 import React, { useEffect, useState } from 'react';
 import Column from '../column/Column';
 
