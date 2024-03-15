@@ -52,6 +52,10 @@ export default function Login({ onSubmit }) {
     }
   };
 
+  const onBlur = () => {
+    validateForm();
+  };
+
   return (
     <div>
       <form onSubmit={onSubmitForm}>
@@ -64,6 +68,7 @@ export default function Login({ onSubmit }) {
               value={userValues.email}
               placeholder="이메일을 입력해 주세요"
               onChange={onChangeLoginSubmit}
+              onBlur={onBlur}
             />
             {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
           </div>
