@@ -37,6 +37,7 @@ export const getUserInfo = async (token: string): Promise<UserInfo> => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'GET',
+      cache: 'no-cache',
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${token}`,
@@ -55,6 +56,7 @@ export const updateUserInfo = async updateUserValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',

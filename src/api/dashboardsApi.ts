@@ -48,6 +48,7 @@ export interface InvitationsInf {
 export const addDashboardApi = async (title: string, color: string) => {
   const res = await fetch(`${BASE_URL}/3-4/dashboards`, {
     method: 'POST',
+    cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -64,6 +65,7 @@ export const addDashboardApi = async (title: string, color: string) => {
 export const getDashboardDetailsApi = async (id: number) => {
   const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
     method: 'GET',
+    cache: 'no-cache',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${token}`,
@@ -85,6 +87,7 @@ export const getDashboardDetailsApi = async (id: number) => {
 export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
   const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
     method: 'PUT',
+    cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -94,98 +97,135 @@ export const putDashboardDetailsApi = async (id: number, title: string, color: s
       title: title,
       color: color,
     }),
-  }).then((res) => {
-    if(res.ok) {
-      return res.json();
-    } else {
-      console.log(res)
-      throw new Error('error')
-    }
-  }).catch((error) => {
-    console.log(error)
-    return null;
-  });
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        console.log(res);
+        throw new Error('error');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
 
   return res;
-}
+};
 
 export const deleteDashboardApi = async (id: number) => {
   const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
     method: 'DELETE',
+    cache: 'no-cache',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('error');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
+
+  return res;
+};
+
+export const getDashboardsByPaginationApi = async (page: number, size: number): Promise<DashboardsInf> => {
+  const res = await fetch(`${BASE_URL}/3-4/dashboards?navigationMethod=pagination&page=${page}&size=${size}`, {
+    method: 'GET',
+    cache: 'no-cache',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) => {
-    if(res.ok) {
-      return res.json();
-    } else {
-      throw new Error('error')
-    }
-  }).catch((error) => {
-    console.log(error)
-    return null;
   });
-
-  return res;
-}
-
-export const getDashboardsByPaginationApi = async (
-  page: number,
-  size: number,
-): Promise<DashboardsInf> => {
-  const res = await fetch(
-    `${BASE_URL}/3-4/dashboards?navigationMethod=pagination&page=${page}&size=${size}`,
-    {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
   return await res.json();
 };
 
-export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
-  const res: InvitationsInf = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
-    method: 'GET',
+export const postDashboardInvitationsApi = async (id: number, email: string) => {
+  console.log(`${BASE_URL}/3-4/dashboards/${id}/invitations`);
+
+  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations`, {
+    method: 'POST',
+    cache: 'no-cache',
     headers: {
-      accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-    }}).then((res) => {
-    if(res.status === 403) {
-      throw new Error(`403 Forbidden`)
-    }
-    else if(res.status === 404) {
-      throw new Error(`404 Not Found`)
-    }
-    return res.json();
-  }).catch((error) => { 
-    console.log(error)
-    return null;
+      accept: 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+    }),
   })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error(`${res.status} error`);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
 
   return res;
-}
+};
 
-export const getDashboardInvitationsCancelApi = async (id: number, invitationId: number) => {
-  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
-    method: 'DELETE',
+export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
+  console.log(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`);
+  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
+    method: 'GET',
+    cache: 'no-cache',
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) => {
-    if(res.ok) {
-      return res.json();
-    } else {
-      throw new Error('error')
-    }
-  }).catch((error) => {
-    console.log(error)
-    return null;
-  });
+  })
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else if (res.status === 403) {
+        throw new Error(`403 Forbidden`);
+      } else if (res.status === 404) {
+        throw new Error(`404 Not Found`);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
 
   return res;
-}
+};
+
+export const deleteDashboardInvitationsCancelApi = async (id: number, invitationId: number) => {
+  console.log(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`);
+  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
+    method: 'DELETE',
+    cache: 'no-cache',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('error');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
+
+  return res;
+};

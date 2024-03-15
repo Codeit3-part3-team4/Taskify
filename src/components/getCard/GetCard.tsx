@@ -1,5 +1,5 @@
 'use client';
-import { CardList } from '@/api/getCardListApi';
+import { CardList } from '@/api/cardApi';
 
 const GetCard = ({ card }: { card: Card }) => {
   function onClickCardDetail() {}

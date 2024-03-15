@@ -9,6 +9,7 @@ export const loginApi = async userValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
       method: 'POST',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -16,7 +17,7 @@ export const loginApi = async userValues => {
     });
 
     const data = await res.json();
-    
+
     // 액세스토큰 로컬스토리지에 저장
     localStorage.setItem('accessToken', data.accessToken);
     console.log('서버에서 받은 데이터:', data);
