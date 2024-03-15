@@ -7,9 +7,8 @@ import { useEffect, useState } from 'react';
 
 const colorList: string[] = ['#7AC555', '#760DDE', '#76A5EA', '#E876EA', '#FFA500'];
 
-const getDashboardDetails = async () => {
-  const dashboardId = 4570;
-  return await getDashboardDetailsApi(dashboardId);
+const getDashboardDetails = async (dashboardId: string) => {
+  return await getDashboardDetailsApi(Number(dashboardId));
 };
 
 export default function DashboardName({ dashboardId }: { dashboardId: string }) {
@@ -32,7 +31,7 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
   };
 
   useEffect(() => {
-    getDashboardDetails().then(res => {
+    getDashboardDetails(dashboardId).then(res => {
       if (res === null) return;
       setColor(res.color);
       setTitle(res.title);
