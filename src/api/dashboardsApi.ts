@@ -149,6 +149,36 @@ export const getDashboardsByPaginationApi = async (page: number, size: number): 
   return await res.json();
 };
 
+export const postDashboardInvitationsApi = async (id: number, email: string) => {
+  console.log(`${BASE_URL}/3-4/dashboards/${id}/invitations`);
+
+  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations`, {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+    }),
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error(`${res.status} error`);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
+
+  return res;
+};
+
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
   console.log(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`);
   const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {

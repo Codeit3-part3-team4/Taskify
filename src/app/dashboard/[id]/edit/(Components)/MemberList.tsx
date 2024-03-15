@@ -48,7 +48,6 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
 
   const result = await getMembers(dashboard, page, showMemberCount);
   if (result === null) return;
-  console.log(result.members);
 
   const maxPage = Math.ceil(result.totalCount / showMemberCount);
   const disabledNext = page === maxPage ? 'pointer-events-none' : '';

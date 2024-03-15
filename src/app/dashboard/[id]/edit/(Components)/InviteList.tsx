@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
+import Modal from '@/components/Modal/Modal';
+import Link from 'next/link';
+import InviteModal from './InviteModal';
 
 const getDashboardInvitations = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getDashboardInvitationsApi(dashboardId, pageIndex, size);
@@ -15,6 +18,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
   const page = Number(searchParams.invitePage);
   const memberPage = Number(searchParams.memberPage);
   const dashboard = Number(dashboardId);
+  const isInviteModal = searchParams.inviteModal === 'on' ? true : false;
 
   const InviteItem = ({ invitation }: { invitation: Invitation }) => {
     return (
@@ -45,12 +49,18 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
 
   const InviteButton = ({ options }: { options: string }) => {
     return (
-      <button className={`${options}`}>
+      <Link
+        className={`${options}`}
+        href={{
+          pathname: `/dashboard/${dashboard}/edit`,
+          query: { memberPage: `${memberPage}`, invitePage: `${page}`, inviteModal: 'on' },
+        }}
+      >
         <div className="flex flex-row items-center px-3 py-2 gap-2 rounded bg-violet-5534DA">
           <Image src="/images/add-white.svg" width="20" height="20" alt="plus" />
           <span className="text-white text-xs">초대하기</span>
         </div>
-      </button>
+      </Link>
     );
   };
 
@@ -85,6 +95,9 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
       <div>
         <InviteItems invitations={invitations} />
       </div>
+      <Modal isOpen={isInviteModal} title={'초대하기'} showCloseButton={false}>
+        <InviteModal id={dashboardId} pathname={`/dashboard/${dashboard}/edit`} query={`memberPage=${memberPage}&invitePage=${page}`} />
+      </Modal>
     </div>
   );
 }

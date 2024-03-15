@@ -8,13 +8,11 @@ import { deleteDashboardInvitationsCancelApi } from '../../../../api/dashboardsA
 
 const deleteMember = async (memberId: number) => {
   const result = await deleteMemberApi(memberId);
-  console.log(result);
   return result;
 };
 
 const deleteDashboardInvitationsCancel = async (id: number, memberId: number) => {
   const result = await deleteDashboardInvitationsCancelApi(id, memberId);
-  console.log(result);
   return result;
 };
 
@@ -23,10 +21,10 @@ export interface searchParamsProps {
   invitePage: string;
   deleteMember?: string;
   cancelInvite?: string;
+  inviteModal?: string;
 }
 
 export default async function Page({ params: { id }, searchParams }: { params: { id: string }; searchParams: searchParamsProps }) {
-  console.log(searchParams);
   if (searchParams.deleteMember) await deleteMember(Number(searchParams.deleteMember));
   if (searchParams.cancelInvite) await deleteDashboardInvitationsCancel(Number(id), Number(searchParams.cancelInvite));
 
