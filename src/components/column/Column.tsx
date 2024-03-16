@@ -1,6 +1,6 @@
-import { ColumnList } from '@/api/getColumnListApi';
+import { ColumnList } from '@/api/columnApi';
 import GetCard from '../getCard/GetCard';
-import { CardList } from '@/api/getCardListApi';
+import { CardList } from '@/api/cardApi';
 
 const Column = ({
   columnList,
