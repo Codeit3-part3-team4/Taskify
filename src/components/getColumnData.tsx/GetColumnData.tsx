@@ -5,10 +5,11 @@ import { ColumnList, getColumnListApi } from '@/api/getColumnListApi';
 import React, { useEffect, useState } from 'react';
 import Column from '../column/Column';
 
-const getColumnData = () => {
+const GetColumnData = () => {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
   const [cardList, setCardList] = useState<CardList | null>(null);
 
+  console.log(columnList, cardList);
   useEffect(() => {
     async function fetchColumnCardData() {
       try {
@@ -16,7 +17,7 @@ const getColumnData = () => {
         setColumnList(ColumnResult.data);
 
         const cardResult = await getCardListApi();
-        setCardList(cardResult.cards);
+        setCardList(cardResult);
       } catch (e) {
         console.log(e);
       }
@@ -35,4 +36,4 @@ const getColumnData = () => {
   );
 };
 
-export default getColumnData;
+export default GetColumnData;
