@@ -1,18 +1,10 @@
 const BASE_URL = 'https://sp-taskify-api.vercel.app/3-4';
 
-// 댓글 목록 조회
-const fetchComments = async (cardId: string) => {
-  const response = await fetch(`${BASE_URL}/comments?cardId=${cardId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  if (!response.ok) {
-    throw new Error('댓글 목록을 불러오는 데 실패했습니다.');
-  }
-  return response.json();
-};
+interface Comment {
+  id: string;
+  content: string;
+  cardId: string;
+}
 
 type CreateCommentProps = {
   content: string;
@@ -21,12 +13,8 @@ type CreateCommentProps = {
   dashboardId: string;
 };
 
-const createComment = async ({
-  content,
-  cardId,
-  columnId,
-  dashboardId,
-}: CreateCommentProps) => {
+// 댓글 생성
+export const createComment = async ({ content, cardId, columnId, dashboardId }: CreateCommentProps): Promise<Comment> => {
   const response = await fetch(`${BASE_URL}/comments`, {
     method: 'POST',
     headers: {
@@ -40,8 +28,22 @@ const createComment = async ({
   return response.json();
 };
 
+// 댓글 목록 조회
+export const fetchComments = async (cardId: string): Promise<Comment[]> => {
+  const response = await fetch(`${BASE_URL}/comments?cardId=${cardId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('댓글 목록을 불러오는 데 실패했습니다.');
+  }
+  return response.json();
+};
+
 // 댓글 수정
-const updateComment = async (commentId: string, content: string) => {
+export const updateComment = async (commentId: string, content: string): Promise<Comment> => {
   const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'PUT',
     headers: {
@@ -56,7 +58,7 @@ const updateComment = async (commentId: string, content: string) => {
 };
 
 // 댓글 삭제
-const deleteComment = async (commentId: string, content: string) => {
+export const deleteComment = async (commentId: string): Promise<void> => {
   const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'DELETE',
     headers: {
@@ -66,7 +68,4 @@ const deleteComment = async (commentId: string, content: string) => {
   if (!response.ok) {
     throw new Error('댓글을 삭제하는 데 실패했습니다.');
   }
-  return response.json();
 };
-
-export { fetchComments, createComment, updateComment, deleteComment };

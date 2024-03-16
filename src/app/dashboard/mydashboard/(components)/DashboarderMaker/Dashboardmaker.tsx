@@ -1,7 +1,4 @@
-import {
-  addDashboardApi,
-  getDashboardsByPaginationApi,
-} from '@/api/dashboardsApi';
+import { addDashboardApi, getDashboardsByPaginationApi } from '@/api/dashboardsApi';
 import { ReactElement, useContext, useState } from 'react';
 import ColorPicker from './ColorPicker';
 import DashboardNameInput from './DashboardNameInput';
@@ -11,9 +8,7 @@ interface DashboardMakerProps {
   setIsModalOpen: (b: boolean) => void;
 }
 
-export default function DashboardMaker({
-  setIsModalOpen,
-}: DashboardMakerProps): ReactElement {
+export default function DashboardMaker({ setIsModalOpen }: DashboardMakerProps): ReactElement {
   const [dashboardName, setDashboardName] = useState('뉴프로젝트');
   const [selectedColor, setSelectedColor] = useState('#7AC555');
   const { setData } = useContext(DashboardContext);
@@ -27,19 +22,9 @@ export default function DashboardMaker({
   };
   return (
     <div>
-      <DashboardNameInput
-        dashboardName={dashboardName}
-        setDashboardName={setDashboardName}
-      />
-      <ColorPicker
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
-      />
-      <button
-        className="btn"
-        onClick={handleCreateDashboard}
-        disabled={!dashboardName}
-      >
+      <DashboardNameInput dashboardName={dashboardName} setDashboardName={setDashboardName} />
+      <ColorPicker setSelectedColor={setSelectedColor} selectedColor={selectedColor} />
+      <button className="btn" onClick={handleCreateDashboard} disabled={!dashboardName}>
         생성
       </button>
     </div>

@@ -17,17 +17,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showClo
       <dialog className="modal" open>
         <div className="modal-box relative">
           {showCloseButton && (
-
-            <button
-              className="absolute btn btn-sm btn-circle btn-ghost right-2 top-6"
-              onClick={onClose}
-              aria-label="Close modal"
-            >
+            <button className="absolute btn btn-sm btn-circle btn-ghost right-2 top-6" onClick={onClose} aria-label="Close modal">
               <img src="/images/cancel.svg" alt="Close modal" />
-
-            <button className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={onClose} aria-label="Close modal">
-              ✕
-
+            </button>
           )}
             </button>
           <h3 className="text-lg font-bold">{title}</h3>

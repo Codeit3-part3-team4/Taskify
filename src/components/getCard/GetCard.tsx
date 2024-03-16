@@ -6,11 +6,7 @@ const GetCard = ({ card }: { card: Card }) => {
 
   return (
     <>
-      <div
-        className="flex flex-col gap-2.5"
-        onClick={onClickCardDetail}
-        key={card.id}
-      >
+      <div className="flex flex-col gap-2.5" onClick={onClickCardDetail} key={card.id}>
         <div className="flex flex-col m-auto w-72 h-full bg-white items-center pt-3 pb-3 mb-3 rounded-lg border border-slate-300 cursor-pointer bg-red-100">
           <div>
             <img
@@ -21,12 +17,8 @@ const GetCard = ({ card }: { card: Card }) => {
             />
             <div className="w-64 pt-3">
               <div>
-                <div className="text-sm font-medium leading-4 pb-1.5">
-                  {card.title}
-                </div>
-                <div className="bg-lime-100 text-lime-400 w-9 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3">
-                  {card.tags}
-                </div>
+                <div className="text-sm font-medium leading-4 pb-1.5">{card.title}</div>
+                <div className="bg-lime-100 text-lime-400 w-9 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3">{card.tags}</div>
               </div>
               <div className="flex w-64 justify-between">
                 <div className="flex w-16 gap-1 items-center pt-1.5">

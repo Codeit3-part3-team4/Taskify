@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// API 함수들이 정의된 파일을 임포트
-import {
-  fetchComments,
-  createComment,
-  updateComment,
-  deleteComment,
-} from '../../api/comments/fetchComments';
+import { fetchComments, createComment, updateComment, deleteComment } from '../../api/comments';
 
 const Comments = ({ cardId }) => {
   const [comments, setComments] = useState([]);
@@ -15,7 +9,7 @@ const Comments = ({ cardId }) => {
     const loadComments = async () => {
       try {
         const data = await fetchComments(cardId);
-        setComments(data.comments || []); // API 응답에 따라 조정 필요
+        setComments(data.comments || []);
       } catch (error) {
         console.error('댓글 로딩 실패:', error);
       }
@@ -27,12 +21,7 @@ const Comments = ({ cardId }) => {
   const handleAddComment = async () => {
     if (!newCommentContent.trim()) return;
     try {
-      const newComment = await createComment(
-        newCommentContent,
-        cardId,
-        /* columnId */ 0,
-        /* dashboardId */ 0,
-      );
+      const newComment = await createComment(newCommentContent, cardId, /* columnId */ 0, /* dashboardId */ 0);
       setComments(prevComments => [...prevComments, newComment]);
       setNewCommentContent('');
     } catch (error) {
@@ -45,13 +34,7 @@ const Comments = ({ cardId }) => {
     if (!newContent.trim()) return;
     try {
       await updateComment(commentId, newContent);
-      setComments(
-        comments.map(comment =>
-          comment.id === commentId
-            ? { ...comment, content: newContent }
-            : comment,
-        ),
-      );
+      setComments(comments.map(comment => (comment.id === commentId ? { ...comment, content: newContent } : comment)));
     } catch (error) {
       console.error('댓글 수정 실패:', error);
     }
@@ -78,10 +61,7 @@ const Comments = ({ cardId }) => {
           onChange={e => setNewCommentContent(e.target.value)}
           placeholder="댓글 작성하기"
         />
-        <button
-          className="absolute w-20  right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary"
-          onClick={handleAddComment}
-        >
+        <button className="absolute w-20  right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary" onClick={handleAddComment}>
           입력
         </button>
       </div>
@@ -90,9 +70,7 @@ const Comments = ({ cardId }) => {
           <li key={comment.id}>
             {comment.content}
             <button onClick={() => handleEditComment(comment.id)}>수정</button>
-            <button onClick={() => handleDeleteComment(comment.id)}>
-              삭제
-            </button>
+            <button onClick={() => handleDeleteComment(comment.id)}>삭제</button>
           </li>
         ))}
       </ul>

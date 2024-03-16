@@ -4,20 +4,12 @@ import { useModal } from '@/components/hooks/useModal/useModal';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { createCards } from '@/api/cards/createCards';
+import { createCards } from '@/api/cards';
 import { fetchMembers, Member } from '@/api/members/fetchMembers';
 
-export default function TodoForm() {
+export default function TodoForm({ dashboardId, columnId }) {
   const { isOpen, openModal, closeModal } = useModal();
-
-  const [formData, setFormData] = useState<{
-    assigneeUserId: string;
-    title: string;
-    description: string;
-    deadline: Date;
-    tags: string;
-    selectedImage: File | null;
-  }>({
+  const [formData, setFormData] = useState({
     assigneeUserId: '',
     title: '',
     description: '',
@@ -28,61 +20,48 @@ export default function TodoForm() {
   const [members, setMembers] = useState<Member[]>([]);
 
   useEffect(() => {
-    const dashboardId = 1; // 예시 대시보드 ID
     fetchMembers(dashboardId)
-      .then(members => setMembers(members))
+      .then(setMembers)
       .catch(error => console.error('멤버 조회 오류:', error));
-  }, []);
+  }, [dashboardId]);
 
-  const handleSelectAssignee = (userId: string) => {
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      assigneeUserId: userId,
-    }));
-  };
-
-  const handleInputChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (file: File | null) => {
+  const handleImageUpload = file => {
     setFormData(prev => ({ ...prev, selectedImage: file }));
   };
 
   const isFormValid = () => {
-    const { assigneeUserId, title, description, tags, deadline } = formData;
-    return assigneeUserId && title && description && tags && deadline;
+    return Object.values(formData).every(value => value);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (isFormValid()) {
-      try {
-        const cardData = {
-          assigneeUserId: parseInt(formData.assigneeUserId),
-          dashboardId: 1, // 이 예시에서 사용된 대시보드 ID, 실제로는 적절한 값을 사용해야 함
-          columnId: 1, // 이 예시에서 사용된 컬럼 ID, 실제로는 적절한 값을 사용해야 함
-          title: formData.title,
-          description: formData.description,
-          dueDate: formData.deadline.toISOString(),
-          tags: formData.tags.split(',').map(tag => tag.trim()), // 태그 문자열을 배열로 변환
-          imageUrl: formData.selectedImage
-            ? '이미지 업로드 로직 구현 필요'
-            : '', // 이미지 업로드 후 URL 설정
-        };
-
-        await createCards(cardData);
-        closeModal(); // 모달 닫기
-      } catch (error) {
-        console.error('Error creating card:', error);
-      }
-    } else {
+    if (!isFormValid()) {
       console.error('Form is not valid.');
+      return;
+    }
+
+    const { assigneeUserId, title, description, deadline, tags, selectedImage } = formData;
+    try {
+      const cardData = {
+        assigneeUserId: parseInt(assigneeUserId, 10),
+        dashboardId,
+        columnId,
+        title,
+        description,
+        dueDate: deadline.toISOString(),
+        tags: tags.split(',').map(tag => tag.trim()),
+        imageUrl: selectedImage,
+      };
+
+      await createCards(cardData);
+      closeModal();
+    } catch (error) {
+      console.error('Error creating card:', error);
     }
   };
 
@@ -92,43 +71,21 @@ export default function TodoForm() {
         <img src="/images/add.svg" />
       </button>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={closeModal}
-        title="할 일 생성"
-        showCloseButton={false}
-      >
+      <Modal isOpen={isOpen} onClose={closeModal} title="할 일 생성" showCloseButton={false}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="assigneeUserId"
-              className="block font-bold text-sm mb-1"
-            >
+            <label htmlFor="assigneeUserId" className="block font-bold text-sm mb-1">
               담당자
             </label>
             <div className="relative w-full">
               <div tabIndex={0} className="dropdown">
-                <label
-                  tabIndex={0}
-                  className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white"
-                >
-                  {members.find(
-                    member =>
-                      member.userId.toString() === formData.assigneeUserId,
-                  )?.nickname || '이름을 선택해 주세요'}
+                <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
+                  {members.find(member => member.userId.toString() === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
                   <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
                 </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 bg-base-100 rounded-box w-52"
-                >
+                <ul tabIndex={0} className="dropdown-content menu p-2 bg-base-100 rounded-box w-52">
                   {members.map(member => (
-                    <li
-                      key={member.id}
-                      onClick={() =>
-                        handleSelectAssignee(member.userId.toString())
-                      }
-                    >
+                    <li key={member.id} onClick={() => handleSelectAssignee(member.userId.toString())}>
                       <a>{member.nickname}</a>
                     </li>
                   ))}
@@ -149,10 +106,7 @@ export default function TodoForm() {
             />
           </div>
           <div>
-            <label
-              htmlFor="description"
-              className="block font-bold text-sm mb-1"
-            >
+            <label htmlFor="description" className="block font-bold text-sm mb-1">
               설명
             </label>
             <input
@@ -204,11 +158,7 @@ export default function TodoForm() {
             <button type="button" className="btn w-32" onClick={closeModal}>
               취소
             </button>
-            <button
-              type="submit"
-              className="btn w-32 btn-primary"
-              disabled={!isFormValid()}
-            >
+            <button type="submit" className="btn w-32 btn-primary" disabled={!isFormValid()}>
               생성
             </button>
           </div>
