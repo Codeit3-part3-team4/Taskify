@@ -30,33 +30,22 @@ export interface Invitation {
   updatedAt: string;
 }
 
-export const getInvitationList = async (
-  size: number,
-  cursorId: number | null,
-  inputValue: string | null,
-): Promise<GetInvitationList> => {
-  const res = await fetch(
-    `${BASE_URL}/3-4/invitations?size=${size}${
-      cursorId ? `&cursorId=${cursorId}` : ''
-    }${inputValue ? `&title=${inputValue}` : ''}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+export const getInvitationList = async (size: number, cursorId: number | null, inputValue: string | null): Promise<GetInvitationList> => {
+  const res = await fetch(`${BASE_URL}/3-4/invitations?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}${inputValue ? `&title=${inputValue}` : ''}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
   return await res.json();
 };
 
-export const putInvitation = async (
-  invitationId: number,
-  isAccepted: boolean,
-) => {
+export const putInvitation = async (invitationId: number, isAccepted: boolean) => {
   const res = await fetch(`${BASE_URL}/3-4/invitations/${invitationId}`, {
     method: 'PUT',
+    cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,

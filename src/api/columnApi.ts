@@ -31,6 +31,7 @@ export interface CreateCardImage {
 export const createColumnApi = async (teamId = '3-4') => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns`, {
     method: 'POST',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -54,24 +55,20 @@ export const createColumnApi = async (teamId = '3-4') => {
 };
 
 // 컬럼 목록 조회
-export const getColumnListApi = async (teamId = '3-4', dashboardId = 4675) => {
-  const res = await fetch(
-    `${BASE_URL}/${TEAM_ID}/columns/?dashboardId=${dashboardId}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-      },
+export const getColumnListApi = async (teamId = '3-4', dashboardId = 4685) => {
+  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/?${dashboardId}`, {
+    method: 'GET',
+    cache: 'no-cache',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
     },
-  )
+  })
     .then(res => {
       if (res.ok) {
         return res.json();
-      } else if (res.status === 400) {
-        throw new Error('error');
       } else if (res.status === 404) {
-        throw new Error('404 not found');
+        throw new Error('404  not found');
       }
     })
     .catch(error => {
@@ -85,6 +82,7 @@ export const getColumnListApi = async (teamId = '3-4', dashboardId = 4675) => {
 export const editColumnApi = async (teamId = '3-4', columnId = 16254) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
     method: 'PUT',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -111,6 +109,7 @@ export const editColumnApi = async (teamId = '3-4', columnId = 16254) => {
 export const deleteColumnApi = async (teamId = '3-4', columnId = 16254) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
     method: 'DELETE',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: '*/*',
@@ -132,17 +131,15 @@ export const deleteColumnApi = async (teamId = '3-4', columnId = 16254) => {
 
 // 카드 이미지 업로드
 export const uploadCardImage = async (teamId = '3-4', columnId = 16254) => {
-  const res = await fetch(
-    `${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
+  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`, {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
-  )
+  })
     .then(res => {
       if (res.ok) {
         return res.json();

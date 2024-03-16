@@ -4,6 +4,7 @@ export const signupApi = async newUserValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users`, {
       method: 'POST',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
       },

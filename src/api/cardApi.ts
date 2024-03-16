@@ -72,6 +72,7 @@ export interface DetailCard {
 export const postCardApi = async (teamId = '3-4') => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards`, {
     method: 'POST',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -91,26 +92,18 @@ export const postCardApi = async (teamId = '3-4') => {
       console.log(error);
       return null;
     });
-  console.log(res);
   return res;
 };
 
 // 카드 목록 조회
-export const getCardListApi = async (
-  size = 5,
-  cursorId = 10,
-  columnId = 15734,
-) => {
-  const res = await fetch(
-    `${BASE_URL}/${TEAM_ID}/cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-      },
+export const getCardListApi = async (size = 5, cursorId = 10, columnId = 15734) => {
+  const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
     },
-  )
+  })
     .then(res => {
       if (res.ok) {
         return res.json();
@@ -129,6 +122,7 @@ export const getCardListApi = async (
 export const editCardApi = async (teamId = '3-4', cardId = 3725) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards/${cardId}`, {
     method: 'PUT',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -155,6 +149,7 @@ export const editCardApi = async (teamId = '3-4', cardId = 3725) => {
 export const detailCardApi = async (teamId = '3-4', cardId = 3725) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards/${cardId}`, {
     method: 'GET',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -178,6 +173,7 @@ export const detailCardApi = async (teamId = '3-4', cardId = 3725) => {
 export const deleteCardApi = async (teamId = '3-4', cardId = 3744) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards/${cardId}`, {
     method: 'DELETE',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: '*/*',
