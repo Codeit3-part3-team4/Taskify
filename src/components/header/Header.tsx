@@ -6,11 +6,9 @@ interface HeaderProps {
 
 export default function Header({ theme }: HeaderProps) {
   return (
-    <nav
-      className={`flex flex-row justify-between items-center py-4 mb-10 ${theme === 'dark' ? 'bg-black' : 'bg-white'} md:py-6`}
-    >
+    <nav className={`flex flex-row justify-between items-center py-4 mb-10 ${theme === 'dark' ? 'bg-black' : 'bg-white'} md:py-6`}>
       <div className="relative flex flex-row w-6 h-7 ml-6 md:w-9 md:h-9 md:ml-9">
-        <Image src={ `${theme === 'dark' ? '/images/taskify-logo-dark.svg' : '/images/taskify-logo-light.svg'}`} alt="Taskify" width="35" height="35"/>
+        <Image src={`${theme === 'dark' ? '/images/taskify-logo-dark.svg' : '/images/taskify-logo-light.svg'}`} alt="Taskify" width="35" height="35" />
         <strong className="hidden text-3xl text-white md:block">Taskify</strong>
       </div>
       <div

@@ -44,14 +44,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
           <img src="/images/add.svg" />
         </button>
       )}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-        className="hidden"
-        accept="image/*"
-        style={{ display: 'none' }}
-      />
+      <input type="file" ref={fileInputRef} onChange={handleImageChange} className="hidden" accept="image/*" style={{ display: 'none' }} />
     </div>
   );
 };
