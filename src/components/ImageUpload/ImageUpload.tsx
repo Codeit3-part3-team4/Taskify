@@ -34,9 +34,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
         <img
           src={imagePreview}
           alt="Preview"
-          className="image-preview"
+          className="image-preview cursor-pointer w-200 h-200"
           onClick={handleButtonClick}
-          style={{ cursor: 'pointer', width: '200px', height: '200px' }}
         />
       )}
       {!imagePreview && (
@@ -44,14 +43,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
           <img src="/images/add.svg" />
         </button>
       )}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-        className="hidden"
-        accept="image/*"
-        style={{ display: 'none' }}
-      />
+      <input type="file" ref={fileInputRef} onChange={handleImageChange} className="hidden" accept="image/*" style={{ display: 'none' }} />
     </div>
   );
 };

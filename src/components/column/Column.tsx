@@ -24,10 +24,7 @@ const Column = ({ columnList, cardList }: { columnList: ColumnList; cardList: Ca
                 </div>
                 <img src="/images/settings.svg" alt="설정 아이콘" className="cursor-pointer" />
               </div>
-              <button
-                className="flex justify-center items-center w-72 md:w-537 h-8 m-auto rounded-md bg-white mb-5 border border-slate-300"
-                onClick={openAddCardModal}
-              >
+              <button className="flex justify-center items-center w-72 h-8 rounded-md bg-white mb-5" onClick={openAddCardModal}>
                 <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="카드 추가하기 버튼 아이콘" />
               </button>
               {cardList.cards

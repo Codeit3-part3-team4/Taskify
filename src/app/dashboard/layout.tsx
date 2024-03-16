@@ -5,7 +5,7 @@ import {
   getDashboardsByPaginationApi,
 } from '@/api/dashboardsApi';
 import SideDashboardList from '@/components/SideDashboardList/SideDashboardList';
-import { DashboardContext } from '@/context/dashboardContext';
+import { DashboardContext } from '@/context/DashboardContext';
 import { useEffect, useState } from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
