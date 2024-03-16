@@ -58,29 +58,15 @@ export default function Login({ onSubmit }) {
         <div>
           <label htmlFor="email">이메일</label>
           <div>
-            <input
-              type="text"
-              id="email"
-              value={userValues.email}
-              placeholder="이메일을 입력해 주세요"
-              onChange={onChangeLoginSubmit}
-            />
+            <input type="text" id="email" value={userValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeLoginSubmit} />
             {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
           </div>
         </div>
         <div>
           <label htmlFor="password">비밀번호</label>
           <div>
-            <input
-              type="password"
-              id="password"
-              value={userValues.password}
-              placeholder="비밀번호를 입력해 주세요"
-              onChange={onChangeLoginSubmit}
-            />
-            {errors.password && (
-              <div style={{ color: 'red' }}>{errors.password}</div>
-            )}
+            <input type="password" id="password" value={userValues.password} placeholder="비밀번호를 입력해 주세요" onChange={onChangeLoginSubmit} />
+            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
           </div>
         </div>
         <button type="submit">로그인</button>

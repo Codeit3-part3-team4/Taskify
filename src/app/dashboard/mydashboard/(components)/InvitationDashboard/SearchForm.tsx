@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 interface SearchFormProps {
@@ -17,14 +18,9 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="대시보드 이름 검색"
-      />
-      <button type="submit">검색</button>
+    <form className="flex border border-gray_D9D9D9 rounded-md" onSubmit={handleSubmit}>
+      <img className="ml-1 w-5" src="/images/search-icon.svg" alt="찾기 아이콘" />
+      <input className="focus:outline-none h-9 w-full" type="text" value={inputValue} onChange={handleInputChange} placeholder="대시보드 이름 검색" />
     </form>
   );
 }
