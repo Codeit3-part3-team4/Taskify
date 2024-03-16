@@ -6,6 +6,7 @@ import GetColumnData from '@/components/getColumnData.tsx/GetColumnData';
 
 import TodoCard from '@/components/Todo/TodoCard';
 import TodoForm from '@/components/Todo/TodoForm';
+import TodoUpdate from '@/components/Todo/TodoUpdate';
 import LoginForm from '@/api/LoginForm';
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <TodoCard />
       <TodoForm />
       <LoginForm />
+      <TodoUpdate />
     </div>
   );
 }
