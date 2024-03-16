@@ -4,11 +4,7 @@ interface ColorSelectButtonProps {
   selectedColor: string;
 }
 
-export default function ColorSelectButton({
-  color,
-  setSelectedColor,
-  selectedColor,
-}: ColorSelectButtonProps) {
+export default function ColorSelectButton({ color, setSelectedColor, selectedColor }: ColorSelectButtonProps) {
   return (
     <div
       onClick={() => setSelectedColor(color)}

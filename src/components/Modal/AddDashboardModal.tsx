@@ -1,13 +1,7 @@
 import DashboardMaker from '@/app/dashboard/mydashboard/(components)/DashboarderMaker/Dashboardmaker';
 import Modal from './Modal';
 
-export default function AddDashboardModal({
-  isOpen,
-  setIsModalOpen,
-}: {
-  isOpen: boolean;
-  setIsModalOpen: (b: boolean) => void;
-}) {
+export default function AddDashboardModal({ isOpen, setIsModalOpen }: { isOpen: boolean; setIsModalOpen: (b: boolean) => void }) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
