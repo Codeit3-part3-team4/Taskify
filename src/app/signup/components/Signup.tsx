@@ -73,59 +73,29 @@ export default function SignUp({ onSubmit }) {
         <div>
           <label htmlFor="email">이메일</label>
           <div>
-            <input
-              type="text"
-              id="email"
-              value={newUserValues.email}
-              placeholder="이메일을 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-            />
+            <input type="text" id="email" value={newUserValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeSignupSubmit} />
             {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
           </div>
         </div>
         <div>
           <label htmlFor="nickname">닉네임</label>
           <div>
-            <input
-              type="text"
-              id="nickname"
-              value={newUserValues.nickname}
-              placeholder="닉네임을 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-            />
-            {errors.nickname && (
-              <div style={{ color: 'red' }}>{errors.nickname}</div>
-            )}
+            <input type="text" id="nickname" value={newUserValues.nickname} placeholder="닉네임을 입력해 주세요" onChange={onChangeSignupSubmit} />
+            {errors.nickname && <div style={{ color: 'red' }}>{errors.nickname}</div>}
           </div>
         </div>
         <div>
           <label htmlFor="password">비밀번호</label>
           <div>
-            <input
-              type="password"
-              id="password"
-              value={newUserValues.password}
-              placeholder="비밀번호를 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-            />
-            {errors.password && (
-              <div style={{ color: 'red' }}>{errors.password}</div>
-            )}
+            <input type="password" id="password" value={newUserValues.password} placeholder="비밀번호를 입력해 주세요" onChange={onChangeSignupSubmit} />
+            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
           </div>
         </div>
         <div>
           <label htmlFor="pwCheck">비밀번호</label>
           <div>
-            <input
-              type="password"
-              id="pwCheck"
-              value={newUserValues.pwCheck}
-              placeholder="비밀번호를 한번 더 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-            />
-            {errors.pwCheck && (
-              <div style={{ color: 'red' }}>{errors.pwCheck}</div>
-            )}
+            <input type="password" id="pwCheck" value={newUserValues.pwCheck} placeholder="비밀번호를 한번 더 입력해 주세요" onChange={onChangeSignupSubmit} />
+            {errors.pwCheck && <div style={{ color: 'red' }}>{errors.pwCheck}</div>}
           </div>
         </div>
         <button type="submit">가입하기 </button>
