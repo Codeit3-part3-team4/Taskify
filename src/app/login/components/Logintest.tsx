@@ -1,3 +1,4 @@
+import LoginLink from '@/components/login/LoginLink';
 import UserValueInput from '@/components/login/UserValueInput';
 import { useState } from 'react';
 
@@ -26,7 +27,7 @@ export default function Logintest({ onSubmit }) {
   const onSubmitForm = e => {
     e.preventDefault();
     console.log('로그인 시도:', loginValue);
-    onSubmit(loginValue);
+    const login = onSubmit(loginValue);
     if (validateForm()) {
     }
   };
@@ -41,7 +42,7 @@ export default function Logintest({ onSubmit }) {
         로그인
       </button>
 
-      <div>회원이 아니신가요? 회원 가입하기</div>
+      <LoginLink sentence={'회원이 아니신가요?'} linktitle={'회원 가입하기'} link={'/signup'} />
     </div>
   );
 }
