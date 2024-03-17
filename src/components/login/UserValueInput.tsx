@@ -37,7 +37,7 @@ export default function UserValueInput({ onSubmit, value }) {
       ...userValues,
       [id]: value,
     });
-    
+    onSubmit(value);
   };
 
   const validateForm = () => {
@@ -78,7 +78,7 @@ export default function UserValueInput({ onSubmit, value }) {
     e.preventDefault();
     console.log(userValues);
     // console.log(validateForm());
-    onSubmit(userValues[value]);
+    // onSubmit(userValues[value]);
 
     if (validateForm()) {
       console.log('회원가입 시도:', userValues);

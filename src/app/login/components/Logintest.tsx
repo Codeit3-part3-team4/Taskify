@@ -34,7 +34,6 @@ export default function Logintest({ onSubmit }) {
   return (
     <div>
       <h2>로그인 테스트</h2>
-
       <UserValueInput value={'email'} onSubmit={emailSubmit} />
       <UserValueInput value={'password'} onSubmit={passwordSubmit} />
 
