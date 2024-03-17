@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function UserValueInput({ onSubmit, value }) {
   const PLACEHOLDER = {
@@ -29,6 +30,8 @@ export default function UserValueInput({ onSubmit, value }) {
     nickname: '',
     pwCheck: '',
   });
+
+  const [isValueLook, setIsValueLook] = useState(false);
 
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
@@ -90,12 +93,26 @@ export default function UserValueInput({ onSubmit, value }) {
     validateForm();
   };
 
+  const typeValue = () => {
+    const originType = TYPE[value];
+    if (!isValueLook) {
+      return originType;
+    } else {
+      return 'text';
+    }
+  };
+
+  const handlePasswordLook = () => {
+    setIsValueLook(!isValueLook);
+  };
+
   return (
     <div>
       <form onSubmit={onSubmitForm}>
         <label htmlFor={value}>{TITLE[value]}</label>
         <div>
-          <input type={TYPE[value]} id={value} value={userValues[value]} placeholder={PLACEHOLDER[value]} onChange={onChangeSignupSubmit} onBlur={onBlur} />
+          <input type={typeValue()} id={value} value={userValues[value]} placeholder={PLACEHOLDER[value]} onChange={onChangeSignupSubmit} onBlur={onBlur} />
+          {value === 'password' ? <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} /> : null}
           {errors[value] && <div style={{ color: 'red' }}>{errors[value]}</div>}
         </div>
       </form>
