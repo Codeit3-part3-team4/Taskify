@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Login({ onSubmit }) {
@@ -62,35 +64,25 @@ export default function Login({ onSubmit }) {
         <div>
           <label htmlFor="email">이메일</label>
           <div>
-            <input
-              type="text"
-              id="email"
-              value={userValues.email}
-              placeholder="이메일을 입력해 주세요"
-              onChange={onChangeLoginSubmit}
-              onBlur={onBlur}
-            />
+            <input type="text" id="email" value={userValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeLoginSubmit} onBlur={onBlur} />
             {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
           </div>
         </div>
         <div>
           <label htmlFor="password">비밀번호</label>
           <div>
-            <input
-              type="password"
-              id="password"
-              value={userValues.password}
-              placeholder="비밀번호를 입력해 주세요"
-              onChange={onChangeLoginSubmit}
-            />
-            {errors.password && (
-              <div style={{ color: 'red' }}>{errors.password}</div>
-            )}
+            <input type="password" id="password" value={userValues.password} placeholder="비밀번호를 입력해 주세요" onChange={onChangeLoginSubmit} />
+            <Image src="/images/password-eyes.svg" alt="비밀번호 눈표시" width={24} height={24} />
+            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
           </div>
         </div>
-        <button type="submit">로그인</button>
+        <Link href={'/'}>
+          <button type="submit">로그인</button>
+        </Link>
       </form>
-      <div>회원이 아니신가요? 회원 가입하기</div>
+      <div>
+        회원이 아니신가요? <Link href={'/signup'}>회원 가입하기</Link>
+      </div>
     </div>
   );
 }

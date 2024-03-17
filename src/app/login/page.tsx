@@ -3,6 +3,7 @@
 import { loginApi } from '@/api/loginApi';
 import Login from './components/login';
 import MainLogo from '@/components/login/MainLogo';
+import Logintest from './components/Logintest';
 
 export default function LoginPage() {
   const handleLoginSubmit = async userValues => {
@@ -16,7 +17,8 @@ export default function LoginPage() {
   return (
     <div>
       <MainLogo title={'오늘도 만나서 반가워요!'} />
-      <Login onSubmit={handleLoginSubmit} />
+      {/* <Login onSubmit={handleLoginSubmit} /> */}
+      <Logintest onSubmit={handleLoginSubmit} />
     </div>
   );
 }
