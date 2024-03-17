@@ -1,88 +1,48 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import LoginLink from '@/components/login/LoginLink';
+import UserValueInput from '@/components/login/UserValueInput';
 import { useState } from 'react';
 
 export default function Login({ onSubmit }) {
-  const [userValues, setUserValues] = useState({
+  const [loginValue, setLoginValue] = useState({
     email: '',
     password: '',
   });
 
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
-
-  const onChangeLoginSubmit = e => {
-    const id = e.target.id;
-    const value = e.target.value;
-    console.log(value);
-    setUserValues({
-      ...userValues,
-      [id]: value,
+  const emailSubmit = userValues => {
+    setLoginValue({
+      ...loginValue,
+      email: userValues,
     });
-    console.log(userValues);
+    console.log(loginValue);
   };
 
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {
-      email: '',
-      password: '',
-    };
-
-    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!userValues.email || !emailCheck.test(userValues.email)) {
-      newErrors.email = '이메일 형식으로 작성해 주세요.';
-      isValid = false;
-    }
-
-    if (userValues.password.length < 8) {
-      newErrors.password = '8자 이상 입력해 주세요.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
+  const passwordSubmit = userValues => {
+    setLoginValue({
+      ...loginValue,
+      password: userValues,
+    });
+    console.log(loginValue);
   };
 
   const onSubmitForm = e => {
     e.preventDefault();
+    console.log('로그인 시도:', loginValue);
+    const login = onSubmit(loginValue);
     if (validateForm()) {
-      console.log('로그인 시도:', userValues);
-      onSubmit(userValues);
     }
-  };
-
-  const onBlur = () => {
-    validateForm();
   };
 
   return (
     <div>
-      <form onSubmit={onSubmitForm}>
-        <div>
-          <label htmlFor="email">이메일</label>
-          <div>
-            <input type="text" id="email" value={userValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeLoginSubmit} onBlur={onBlur} />
-            {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-          </div>
-        </div>
-        <div>
-          <label htmlFor="password">비밀번호</label>
-          <div>
-            <input type="password" id="password" value={userValues.password} placeholder="비밀번호를 입력해 주세요" onChange={onChangeLoginSubmit} />
-            <Image src="/images/password-eyes.svg" alt="비밀번호 눈표시" width={24} height={24} />
-            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-          </div>
-        </div>
-        <Link href={'/'}>
-          <button type="submit">로그인</button>
-        </Link>
-      </form>
-      <div>
-        회원이 아니신가요? <Link href={'/signup'}>회원 가입하기</Link>
-      </div>
+      <h2>로그인 테스트</h2>
+      <UserValueInput value={'email'} onSubmit={emailSubmit} />
+      <UserValueInput value={'password'} onSubmit={passwordSubmit} />
+
+      <button type="click" onClick={onSubmitForm}>
+        로그인
+      </button>
+
+      <LoginLink sentence={'회원이 아니신가요?'} linktitle={'회원 가입하기'} link={'/signup'} />
     </div>
   );
 }

@@ -2,9 +2,9 @@
 
 import { loginApi } from '@/api/loginApi';
 import MainLogo from '@/components/login/MainLogo';
-import Logintest from './components/Logintest';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Login from './components/Login';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,8 +23,7 @@ export default function LoginPage() {
   return (
     <div>
       <MainLogo title={'오늘도 만나서 반가워요!'} />
-      {/* <Login onSubmit={handleLoginSubmit} /> */}
-      <Logintest onSubmit={handleLoginSubmit} />
+      <Login onSubmit={handleLoginSubmit} />
     </div>
   );
 }
