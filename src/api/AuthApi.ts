@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface UserValues {

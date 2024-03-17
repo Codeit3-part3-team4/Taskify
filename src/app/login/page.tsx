@@ -1,6 +1,6 @@
 'use client';
 
-import { loginApi } from '@/api/loginApi';
+import { loginApi } from '@/api/AuthApi';
 import MainLogo from '@/components/login/MainLogo';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
