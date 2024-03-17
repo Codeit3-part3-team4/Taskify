@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface UserValues {
@@ -5,6 +7,7 @@ export interface UserValues {
   pass;
 }
 
+// 로그인
 export const loginApi = async userValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
@@ -15,16 +18,20 @@ export const loginApi = async userValues => {
       },
       body: JSON.stringify(userValues),
     });
-
     const data = await res.json();
-    // 액세스토큰 로컬스토리지에 저장
-    localStorage.setItem('accessToken', data.accessToken);
 
     console.log('서버에서 받은 데이터:', data);
-    alert(data.message);
+    if (res.status === 201) {
+      // 액세스토큰 로컬스토리지에 저장
+      localStorage.setItem('accessToken', data.accessToken);
+    } else {
+      alert(data.message);
+    }
+
     return res;
   } catch (error) {
     console.log(res.status);
     console.error('로그인 에러:', error);
+    return res;
   }
 };

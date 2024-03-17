@@ -1,14 +1,20 @@
 'use client';
 
 import { loginApi } from '@/api/loginApi';
-import Login from './components/login';
 import MainLogo from '@/components/login/MainLogo';
 import Logintest from './components/Logintest';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
   const handleLoginSubmit = async userValues => {
     try {
-      await loginApi(userValues);
+      const res = await loginApi(userValues);
+      console.log('로그인페이지 시도:' + res);
+      if (res.ok) {
+        router.push('/mydashboard');
+      }
     } catch (error) {
       console.error('로그인 페이지 실패:', error);
     }
