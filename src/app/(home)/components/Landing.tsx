@@ -10,10 +10,10 @@ export default function Landing() {
         </div>
         <div className="flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6">
           <strong className="text-4xl mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
-          <strong className="text-5xl text-violet_5534DA mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
+          <strong className="text-5xl text-violet-5534DA mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
         </div>
         <div className="text-xs mb-20 md:text-sm md:mb-16 2xl:text-base">서비스의 메인 설명 들어갑니다</div>
-        <div className="flex justify-center items-center rounded-lg w-60 h-11 bg-violet_5534DA md:w-72">
+        <div className="flex justify-center items-center rounded-lg w-60 h-11 bg-violet-5534DA md:w-72">
           <button className="w-full h-full md:text-lg">로그인하기</button>
         </div>
       </div>
