@@ -62,7 +62,11 @@ export default function InvitationDashboard() {
       <SearchForm onSubmit={handleSearchSubmit} />
       <InvitationList invitations={invitations} setInvitations={setInvitations} />
       <div ref={sentinelRef}></div> {/* Intersection Observer 타겟 */}
-      {loading && <p>불러오는 중이에요!!!</p>}
+      {loading && (
+        <div className="flex justify-center h-44 items-center">
+          <svg className="animate-spin h-10 w-10 border-4 rounded-full border-t-indigo-500" viewBox="0 0 24 24"></svg>
+        </div>
+      )}
     </div>
   );
 }
