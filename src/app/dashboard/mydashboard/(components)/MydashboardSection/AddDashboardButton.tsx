@@ -10,7 +10,7 @@ export default function AddDashboardButton({ children, isModalOpen }: AddDashboa
     isModalOpen(true);
   };
   return (
-    <button onClick={handleOpenModal} className="flex items-center justify-center w-full">
+    <button onClick={handleOpenModal} className="flex items-center justify-center w-full h-full">
       {children}
     </button>
   );

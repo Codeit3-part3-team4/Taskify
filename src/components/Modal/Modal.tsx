@@ -26,6 +26,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showClo
               <img src="/images/cancel.svg" alt="Close modal" />
             </button>
           )}
+
           <h3 className="text-lg font-bold">{title}</h3>
           <div className="py-4">{children}</div>
         </div>

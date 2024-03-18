@@ -3,21 +3,31 @@ import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
 import { detailCardApi } from '@/api/cardApi';
 
+interface CardDetails {
+  description: string;
+  assignee: { nickname: string } | null;
+  dueDate: string;
+}
+
+interface TodoCardProps {
+  cardId: string;
+}
+
 export default function TodoCard({ cardId }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
-  const [cardDetails, setCardDetails] = useState(null);
+  const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
 
   useEffect(() => {
     const loadCardDetails = async () => {
       try {
+        const details = await detailCardApi(cardId);
         const details = await detailCardApi(cardId);
         setCardDetails(details);
       } catch (error) {
         console.error('카드 상세 정보를 가져오는 데 실패했습니다.', error);
       }
     };
-
     loadCardDetails();
   }, [cardId]);
 
