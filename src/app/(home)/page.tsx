@@ -7,6 +7,7 @@ import TodoCard from '@/components/Todo/TodoCard';
 import TodoForm from '@/components/Todo/TodoForm';
 import TodoUpdate from '@/components/Todo/TodoUpdate';
 import LoginForm from '@/api/LoginForm';
+import GetColumnData from '@/components/getColumnData.tsx/GetColumnData';
 
 export default function Home() {
   return (
@@ -14,8 +15,6 @@ export default function Home() {
       <Header theme="dark" />
       <Landing />
       <Footer />
-      <TodoCard />
-      <TodoForm />
       <LoginForm />
       <TodoUpdate />
     </div>
