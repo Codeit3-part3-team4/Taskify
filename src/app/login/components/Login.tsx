@@ -28,8 +28,8 @@ export default function Login({ onSubmit }) {
     e.preventDefault();
     console.log('로그인 시도:', loginValue);
     const login = onSubmit(loginValue);
-    if (validateForm()) {
-    }
+    // if (validateForm()) { // FIX IT !! 에러나서 주석처리해둠
+    // }
   };
 
   return (
