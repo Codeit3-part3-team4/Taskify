@@ -43,11 +43,7 @@ export default function MyPage() {
   return (
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
-        {userInfo ? (
-          <MyAccounts onSubmit={handleUpdateUserSubmit} />
-        ) : (
-          <LoginPage />
-        )}
+        {userInfo ? <MyAccounts onSubmit={handleUpdateUserSubmit} /> : <LoginPage />}
       </UserContext.Provider>
     </div>
   );
