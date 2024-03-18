@@ -12,12 +12,17 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showCloseButton = true }) => {
   if (!isOpen) return null;
 
+  const closeModal = e => {
+    e.stopPropagation();
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
       <dialog className="modal" open>
         <div className="modal-box relative">
           {showCloseButton && (
-            <button className="absolute btn btn-sm btn-circle btn-ghost right-2 top-6" onClick={onClose} aria-label="Close modal">
+            <button className="absolute btn btn-sm btn-circle btn-ghost right-2 top-6" onClick={closeModal} aria-label="Close modal">
               <img src="/images/cancel.svg" alt="Close modal" />
             </button>
           )}

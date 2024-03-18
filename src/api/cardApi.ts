@@ -1,11 +1,7 @@
-import { error } from 'console';
-
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 const TEAM_ID = '3-4';
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyMCwidGVhbUlkIjoiMy00IiwiaWF0IjoxNzA5OTkyNTU3LCJpc3MiOiJzcC10YXNraWZ5In0.K1rM2R-ywv-P73rUvYWw1WyWfzyk3_vMe8ZS2_84Y4c';
-// process.env.REACT_APP_TOKEN;
+const token = typeof window !== 'undefined' ? 'accessToken' : null;
 
 export interface PostCard {
   assigneeUserId: number;
@@ -17,7 +13,6 @@ export interface PostCard {
   tags: string[];
   imageUrl: string;
 }
-[];
 
 export interface CardList {
   cursorId: number;
@@ -58,7 +53,7 @@ export interface DetailCard {
   tags: string[];
   dueDate: string;
   assignee: {
-    profileImageurl: string;
+    profileImageUrl: string;
     nickname: string;
     id: number;
   };
@@ -97,10 +92,9 @@ export const postCardApi = async (teamId = '3-4') => {
 };
 
 // 카드 목록 조회
-export const getCardListApi = async (size = 1, cursorId = 10, columnId = 15764) => {
-  const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards?${size}&${cursorId}&${columnId}`, {
+export const getCardListApi = async (size: number, cursorId: number, columnId: number) => {
+  const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`, {
     method: 'GET',
-    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -121,7 +115,7 @@ export const getCardListApi = async (size = 1, cursorId = 10, columnId = 15764) 
 };
 
 // 카드 수정
-export const editCardApi = async (teamId = '3-4', cardId = 3725) => {
+export const editCardApi = async (cardId: number) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards/${cardId}`, {
     method: 'PUT',
     cache: 'no-cache',
@@ -148,7 +142,7 @@ export const editCardApi = async (teamId = '3-4', cardId = 3725) => {
 };
 
 // 카드 상세 조회
-export const detailCardApi = async (teamId = '3-4', cardId = 3725) => {
+export const detailCardApi = async (cardId: number) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards/${cardId}`, {
     method: 'GET',
     cache: 'no-cache',
@@ -172,7 +166,7 @@ export const detailCardApi = async (teamId = '3-4', cardId = 3725) => {
 };
 
 // 카드 삭제
-export const deleteCardApi = async (teamId = '3-4', cardId = 3744) => {
+export const deleteCardApi = async (cardId: number) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/cards/${cardId}`, {
     method: 'DELETE',
     cache: 'no-cache',
