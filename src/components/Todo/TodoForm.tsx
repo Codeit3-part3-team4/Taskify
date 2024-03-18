@@ -4,8 +4,8 @@ import { useModal } from '@/components/hooks/useModal/useModal';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { createCards } from '@/api/cards';
-import { fetchMembers, Member } from '@/api/members/fetchMembers';
+import { getMembersApi, Member } from '@/api/membersApi';
+import { postCardApi } from '@/api/cardApi';
 
 export default function TodoForm({ dashboardId, columnId }) {
   const { isOpen, openModal, closeModal } = useModal();
@@ -20,9 +20,14 @@ export default function TodoForm({ dashboardId, columnId }) {
   const [members, setMembers] = useState<Member[]>([]);
 
   useEffect(() => {
-    fetchMembers(dashboardId)
-      .then(setMembers)
-      .catch(error => console.error('멤버 조회 오류:', error));
+    const fetchMembers = async () => {
+      const res = await getMembersApi(dashboardId, 1, 10); // Assuming page 1 and size 10 for example
+      if (res && res.members) {
+        setMembers(res.members);
+      }
+    };
+
+    fetchMembers().catch(error => console.error('멤버 조회 오류:', error));
   }, [dashboardId]);
 
   const handleInputChange = e => {
@@ -58,11 +63,18 @@ export default function TodoForm({ dashboardId, columnId }) {
         imageUrl: selectedImage,
       };
 
-      await createCards(cardData);
+      await postCardApi(cardData);
       closeModal();
     } catch (error) {
       console.error('Error creating card:', error);
     }
+  };
+
+  const handleSelectAssignee = userId => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      assigneeUserId: userId,
+    }));
   };
 
   return (

@@ -2,6 +2,7 @@ const BASE_URL = 'https://sp-taskify-api.vercel.app';
 const LOCAL_URL = 'http://localhost:3000';
 
 export interface UserValues {
+
   accessToken: string;
   user: {
     createdAt: string;
@@ -60,6 +61,7 @@ export const postRequestCookies = async (key: string, value: string) => {
     .catch(error => {
       console.error('Error:', error);
       return null;
+
     });
 
   return response;

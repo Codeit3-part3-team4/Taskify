@@ -18,7 +18,6 @@ export default function Home() {
       <Footer />
       <TodoCard />
       <TodoForm />
-      <LoginForm />
       <TodoUpdate />
     </div>
   );

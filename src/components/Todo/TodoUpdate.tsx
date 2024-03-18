@@ -3,9 +3,9 @@ import Modal from '@/components/Modal/Modal';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { updateCards } from '@/api/cards';
-import { fetchMembers } from '@/api/members/fetchMembers';
-import { fetchColumns } from '@/api/columns/fetchColumns';
+import { getMembersApi } from '@/api/membersApi';
+import { getColumnListApi } from '@/api/columnApi';
+import { editCardApi } from '@/api/cardApi';
 
 interface CardDetails {
   assigneeUserId: string;
@@ -24,11 +24,10 @@ interface TodoUpdateProps {
   dashboardId: number;
 }
 
-const TodoUpdate: FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dashboardId }) => {
+const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dashboardId }) => {
   const [statuses, setStatuses] = useState([]);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState(cardDetails ? cardDetails.columnId : '');
-  const [selectedAssignee, setSelectedAssignee] = useState(cardDetails ? cardDetails.assigneeUserId : '');
+  const [selectedStatus, setSelectedStatus] = useState<string>(cardDetails ? cardDetails.columnId : '');
+  const [selectedAssignee, setSelectedAssignee] = useState<string>(cardDetails ? cardDetails.assigneeUserId : '');
   const [formData, setFormData] = useState({
     assigneeUserId: cardDetails ? cardDetails.assigneeUserId : '',
     title: cardDetails ? cardDetails.title : '',
@@ -42,8 +41,12 @@ const TodoUpdate: FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dash
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [membersData, columnsData] = await Promise.all([fetchMembers(dashboardId), fetchColumns(dashboardId)]);
-        setMembers(membersData);
+        // 멤버 목록 가져오기
+        const membersData = await getMembersApi(dashboardId);
+        setMembers(membersData.members);
+
+        // 컬럼 목록 가져오기 (기존 코드 유지)
+        const columnsData = await getColumnListApi(dashboardId);
         setStatuses(columnsData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -89,12 +92,11 @@ const TodoUpdate: FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dash
       assigneeUserId: parseInt(selectedAssignee),
       dueDate: formData.deadline.toISOString(),
       tags: formData.tags.split(',').map(tag => tag.trim()),
-
-      imageUrl: formData.selectedImage ? await uploadImageAndGetUrl(formData.selectedImage) : '',
+      imageUrl: formData.selectedImage,
     };
 
     try {
-      await updateCards(cardData);
+      await editCardApi(cardData);
       console.log('Card updated successfully');
       closeModal();
     } catch (error) {
@@ -118,21 +120,21 @@ const TodoUpdate: FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dash
                 </label>
                 <div className="relative w-full">
                   <div tabIndex={0} className="dropdown">
-                    <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
-                      {statuses.find(status => status.id === selectedStatus)?.name || '상태를 선택해 주세요'}
-                      <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
-                    </label>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                      style={{ display: isDropdownOpen ? 'block' : 'none' }}
-                    >
-                      {statuses.map(status => (
-                        <li key={status.id} onClick={() => handleSelectStatus(status.id)}>
-                          <a>{status.name}</a>
-                        </li>
-                      ))}
-                    </ul>
+                    {statuses && statuses.length > 0 && (
+                      <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
+                        {statuses.find(status => status.id === selectedStatus)?.name || '상태를 선택해 주세요'}
+                        <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
+                      </label>
+                    )}
+                    {statuses && statuses.length > 0 && (
+                      <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                        {statuses.map(status => (
+                          <li key={status.id} onClick={() => handleSelectStatus(status.id)}>
+                            <a>{status.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
               </div>
@@ -142,17 +144,21 @@ const TodoUpdate: FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dash
                 </label>
                 <div className="relative w-full">
                   <div tabIndex={0} className="dropdown">
-                    <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
-                      {members.find(member => member.userId.toString() === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
-                      <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
-                    </label>
-                    <ul tabIndex={0} className="dropdown-content menu p-2 bg-base-100 rounded-box w-52">
-                      {members.map(member => (
-                        <li key={member.id} onClick={() => handleSelectAssignee(member.userId.toString())}>
-                          <a>{member.nickname}</a>
-                        </li>
-                      ))}
-                    </ul>
+                    {members && members.length > 0 && (
+                      <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
+                        {members.find(member => member.userId.toString() === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
+                        <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
+                      </label>
+                    )}
+                    {members && members.length > 0 && (
+                      <ul tabIndex={0} className="dropdown-content menu p-2 bg-base-100 rounded-box w-52">
+                        {members.map(member => (
+                          <li key={member.id} onClick={() => handleSelectAssignee(member.userId.toString())}>
+                            <a>{member.nickname}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
               </div>

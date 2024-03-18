@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import Modal from '../Modal/Modal';
-import { useModal } from '../hooks/useModal/useModal';
-import Comment from '../Comment/Comment';
-import { searchCards } from '@/api/cards';
+import Modal from '@/components/Modal/Modal';
+import { useModal } from '@/components/hooks/useModal/useModal';
+import Comment from '@/components/Comment/Comment';
 import TodoUpdate from './TodoUpdate';
+import { detailCardApi } from '@/api/cardApi';
 
-export default function TodoCard({ cardId }) {
+interface CardDetails {
+  description: string;
+  assignee: { nickname: string } | null;
+  dueDate: string;
+}
+
+interface TodoCardProps {
+  cardId: string;
+}
+
+export default function TodoCard({ cardId }: TodoCardProps): JSX.Element {
   const { isOpen, openModal, closeModal } = useModal();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
-  const [cardDetails, setCardDetails] = useState(null);
+  const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
 
   useEffect(() => {
     const loadCardDetails = async () => {
       try {
-        const details = await searchCards(cardId);
+        const details = await detailCardApi(cardId);
         setCardDetails(details);
       } catch (error) {
         console.error('카드 상세 정보를 가져오는 데 실패했습니다.', error);
       }
     };
-
     loadCardDetails();
   }, [cardId]);
 
@@ -33,7 +42,7 @@ export default function TodoCard({ cardId }) {
 
   return (
     <div>
-      <button className="btn" onClick={openModal}>
+      <button type="button" className="btn" onClick={openModal}>
         <img src="/images/add.svg" />
       </button>
       <Modal
@@ -57,9 +66,7 @@ export default function TodoCard({ cardId }) {
             </ul>
           </div>
         )}
-
         {isUpdateModalOpen && <TodoUpdate closeModal={() => setUpdateModalOpen(false)} cardDetails={cardDetails} cardId={cardId} />}
-
         <div className="flex flex-col gap-3 w-full">
           {cardDetails && (
             <>
@@ -69,19 +76,17 @@ export default function TodoCard({ cardId }) {
                 <img src="/images/test2.svg" alt="Test 2" />
               </div>
               <div className="flex">
-                <div>{cardDetails.description}</div>
-
+                <div>{cardDetails?.description}</div>
                 <div className="flex flex-col border p-3 gap-3 w-96 h-40">
                   <div className="font-bold">담당자</div>
-                  <div>{cardDetails.assignee ? cardDetails.assignee.nickname : '할당되지 않음'}</div>
+                  <div>{cardDetails?.assignee ? cardDetails.assignee.nickname : '할당되지 않음'}</div>
                   <div className="font-bold">마감일</div>
-                  <div>{cardDetails.dueDate}</div>
+                  <div>{cardDetails?.dueDate}</div>
                 </div>
               </div>
               <div>
                 <img src="/images/test3.svg" alt="Test 3" />
               </div>
-
               <Comment />
             </>
           )}
