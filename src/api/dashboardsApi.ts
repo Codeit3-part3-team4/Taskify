@@ -180,7 +180,6 @@ export const postDashboardInvitationsApi = async (id: number, email: string) => 
 };
 
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
-  console.log(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`);
   const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
     method: 'GET',
     cache: 'no-cache',
@@ -203,6 +202,7 @@ export const getDashboardInvitationsApi = async (id: number, page: number, size:
       return null;
     });
 
+  console.log(res);
   return res;
 };
 

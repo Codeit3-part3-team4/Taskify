@@ -3,8 +3,12 @@ import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
+import { cookies } from 'next/headers';
 
 const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
+  const accessToken = cookies().get('accessToken');
+  console.log('MemberList accessToken', accessToken);
+
   const result = await getMembersApi(dashboardId, pageIndex, size);
   return result;
 };
