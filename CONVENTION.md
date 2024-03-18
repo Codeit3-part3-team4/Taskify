@@ -39,31 +39,29 @@
 # 폴더구조
 
 📦src<br>
- ┣ 📂apis<br>
- ┣ 📂components<br>
- ┃ ┣ 📂Button<br>
- ┃ ┃  ┣ 📂BadeButton<br>
- ┃ ┃  ┣ 📂FloatingButton<br>
- ┃ ┃  ┣ 📂FillBoxButton<br>
- ┃ ┃  ┣ 📂OutlineBoxButton<br>
- ┃ ┣ 📂Input<br>
- ┃ ┣ 📂Pagenation<br>
- ┃ ┗ ...<br>
- ┣ 📂styles<br>
- ┃ ┗ 📜GlobalStyle.js<br>
- ┣ 📂app<br>
- ┃ ┣ 📂home<br>
- ┃ ┃  ┣ 📜page.tsx<br>
- ┃ ┃  ┣ 📜layout.jsx<br>
- ┃ ┃  ┣ 📜Router.jsx<br>
- ┃ ┃  ┣ 📂(dashboardComponents)<br>
- ┃ ┃  ┃ ┣ 📜dashboardComponents.tsx<br>
- ┃ ┣ 📂CardListPage<br>
- ┃ ┣ 📂MainPage<br>
- ┣ 📂utils<br>
- ┣ 📜App.jsx<br>
- ┣ 📜constants.js<br>
- ┣ 📜index.css<br>
- ┗ 📜Router.jsx<br>
-
-
+┣ 📂apis<br>
+┣ 📂components<br>
+┃ ┣ 📂Button<br>
+┃ ┃ ┣ 📂BadeButton<br>
+┃ ┃ ┣ 📂FloatingButton<br>
+┃ ┃ ┣ 📂FillBoxButton<br>
+┃ ┃ ┣ 📂OutlineBoxButton<br>
+┃ ┣ 📂Input<br>
+┃ ┣ 📂Pagenation<br>
+┃ ┗ ...<br>
+┣ 📂styles<br>
+┃ ┗ 📜GlobalStyle.js<br>
+┣ 📂app<br>
+┃ ┣ 📂home<br>
+┃ ┃ ┣ 📜page.tsx<br>
+┃ ┃ ┣ 📜layout.jsx<br>
+┃ ┃ ┣ 📜Router.jsx<br>
+┃ ┃ ┣ 📂(dashboardComponents)<br>
+┃ ┃ ┃ ┣ 📜dashboardComponents.tsx<br>
+┃ ┣ 📂CardListPage<br>
+┃ ┣ 📂MainPage<br>
+┣ 📂utils<br>
+┣ 📜App.jsx<br>
+┣ 📜constants.js<br>
+┣ 📜index.css<br>
+┗ 📜Router.jsx<br>

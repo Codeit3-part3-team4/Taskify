@@ -1,16 +1,16 @@
 const BASE_URL = 'https://sp-taskify-api.vercel.app/3-4';
 
 interface Comment {
-  id: string;
+  id: number;
   content: string;
-  cardId: string;
+  cardId: number;
 }
 
 type CreateCommentProps = {
   content: string;
-  cardId: string;
-  columnId: string;
-  dashboardId: string;
+  cardId: number;
+  columnId: number;
+  dashboardId: number;
 };
 
 // 댓글 생성
@@ -29,7 +29,7 @@ export const createComment = async ({ content, cardId, columnId, dashboardId }: 
 };
 
 // 댓글 목록 조회
-export const fetchComments = async (cardId: string): Promise<Comment[]> => {
+export const fetchComments = async (cardId: number): Promise<Comment[]> => {
   const response = await fetch(`${BASE_URL}/comments?cardId=${cardId}`, {
     method: 'GET',
     headers: {
@@ -43,7 +43,7 @@ export const fetchComments = async (cardId: string): Promise<Comment[]> => {
 };
 
 // 댓글 수정
-export const updateComment = async (commentId: string, content: string): Promise<Comment> => {
+export const updateComment = async (commentId: number, content: string): Promise<Comment> => {
   const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'PUT',
     headers: {
@@ -58,7 +58,7 @@ export const updateComment = async (commentId: string, content: string): Promise
 };
 
 // 댓글 삭제
-export const deleteComment = async (commentId: string): Promise<void> => {
+export const deleteComment = async (commentId: number): Promise<void> => {
   const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'DELETE',
     headers: {

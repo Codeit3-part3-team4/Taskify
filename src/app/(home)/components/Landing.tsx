@@ -1,14 +1,12 @@
-import Image from "next/image";
-import Canvas3DView from "./Canvas3DView";
+import Image from 'next/image';
+import Canvas3DView from './Canvas3DView';
 
 export default function Landing() {
   const Title = () => {
     return (
       <div className="flex flex-col items-center vertical-middle text-center align-middle md:mb-44">
         <div className="mb-10">
-          <div className="w-287 h-168 rounded-lg overflow-hidden bg-white md:w-537 md:h-314 2xl:w-722 2xl:h-423">
-            {/* <Canvas3DView /> */}
-          </div>
+          <div className="w-287 h-168 rounded-lg overflow-hidden bg-white md:w-537 md:h-314 2xl:w-722 2xl:h-423">{/* <Canvas3DView /> */}</div>
         </div>
         <div className="flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6">
           <strong className="text-4xl mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
@@ -19,34 +17,50 @@ export default function Landing() {
           <button className="w-full h-full md:text-lg">로그인하기</button>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
-  const MainThumb = ({ title, desc, desc2, options = "", children }: { title: string, desc: string, desc2: string, options?: string, children: React.ReactNode }) => {
+  const MainThumb = ({
+    title,
+    desc,
+    desc2,
+    options = '',
+    children,
+  }: {
+    title: string;
+    desc: string;
+    desc2: string;
+    options?: string;
+    children: React.ReactNode;
+  }) => {
     return (
-      <div className={`flex flex-col 2xl:flex-row justify-between w-343 h-686 rounded-lg overflow-hidden bg-gray-300/10 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 ${options}`}>
+      <div
+        className={`flex flex-col 2xl:flex-row justify-between w-343 h-686 rounded-lg overflow-hidden bg-gray-300/10 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 ${options}`}
+      >
         <div className="flex flex-col w-full items-center md:items-start md:p-14 mt-16 md:mt-0 2xl:pt-32">
           <span className="text-lg text-gray_9FA6B2 mb-20">{title}</span>
-          <strong className="text-3xl text-center md:text-start">{desc}<br/>{desc2}</strong>
+          <strong className="text-3xl text-center md:text-start">
+            {desc}
+            <br />
+            {desc2}
+          </strong>
         </div>
         {children}
       </div>
     );
-  }
+  };
 
-  const MiniThumb = ({ title, desc, children}: { title: string, desc: string, children: React.ReactNode }) => {
+  const MiniThumb = ({ title, desc, children }: { title: string; desc: string; children: React.ReactNode }) => {
     return (
       <div className="w-343 h-350 rounded-lg overflow-hidden md:w-378 md:h-384">
-        <div className="flex justify-center items-center w-full h-2/3 bg-gray-300/10">
-          {children}
-        </div>
+        <div className="flex justify-center items-center w-full h-2/3 bg-gray-300/10">{children}</div>
         <div className="flex flex-col justify-center w-full h-1/3 bg-gray-500/40 px-5 gap-4">
           <strong className="text-base">{title}</strong>
           <span className="text-sm">{desc}</span>
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <div className="flex flex-col justify-start items-center min-h-screen text-white">

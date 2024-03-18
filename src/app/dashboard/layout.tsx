@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  DashboardsInf,
-  getDashboardsByPaginationApi,
-} from '@/api/dashboardsApi';
+import { DashboardsInf, getDashboardsByPaginationApi } from '@/api/dashboardsApi';
 import SideDashboardList from '@/components/SideDashboardList/SideDashboardList';
 import { DashboardContext } from '@/context/DashboardContext';
 import { useEffect, useState } from 'react';

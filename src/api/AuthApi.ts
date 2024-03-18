@@ -2,11 +2,11 @@ const BASE_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface UserValues {
   email: string;
-  pass;
+  password: string;
 }
 
 // 로그인
-export const loginApi = async userValues => {
+export const loginApi = async (userValues: UserValues) => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
       method: 'POST',
