@@ -2,6 +2,8 @@
 
 import { signupApi } from '@/api/userApi';
 import SignUp from './components/Signup';
+import SignUptest from './components/Signuptest';
+import MainLogo from '@/components/login/MainLogo';
 
 export default function SignUpPage() {
   const handleSignUpSubmit = async newUserValues => {
@@ -14,7 +16,9 @@ export default function SignUpPage() {
 
   return (
     <div>
-      <SignUp onSubmit={handleSignUpSubmit} />
+      <MainLogo title={'첫 방문을 환영합니다!'} />
+      {/* <SignUp onSubmit={handleSignUpSubmit} /> */}
+      <SignUptest onSubmit={handleSignUpSubmit} />
     </div>
   );
 }

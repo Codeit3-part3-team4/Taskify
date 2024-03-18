@@ -1,34 +1,47 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-export default function UserValueInput({ onSubmit, value }) {
+export default function UserValueInput({ onSubmit, value, type, isValidPw }) {
   const PLACEHOLDER = {
     email: '이메일을 입력해 주세요',
-    password: '비밀번호를 입력해 주세요',
+    nickname: '닉네임을 입력해 주세요',
+    password: {
+      login: '비밀번호를 입력해 주세요',
+      signup: '8자 이상 입력해 주세요',
+      new: '새 비밀번호 입력',
+    },
+    pwcheck: {
+      check: '비밀번호를 한번 더 입력해 주세요',
+      newcheck: '새 비밀번호 입력',
+    },
   };
 
   const TITLE = {
     email: '이메일',
+    nickname: '닉네임',
     password: '비밀번호',
+    pwcheck: '비밀번호 확인',
   };
 
   const TYPE = {
     email: 'text',
+    nickname: 'text',
     password: 'password',
+    pwcheck: 'password',
   };
 
   const [userValues, setUserValues] = useState({
     email: '',
-    password: '',
     nickname: '',
-    pwCheck: '',
+    password: '',
+    pwcheck: '',
   });
 
   const [errors, setErrors] = useState({
     email: '',
-    password: '',
     nickname: '',
-    pwCheck: '',
+    password: '',
+    pwcheck: '',
   });
 
   const [isValueLook, setIsValueLook] = useState(false);
@@ -47,9 +60,9 @@ export default function UserValueInput({ onSubmit, value }) {
     let isValid = true;
     const newErrors = {
       email: '',
-      password: '',
       nickname: '',
-      pwCheck: '',
+      password: '',
+      pwcheck: '',
     };
 
     const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -69,9 +82,12 @@ export default function UserValueInput({ onSubmit, value }) {
       isValid = false;
     }
 
-    if (userValues.password !== userValues.pwCheck) {
-      newErrors.pwCheck = '비밀번호가 일치하지 않습니다.';
+    if (isValidPw !== userValues.password) {
+      newErrors.pwcheck = '비밀번호가 일치하지 않습니다.';
     }
+    // console.log(onCheckPassword);
+    // console.log(onCheckPassword);
+    // console.log('비밀번호는' + isValidPw(userValues.password));
 
     setErrors(newErrors);
     return isValid;
@@ -111,8 +127,17 @@ export default function UserValueInput({ onSubmit, value }) {
       <form onSubmit={onSubmitForm}>
         <label htmlFor={value}>{TITLE[value]}</label>
         <div>
-          <input type={typeValue()} id={value} value={userValues[value]} placeholder={PLACEHOLDER[value]} onChange={onChangeSignupSubmit} onBlur={onBlur} />
-          {value === 'password' ? <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} /> : null}
+          <input
+            type={typeValue()}
+            id={value}
+            value={userValues[value]}
+            placeholder={type ? PLACEHOLDER[value][type] : PLACEHOLDER[value]}
+            onChange={onChangeSignupSubmit}
+            onBlur={onBlur}
+          />
+          {TYPE[value] === 'password' ? (
+            <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} />
+          ) : null}
           {errors[value] && <div style={{ color: 'red' }}>{errors[value]}</div>}
         </div>
       </form>

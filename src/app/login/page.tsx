@@ -13,7 +13,7 @@ export default function LoginPage() {
       const res = await loginApi(userValues);
       console.log('로그인페이지 시도:' + res);
       if (res.ok) {
-        router.push('/mydashboard');
+        router.push('dashboard/mydashboard');
       }
     } catch (error) {
       console.error('로그인 페이지 실패:', error);

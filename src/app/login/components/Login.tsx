@@ -36,7 +36,7 @@ export default function Login({ onSubmit }) {
     <div>
       <h2>로그인 테스트</h2>
       <UserValueInput value={'email'} onSubmit={emailSubmit} />
-      <UserValueInput value={'password'} onSubmit={passwordSubmit} />
+      <UserValueInput value={'password'} type={'login'} onSubmit={passwordSubmit} />
 
       <button type="click" onClick={onSubmitForm}>
         로그인
