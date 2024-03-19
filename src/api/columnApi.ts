@@ -1,11 +1,6 @@
 import { authInstance } from '@/utils/functionalFetch';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const TEAM_ID = '3-4';
-
-// const token =
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyNywidGVhbUlkIjoiMy00IiwiaWF0IjoxNzEwODI5MjkzLCJpc3MiOiJzcC10YXNraWZ5In0.JKf4DY_qCrMyMb-lwyG3a3ilS4bQrD7VkJD5mDzOyfQ';
-// //typeof window !== 'undefined' ? 'accessToken' : null;
 
 export interface CreateColumn {
   title: string;
@@ -38,11 +33,10 @@ export const createColumnApi = async (title, dashboardId) => {
   };
 
   const res = await authInstance
-    .fetch(`${BASE_URL}/${TEAM_ID}/columns`, {
+    .fetch(`${BASE_URL}/3-4/columns`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
-        // Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -68,11 +62,10 @@ export const createColumnApi = async (title, dashboardId) => {
 // 컬럼 목록 조회
 export const getColumnListApi = async (dashboardId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/${TEAM_ID}/columns/?dashboardId=${dashboardId}`, {
+    .fetch(`${BASE_URL}/3-4/columns/?dashboardId=${dashboardId}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
-        // Authorization: `Bearer ${token}`,
         accept: 'application/json',
       },
     })
@@ -93,11 +86,10 @@ export const getColumnListApi = async (dashboardId: number) => {
 // 컬럼 수정
 export const editColumnApi = async (columnId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
+    .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
-        // Authorization: `Bearer ${token}`,
         accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -121,11 +113,10 @@ export const editColumnApi = async (columnId: number) => {
 // 컬럼 삭제
 export const deleteColumnApi = async (columnId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
+    .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {
-        // Authorization: `Bearer ${token}`,
         accept: '*/*',
       },
     })
