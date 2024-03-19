@@ -1,28 +1,50 @@
-import React, { useState, useRef, MouseEvent } from 'react';
+import React, { useState, useRef } from 'react';
 
 interface ImageUploadProps {
-  onImageUpload: () => void;
+  onImageUpload: (imageUrl: string | null) => void;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null); // HTMLInputElement 타입 지정
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault();
+  const uploadImageToServer = async (file: File): Promise<string | null> => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('서버의 이미지 업로드 API 엔드포인트', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Image upload failed');
+      }
+
+      const data = await response.json();
+      return data.imageUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return null;
+    }
+  };
+
+  const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setImagePreview(result);
-        onImageUpload(file);
-      };
-      reader.readAsDataURL(file);
+      const imageUrl = await uploadImageToServer(file);
+      if (imageUrl) {
+        setImagePreview(imageUrl);
+        onImageUpload(imageUrl);
+      } else {
+        setImagePreview(null);
+        onImageUpload(null);
+      }
     } else {
       setImagePreview(null);
       onImageUpload(null);

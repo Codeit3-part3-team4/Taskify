@@ -10,7 +10,6 @@ import { postCardApi } from '@/api/cardApi';
 
 export default function TodoForm({ dashboardId, columnId }) {
   const { isOpen, openModal, closeModal } = useModal();
-
   const [formData, setFormData] = useState({
     assigneeUserId: '',
     title: '',
@@ -23,7 +22,7 @@ export default function TodoForm({ dashboardId, columnId }) {
 
   useEffect(() => {
     const fetchMembers = async () => {
-      const res = await getMembersApi(dashboardId, 1, 10); // Assuming page 1 and size 10 for example
+      const res = await getMembersApi(dashboardId, 1, 10);
       if (res && res.members) {
         setMembers(res.members);
       }
@@ -37,14 +36,14 @@ export default function TodoForm({ dashboardId, columnId }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = file => {
-    setFormData(prev => ({ ...prev, selectedImage: file }));
+  const handleImageUpload = imageUrl => {
+    setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
   };
 
   const isFormValid = () => {
-    return Object.values(formData).every(value => value);
+    const { selectedImage, ...requiredFields } = formData;
+    return Object.values(requiredFields).every(value => value);
   };
-
   const handleSubmit = async e => {
     e.preventDefault();
     if (!isFormValid()) {
