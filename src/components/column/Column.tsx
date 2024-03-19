@@ -3,16 +3,17 @@ import GetCard from '../getCard/GetCard';
 import { CardList, getCardListApi } from '@/api/cardApi';
 import { useEffect, useState } from 'react';
 import TodoForm from '../Todo/TodoForm';
+import { useModal } from '../hooks/useModal/useModal';
 
 const Column = ({ columnId, columnTitle, dashboardId }) => {
   const [cardList, setCardList] = useState<CardList | null>(null);
+  const { openModal } = useModal;
 
   console.log(cardList);
   useEffect(() => {
     async function fetchCardData() {
       try {
         const result = await getCardListApi(5, 10, columnId);
-        // setCardList(result);
         console.log(result);
         setCardList(result);
         return result;
@@ -38,7 +39,7 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
           <div className="flex md: justify-center">
             <button
               className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border border-slate-300"
-              // onClick={openModal}
+              onClick={openModal}
             >
               <TodoForm dashboardId={dashboardId} columnId={columnId} />
             </button>

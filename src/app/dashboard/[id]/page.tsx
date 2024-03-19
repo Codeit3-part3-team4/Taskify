@@ -8,7 +8,7 @@ import { useModal } from '@/components/hooks/useModal/useModal';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
+export default function Page({ params: { id } }: { params: { id: number } }) {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
 
   console.log(columnList);

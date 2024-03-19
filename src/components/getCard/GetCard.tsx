@@ -54,7 +54,7 @@ const GetCard = ({ card }: { card: Card }) => {
                       <img src="/images/calendar-icon.svg" alt="캘린더 아이콘" />
                       <div className="text-xs text-slate-400">{card.createdAt}</div>
                     </div>
-                    <div className="flex justify-center items-center w-6 h-6 bg-emerald-800 opacity-40 rounded-full text-white text-xs font-semibold">
+                    <div className="flex justify-center items-center w-6 h-6 bg-green-A3C4A2 rounded-full text-white text-xs font-semibold">
                       {card.assignee.nickname[0].toUpperCase()}
                     </div>
                   </div>
