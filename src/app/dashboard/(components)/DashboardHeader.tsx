@@ -2,14 +2,16 @@
 
 import { DashboardContext } from '@/context/DashboardContext';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useEffect, useContext } from 'react';
 import { getMembers } from '../[id]/edit/(components)/MemberList';
 import { usePathname } from 'next/navigation';
-import { Member, MembersInf } from '../../../api/membersApi';
+import { MembersInf } from '../../../api/membersApi';
 import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
 import { UserInfo, getUserInfo } from '@/api/userApi';
 import { getDashboardDetailsApi } from '@/api/dashboardsApi';
+import { useRouter } from 'next/navigation';
+import Modal from '@/components/Modal/Modal';
+import InviteModal from '../[id]/edit/(components)/InviteModal';
 
 interface ProfileImageProps {
   nickname: string;
@@ -43,10 +45,17 @@ const ProfileImage = ({ nickname, profileImageUrl, options, style }: ProfileImag
 
 export const FunctionalHeader = () => {
   const [membersInf, setMembersInf] = useState<MembersInf>();
+  const [isInviteModal, setIsInviteModal] = useState<boolean>(false);
 
   const { dashboardId } = useContext(DashboardContext);
   const pathname = usePathname();
   const mediaQuery = useMediaQuery();
+  const router = useRouter();
+
+  const onCloseModal = () => {
+    console.log('close');
+    setIsInviteModal(false);
+  };
 
   useEffect(() => {
     if (Number.isNaN(dashboardId)) return;
@@ -72,14 +81,22 @@ export const FunctionalHeader = () => {
 
   return (
     <div className="flex flex-row justify-center items-center h-full mr-3 md:mr-5">
-      <div className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2">
+      <button
+        className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2"
+        onClick={() => {
+          router.push(`${pathname}/edit?memberPage=1&invitePage=1`);
+        }}
+      >
         <Image className="hidden md:block w-5 h-5" src="/images/settings.svg" alt="Taskify" width="32" height="32" />
         <span>관리</span>
-      </div>
-      <div className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-3 md:mr-8 md:gap-2">
+      </button>
+      <button
+        className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-3 md:mr-8 md:gap-2"
+        onClick={() => setIsInviteModal(true)}
+      >
         <Image className="hidden md:block w-5 h-5" src="/images/add_box.svg" alt="Taskify" width="15" height="15" />
         <span>초대하기</span>
-      </div>
+      </button>
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
           const moveX = (showMemberCount - index - 1) * 15;
@@ -88,6 +105,9 @@ export const FunctionalHeader = () => {
         })}
       </div>
       <div className="w-[1px] h-3/6 bg-gray-300"></div>
+      <Modal isOpen={isInviteModal} title={'초대하기'} showCloseButton={false}>
+        <InviteModal id={dashboardId} pathname={pathname} query={`memberPage=1&invitePage=1`} onClose={() => setIsInviteModal(false)} />
+      </Modal>
     </div>
   );
 };

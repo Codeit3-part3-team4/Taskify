@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
-import { cookies } from 'next/headers';
 
 export const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getMembersApi(dashboardId, pageIndex, size);

@@ -3,9 +3,9 @@ import { getDashboardInvitationsApi } from '@/api/dashboardsApi';
 import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
-import { LinkImage, LinkText } from './LinkComponents';
 import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
+import { LinkText, LinkImage } from './LinkComponents';
 import InviteModal from './InviteModal';
 
 const getDashboardInvitations = async (dashboardId: number, pageIndex: number, size: number) => {
@@ -96,7 +96,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
         <InviteItems invitations={invitations} />
       </div>
       <Modal isOpen={isInviteModal} title={'초대하기'} showCloseButton={false}>
-        <InviteModal id={dashboardId} pathname={`/dashboard/${dashboard}/edit`} query={`memberPage=${memberPage}&invitePage=${page}`} />
+        <InviteModal id={Number(dashboardId)} pathname={`/dashboard/${dashboard}/edit`} query={`memberPage=${memberPage}&invitePage=${page}`} />
       </Modal>
     </div>
   );
