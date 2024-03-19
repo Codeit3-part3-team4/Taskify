@@ -33,30 +33,23 @@ const GetCard = ({ card }: { card: Card }) => {
           </Modal>
           <div className="md:flex lg:flex-col md:m-auto md:gap-4">
             <div>
-              <img
-                className="w-64 md:w-24 lg:w-72"
-                alt="Upload-image"
-                // src={card.imageUrl ? card.imageUrl : '/images/image-test.png'}
-                src="/images/image-test.png"
-              />
+              {/* {card.imageUrl && <img className="w-64 md:w-24 lg:w-72" src={card.imageUrl} alt="Card Image" />} */}
+              <img className="w-64 md:w-24 lg:w-72" src="/images/image-test.png" alt="Card Image" />
             </div>
-            <div>
-              <div className="w-64 md:w-96 lg:w-72 pt-3 md:pt-0 md:flex-row">
-                <div>
-                  <div className="text-sm font-medium leading-4 pb-1.5">{card.title}</div>
-                </div>
-                <div className="md:flex md:items-center lg:flex-col">
-                  {/* <div> */}
-                  <div className="bg-lime-100 text-lime-400 w-9 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">{card.tags}</div>
-                  {/* </div> */}
-                  <div className="flex w-64 md:w-full justify-between md:items-center">
-                    <div className="flex w-16 gap-1 items-center pt-1.5 md:pt-0">
-                      <img src="/images/calendar-icon.svg" alt="캘린더 아이콘" />
-                      <div className="text-xs text-slate-400">{card.createdAt}</div>
-                    </div>
-                    <div className="flex justify-center items-center w-6 h-6 bg-green-A3C4A2 rounded-full text-white text-xs font-semibold">
-                      {card.assignee.nickname[0].toUpperCase()}
-                    </div>
+            {/* <div className="bg-red-200"> */}
+            <div className="w-64 md:w-96 lg:w-72 pt-3 md:pt-0 md:flex-row ">
+              <div>
+                <div className="text-sm font-medium leading-4 pb-1.5">{card.title}</div>
+              </div>
+              <div className="md:flex md:items-center lg:flex-col">
+                <div className="bg-lime-100 text-lime-400 w-9 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">{card.tags}</div>
+                <div className="flex w-64 md:w-full justify-between md:items-center">
+                  <div className="flex w-full gap-1 items-center pt-1.5 md:pt-0">
+                    <img src="/images/calendar-icon.svg" alt="캘린더 아이콘" />
+                    <div className="text-xs text-slate-400">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
+                  </div>
+                  <div className="flex justify-center items-center w-6 h-6 bg-green-A3C4A2 rounded-full text-white text-xs font-semibold">
+                    {card.assignee.nickname[0].toUpperCase()}
                   </div>
                 </div>
               </div>
@@ -64,6 +57,7 @@ const GetCard = ({ card }: { card: Card }) => {
           </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 };

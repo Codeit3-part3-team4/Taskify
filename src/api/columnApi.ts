@@ -33,11 +33,10 @@ export const createColumnApi = async (title, dashboardId) => {
   };
 
   const res = await authInstance
-    .fetch(`${BASE_URL}/${TEAM_ID}/columns`, {
+    .fetch(`${BASE_URL}/3-4/columns`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
-        // Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },

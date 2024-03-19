@@ -38,7 +38,7 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
   return (
     <div>
       <button onClick={openModal}>
-        <img src="/images/settings.svg" className="bg-violet-200 rounded-md" alt="컬럼 관리 버튼 아이콘" />
+        <img src="/images/settings.svg" alt="컬럼 관리 버튼 아이콘" />
       </button>
       {isOpen && (
         <Modal isOpen={isOpen} onClose={closeModal} title="컬럼 관리" showCloseButton={false}>
