@@ -13,7 +13,7 @@ const AddColumn = () => {
   const { data: dashboardData } = useContext(DashboardContext);
 
   const dashboardId = dashboardData?.id;
-
+  console.log('dashboardId:', dashboardId, 'Type:', typeof dashboardId);
   useEffect(() => {
     if (!dashboardId) return;
 
