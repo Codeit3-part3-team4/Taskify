@@ -14,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showClo
 
   const closeModal = e => {
     e.stopPropagation();
-    onClose();
+    if (onClose) onClose();
   };
 
   return (

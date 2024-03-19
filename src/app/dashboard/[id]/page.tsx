@@ -6,13 +6,16 @@ import AddColumn from '@/components/column/AddColumn';
 import Column from '@/components/column/Column';
 import EditColumn from '@/components/column/EditColumn';
 import { useModal } from '@/components/hooks/useModal/useModal';
+import { DashboardContext } from '@/context/DashboardContext';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export default function Page({ params: { id } }: { params: { id: number } }) {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
-
+  const { setDashboardId } = useContext(DashboardContext);
   const { openModal } = useModal();
+
+  setDashboardId(Number(id));
 
   useEffect(() => {
     async function fetchColumnData() {
