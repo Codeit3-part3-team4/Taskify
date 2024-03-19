@@ -3,11 +3,11 @@ import Link from 'next/link';
 
 export default function MainLogo({ title }) {
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center mt-223 md:w-576">
       <Link href={'/'}>
         <Image src="/images/taskify-logo-main.svg" alt="메인 로고" width={200} height={279} />
       </Link>
-      <div>{title}</div>
+      <div className="font-semibold">{title}</div>
     </div>
   );
 }

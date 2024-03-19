@@ -126,19 +126,21 @@ export default function UserValueInput({ onSubmit, value, type, isValidPw }) {
     <div>
       <form onSubmit={onSubmitForm}>
         <label htmlFor={value}>{TITLE[value]}</label>
-        <div>
-          <input
-            type={typeValue()}
-            id={value}
-            value={userValues[value]}
-            placeholder={type ? PLACEHOLDER[value][type] : PLACEHOLDER[value]}
-            onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
-          />
-          {TYPE[value] === 'password' ? (
-            <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} />
-          ) : null}
-          {errors[value] && <div style={{ color: 'red' }}>{errors[value]}</div>}
+        <div className="flex ">
+          <div>
+            <input
+              type={typeValue()}
+              id={value}
+              value={userValues[value]}
+              placeholder={type ? PLACEHOLDER[value][type] : PLACEHOLDER[value]}
+              onChange={onChangeSignupSubmit}
+              onBlur={onBlur}
+            />
+            {TYPE[value] === 'password' ? (
+              <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} />
+            ) : null}
+          </div>
+          <div>{errors[value] && <div style={{ color: 'red' }}>{errors[value]}</div>}</div>
         </div>
       </form>
     </div>
