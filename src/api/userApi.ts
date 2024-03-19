@@ -64,10 +64,13 @@ export const updateUserInfo = async updateUserValues => {
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updateUserValues),
     });
+    if (res.ok) {
+      console.log('유저 정보 수정 도착');
+    }
+    console.log('유저 정보 수정??');
     console.log(res);
   } catch (error) {
     console.error('계정 api 페이지 수정 에러:', error);
