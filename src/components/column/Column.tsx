@@ -9,12 +9,10 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
   const [cardList, setCardList] = useState<CardList | null>(null);
   const { openModal } = useModal;
 
-  console.log(cardList);
   useEffect(() => {
     async function fetchCardData() {
       try {
         const result = await getCardListApi(5, 10, columnId);
-        console.log(result);
         setCardList(result);
         return result;
       } catch (e) {

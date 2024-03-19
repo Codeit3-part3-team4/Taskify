@@ -64,7 +64,7 @@ export interface DetailCard {
 }
 
 // 카드 생성
-export const postCardApi = async () => {
+export const postCardApi = async cardData => {
   const res = await authInstance
     .fetch(`${BASE_URL}/3-4/cards`, {
       method: 'POST',
@@ -73,6 +73,7 @@ export const postCardApi = async () => {
         accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(cardData),
     })
     .then(res => {
       if (res.ok) {

@@ -53,6 +53,7 @@ export default function TodoForm({ dashboardId, columnId }) {
     }
 
     const { assigneeUserId, title, description, deadline, tags, selectedImage } = formData;
+
     try {
       const cardData = {
         assigneeUserId: parseInt(assigneeUserId, 10),
@@ -60,11 +61,12 @@ export default function TodoForm({ dashboardId, columnId }) {
         columnId,
         title,
         description,
-        dueDate: deadline.toISOString(),
+        dueDate: deadline.toISOString().slice(0, 16).replace('T', ' '),
         tags: tags.split(',').map(tag => tag.trim()),
         imageUrl: selectedImage,
       };
 
+      console.log(cardData);
       await postCardApi(cardData);
       closeModal();
     } catch (error) {
