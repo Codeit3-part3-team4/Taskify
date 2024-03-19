@@ -9,10 +9,6 @@ interface CardDetails {
   dueDate: string;
 }
 
-interface TodoCardProps {
-  cardId: string;
-}
-
 export default function TodoCard({ cardId }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -21,7 +17,6 @@ export default function TodoCard({ cardId }) {
   useEffect(() => {
     const loadCardDetails = async () => {
       try {
-        const details = await detailCardApi(cardId);
         const details = await detailCardApi(cardId);
         setCardDetails(details);
       } catch (error) {

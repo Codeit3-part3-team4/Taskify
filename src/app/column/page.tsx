@@ -1,7 +1,7 @@
 'use client';
 
 import GetCard from '@/components/getCard/GetCard';
-import GetColumnData from '@/components/getColumnData.tsx/GetColumnData';
+import GetColumnData from '@/components/getColumnData/GetColumnData';
 
 export default function InnerDashboard() {
   return (
