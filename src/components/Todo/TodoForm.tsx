@@ -16,7 +16,7 @@ export default function TodoForm({ dashboardId, columnId }) {
     description: '',
     deadline: new Date(),
     tags: '',
-    selectedImage: null,
+    selectedImage: '',
   });
   const [members, setMembers] = useState<Member[]>([]);
 

@@ -144,28 +144,23 @@ export const deleteColumnApi = async (columnId: number) => {
 };
 
 // 카드 이미지 업로드
-export const uploadCardImage = async (columnId: number) => {
-  const res = await authInstance
-    .fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`, {
+export const uploadCardImage = async (columnId: number, imageFile: File) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  try {
+    const response = await authInstance.fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`, {
       method: 'POST',
-      cache: 'no-cache',
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error('error');
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      return null;
+      body: formData,
     });
 
-  return res;
+    if (!response.ok) {
+      throw new Error('Image upload failed: ' + response.statusText);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('API call error:', error);
+    return null;
+  }
 };
