@@ -7,21 +7,21 @@ import { getMembersApi } from '@/api/membersApi';
 import { getColumnListApi } from '@/api/columnApi';
 import { editCardApi } from '@/api/cardApi';
 
-interface CardDetails {
-  assigneeUserId: string;
-  columnId: string;
-  title: string;
-  description: string;
-  deadline: Date;
-  tags: string[];
-  selectedImage?: File | null;
-}
-
 interface TodoUpdateProps {
   isOpen: boolean;
-  cardDetails: CardDetails;
+  cardDetails: {
+    // TodoUpdateProps 내의 cardDetails의 예상 구조
+    assigneeUserId: string;
+    columnId: string;
+    title: string;
+    description: string;
+    deadline: Date;
+    tags: string[];
+    selectedImage?: File | null;
+  };
   closeModal: () => void;
   dashboardId: number;
+  columnId: number;
 }
 
 const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dashboardId }) => {
@@ -71,8 +71,8 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     setFormData({ ...formData, assigneeUserId: userId });
   };
 
-  const handleImageUpload = file => {
-    console.log('Image upload logic goes here', file);
+  const handleImageUpload = imageUrl => {
+    setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
   };
 
   const isFormValid = () => {
@@ -86,21 +86,24 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
       return;
     }
 
-    const cardData = {
-      ...formData,
+    const cardData: EditCard = {
       columnId: parseInt(selectedStatus),
       assigneeUserId: parseInt(selectedAssignee),
+      title: formData.title,
+      description: formData.description,
       dueDate: formData.deadline.toISOString(),
       tags: formData.tags.split(',').map(tag => tag.trim()),
-      imageUrl: formData.selectedImage,
+      imageUrl: formData.selectedImage ? formData.selectedImage : '', // 이미지 처리 방식에 따라 변경 가능
     };
 
     try {
-      await editCardApi(cardData);
-      console.log('Card updated successfully');
+      await editCardApi(cardDetails.cardId, cardData);
+      alert('Card updated successfully');
       closeModal();
+      // 성공적으로 수정된 후의 처리 로직 (예: 상태 업데이트, 목록 새로고침 등)
     } catch (error) {
       console.error('Failed to update card:', error);
+      alert('Failed to update the card');
     }
   };
 

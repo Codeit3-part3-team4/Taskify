@@ -9,7 +9,7 @@ interface CardDetails {
   dueDate: string;
 }
 
-export default function TodoCard({ cardId }) {
+export default function TodoCard({ cardId, dashboardId, columnId }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
@@ -65,8 +65,7 @@ export default function TodoCard({ cardId }) {
         </div>
       )}
 
-      {isUpdateModalOpen && <TodoUpdate closeModal={() => setUpdateModalOpen(false)} cardDetails={cardDetails} cardId={cardId} />}
-
+      {isUpdateModalOpen && <TodoUpdate closeModal={() => setUpdateModalOpen(false)} cardDetails={cardDetails} cardId={cardId} dashboardId={dashboardId} />}
       <div className="flex flex-col gap-3 w-full">
         {cardDetails && (
           <>
@@ -89,7 +88,7 @@ export default function TodoCard({ cardId }) {
               <img src="/images/test3.svg" alt="Test 3" />
             </div>
 
-            <Comment />
+            <Comment cardId={cardId} dashboardId={dashboardId} columnId={columnId} />
           </>
         )}
       </div>

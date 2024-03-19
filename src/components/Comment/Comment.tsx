@@ -1,66 +1,73 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createComment, deleteComment, fetchComments, updateComment } from '@/api/commentsApi';
+
+interface Author {
+  profileImageUrl: string;
+  nickname: string;
+  id: number;
+}
 
 interface Comment {
   id: number;
   content: string;
-}
-
-interface CommentsProps {
   cardId: number;
-  columnId: number;
-  dashboardId: number;
+  author: Author;
 }
 
-const Comments: FC<CommentsProps> = ({ cardId, columnId, dashboardId }) => {
+const Comments = ({ cardId, columnId, dashboardId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [newCommentContent, setNewCommentContent] = useState<string>('');
+  const [newCommentContent, setNewCommentContent] = useState('');
+  const [editCommentId, setEditCommentId] = useState<number | null>(null);
+  const [editContent, setEditContent] = useState('');
 
   useEffect(() => {
-    const fetchCommentsData = async () => {
+    const loadComments = async () => {
       try {
-        const fetchedComments = await fetchComments(cardId);
-        setComments(fetchedComments);
+        const { comments: commentsData, cursorId } = await fetchComments(cardId);
+        // commentsData가 배열인지 확인하고, 배열이면 상태를 업데이트
+        if (Array.isArray(commentsData)) {
+          setComments(commentsData);
+        } else {
+          console.error('Fetched comments data is not an array:', commentsData);
+          setComments([]); // 데이터 형식이 맞지 않을 경우 빈 배열 할당
+        }
       } catch (error) {
-        console.error('댓글 목록을 불러오는 데 실패했습니다.', error);
+        console.error('Failed to load comments:', error);
+        setComments([]); // 에러 발생 시 빈 배열 할당
       }
     };
 
-    fetchCommentsData();
+    loadComments();
   }, [cardId]);
 
   const handleAddComment = async () => {
     if (!newCommentContent.trim()) return;
-    try {
-      const createdComment = await createComment({ content: newCommentContent, cardId, columnId, dashboardId });
-      setComments(prevComments => [...prevComments, createdComment]);
-      setNewCommentContent('');
-    } catch (error) {
-      console.error('댓글을 추가하는 데 실패했습니다.', error);
-    }
+    const createdComment = await createComment({ content: newCommentContent, cardId, columnId, dashboardId });
+    setComments(prev => [...prev, createdComment]);
+    setNewCommentContent('');
   };
 
-  const handleEditComment = async (id: number, newContent: string) => {
-    try {
-      await updateComment(id, newContent);
-      setComments(comments.map(comment => (comment.id === id ? { ...comment, content: newContent } : comment)));
-    } catch (error) {
-      console.error('댓글을 수정하는 데 실패했습니다.', error);
-    }
+  const startEdit = (comment: Comment) => {
+    setEditCommentId(comment.id);
+    setEditContent(comment.content);
+  };
+
+  const handleEditComment = async (commentId: number, content: string) => {
+    if (!content.trim()) return;
+    await updateComment(commentId, content);
+    setComments(comments.map(comment => (comment.id === commentId ? { ...comment, content } : comment)));
+    setEditCommentId(null);
+    setEditContent('');
   };
 
   const handleDeleteComment = async (id: number) => {
-    try {
-      await deleteComment(id);
-      setComments(comments.filter(comment => comment.id !== id));
-    } catch (error) {
-      console.error('댓글을 삭제하는 데 실패했습니다.', error);
-    }
+    await deleteComment(id);
+    setComments(comments.filter(comment => comment.id !== id));
   };
 
   return (
     <div className="flex flex-col gap-3">
-      <h3>댓글</h3>
+      <h3 className="mb-2 font-semibold">댓글</h3>
       <div className="flex flex-col items-end relative">
         <input
           type="text"
@@ -73,11 +80,35 @@ const Comments: FC<CommentsProps> = ({ cardId, columnId, dashboardId }) => {
           입력
         </button>
       </div>
-      <ul>
+      <ul className="mt-4 space-y-2">
         {comments.map(comment => (
-          <li key={comment.id}>
-            <input type="text" value={comment.content} onChange={e => handleEditComment(comment.id, e.target.value)} />
-            <button onClick={() => handleDeleteComment(comment.id)}>삭제</button>
+          <li key={comment.id} className="flex items-start space-x-3">
+            <img src={comment.author.profileImageUrl || '/images/crown-icon.svg'} alt="Author" className="w-10 h-10 rounded-full" />
+            <div>
+              <h4 className="font-semibold">{comment.author.nickname}</h4>
+              {editCommentId === comment.id ? (
+                <input
+                  type="text"
+                  value={editContent}
+                  onChange={e => setEditContent(e.target.value)}
+                  onBlur={() => handleEditComment(comment.id, editContent)} // onBlur를 사용하여 수정 완료 처리
+                  className="input input-bordered"
+                  autoFocus
+                />
+              ) : (
+                <p onClick={() => startEdit(comment)}>{comment.content}</p> // 클릭하여 수정 모드 진입
+              )}
+              <div className="flex space-x-2 mt-2">
+                {editCommentId !== comment.id && (
+                  <button className="btn btn-xs btn-outline btn-accent" onClick={() => startEdit(comment)}>
+                    수정
+                  </button>
+                )}
+                <button className="btn btn-xs btn-outline btn-error" onClick={() => handleDeleteComment(comment.id)}>
+                  삭제
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
