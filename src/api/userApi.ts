@@ -22,12 +22,16 @@ export const signupApi = async newUserValues => {
       body: JSON.stringify(newUserValues),
     });
 
-    if (!res.ok) {
-      throw new Error('회원가입 실패');
+    if (res.ok) {
+      const data = await res.json();
+      console.log('회원가입api 성공', data);
+    } else if (res.status === 409) {
+      console.log('409에러닷');
+    } else {
+      console.log('다른 상태 오류');
     }
 
-    const data = await res.json();
-    console.log('서버에서 받은 데이터:', data);
+    return res;
   } catch (error) {
     console.error('회원가입 에러:', error);
   }

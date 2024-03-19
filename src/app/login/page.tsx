@@ -3,9 +3,8 @@
 import { loginApi, postRequestCookies } from '@/api/AuthApi';
 import MainLogo from '@/components/login/MainLogo';
 import { useRouter } from 'next/navigation';
-import Login from './components/Login';
 import { authInstance } from '@/utils/functionalFetch';
-import { searchCardlist } from '../../api/cards';
+import Login from './components/Login';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,7 +19,7 @@ export default function LoginPage() {
         },
       });
       postRequestCookies('accessToken', res.accessToken);
-      // router.push('/dashboard/4973');
+      router.push('/dashboard/mydashboard');
     }
   };
 
