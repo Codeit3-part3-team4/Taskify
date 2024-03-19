@@ -47,7 +47,7 @@ class FunctionalFetch {
         ...newInit?.headers,
       },
     };
-    const res = await fetch(url, options);
+    const res = fetch(url, options);
     return res;
   }
 }

@@ -1,5 +1,6 @@
+import { authInstance } from '@/utils/functionalFetch';
+
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const token = localStorage.getItem('accessToken');
 
 export interface UserInfo {
   id: number;
@@ -33,14 +34,13 @@ export const signupApi = async newUserValues => {
 };
 
 // 내 정보 조회
-export const getUserInfo = async (token: string): Promise<UserInfo> => {
+export const getUserInfo = async (): Promise<UserInfo> => {
   try {
-    const res = await fetch(`${BASE_URL}/3-4/users/me`, {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
         accept: 'application/json',
-        Authorization: `Bearer ${token}`,
       },
     });
     const data = await res.json();

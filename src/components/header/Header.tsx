@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -14,8 +15,8 @@ export default function Header({ theme }: HeaderProps) {
       <div
         className={`flex flex-row justify-between gap-4 text-sm mr-6 ${theme === 'dark' ? 'text-white' : 'text-black'} md:text-lg md:gap-8 md:px-10 2xl:px-20`}
       >
-        <span>로그인</span>
-        <span>회원가입</span>
+        <Link href={{ pathname: '/login' }}>로그인</Link>
+        <Link href={{ pathname: '/signup' }}>회원가입</Link>
       </div>
     </nav>
   );
