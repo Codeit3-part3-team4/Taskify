@@ -6,6 +6,14 @@ import MemeberList from './(Components)/MemberList';
 import { deleteMemberApi } from '@/api/membersApi';
 import { deleteDashboardInvitationsCancelApi } from '../../../../api/dashboardsApi';
 
+export interface searchParamsProps {
+  memberPage: string;
+  invitePage: string;
+  deleteMember?: string;
+  cancelInvite?: string;
+  inviteModal?: string;
+}
+
 const deleteMember = async (memberId: number) => {
   const result = await deleteMemberApi(memberId);
   return result;
@@ -15,14 +23,6 @@ const deleteDashboardInvitationsCancel = async (id: number, memberId: number) =>
   const result = await deleteDashboardInvitationsCancelApi(id, memberId);
   return result;
 };
-
-export interface searchParamsProps {
-  memberPage: string;
-  invitePage: string;
-  deleteMember?: string;
-  cancelInvite?: string;
-  inviteModal?: string;
-}
 
 export default async function Page({ params: { id }, searchParams }: { params: { id: string }; searchParams: searchParamsProps }) {
   if (searchParams.deleteMember) await deleteMember(Number(searchParams.deleteMember));

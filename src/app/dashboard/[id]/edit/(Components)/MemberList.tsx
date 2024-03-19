@@ -7,7 +7,6 @@ import { cookies } from 'next/headers';
 
 const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
   const accessToken = cookies().get('accessToken');
-  console.log('MemberList accessToken', accessToken);
 
   const result = await getMembersApi(dashboardId, pageIndex, size);
   return result;
@@ -43,7 +42,7 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   const MemberItems = ({ members }: { members: Member[] }) => {
     return (
       <ul className="flex flex-col gap-[1px]">
-        {members.map(member => {
+        {members?.map(member => {
           return <MemberItem key={`${id}-${member.userId}`} member={member} />;
         })}
       </ul>

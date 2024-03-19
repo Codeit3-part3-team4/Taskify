@@ -15,8 +15,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       width: {
         '217': '217px',
@@ -52,6 +51,7 @@ const config: Config = {
         '600': '600px',
         '686': '686px',
         '972': '972px',
+        '1080': '1080px',
       },
       colors: {
         'black-000000': '#000000',

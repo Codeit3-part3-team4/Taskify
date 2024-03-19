@@ -39,7 +39,6 @@ export const loginApi = async (userValues: UserValues) => {
   //   return null;
   // });
   console.log('로그인 성공', res);
-  localStorage.setItem('accessToken', res.accessToken);
   return res;
 };
 
