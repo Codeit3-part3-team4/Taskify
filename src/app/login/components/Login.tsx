@@ -1,8 +1,5 @@
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import validateForm from '@/components/login/validateForm';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Login({ onSubmit }) {

@@ -1,3 +1,4 @@
+import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
 import { useState } from 'react';
 
@@ -16,6 +17,8 @@ export default function SignUp({ onSubmit }) {
     pwCheck: '',
   });
 
+  const [isValueLook, setIsValueLook] = useState(false);
+
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
     const value = e.target.value;
@@ -23,6 +26,7 @@ export default function SignUp({ onSubmit }) {
       ...newUserValues,
       [id]: value,
     });
+    console.log(newUserValues)
   };
 
   const validateForm = () => {
@@ -61,11 +65,7 @@ export default function SignUp({ onSubmit }) {
     return isValid;
   };
 
-  const onBlur = () => {
-    validateForm();
-    console.log(validateForm);
-  };
-
+  
   const onSubmitForm = async e => {
     e.preventDefault();
     if (validateForm()) {
@@ -74,11 +74,77 @@ export default function SignUp({ onSubmit }) {
     }
   };
 
+  const onBlur = () => {
+    validateForm();
+  };
+  
+  const handlePasswordLook = () => {
+    setIsValueLook(!isValueLook);
+  };
+
+  const typeValue = () => {
+    if (!isValueLook) {
+      return 'password';
+    } else {
+      return 'text';
+    }
+  };
+
   return (
-    <div>
+    <div className="flex flex-col items-center t-[574px] ">
       <h2>회원가입</h2>
       <form onSubmit={onSubmitForm}>
+      <div>
+          <InputUserInfo
+            label={'이메일'}
+            id={'email'}
+            type={'text'}
+            value={newUserValues.email}
+            placeholder={'이메일을 입력해 주세요'}
+            onChange={onChangeSignupSubmit}
+            onBlur={onBlur}
+            error={errors.email}
+          />
+        </div>
         <div>
+          <InputUserInfo
+            label={'닉네임'}
+            id={'nickname'}
+            type={'text'}
+            value={newUserValues.nickname}
+            placeholder={'닉네임을 입력해 주세요'}
+            onChange={onChangeSignupSubmit}
+            onBlur={onBlur}
+            error={errors.nickname}
+          />
+        </div>
+        <div>
+          <InputUserInfo
+            label={'비밀번호'}
+            id={'password'}
+            type={typeValue()}
+            value={newUserValues.password}
+            placeholder={'8자 이상 입력해 주세요'}
+            onChange={onChangeSignupSubmit}
+            onBlur={onBlur}
+            handlePasswordLook={handlePasswordLook}
+            error={errors.password}
+          />
+        </div>
+        <div>
+          <InputUserInfo
+            label={'비밀번호 확인'}
+            id={'pwCheck'}
+            type={typeValue()}
+            value={newUserValues.pwCheck}
+            placeholder={'비밀번호를 한번 더 입력해 주세요'}
+            onChange={onChangeSignupSubmit}
+            onBlur={onBlur}
+            handlePasswordLook={handlePasswordLook}
+            error={errors.pwCheck}
+          />
+        </div>
+        {/* <div>
           <label htmlFor="email">이메일</label>
           <div>
             <input type="text" id="email" value={newUserValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeSignupSubmit} onBlur={onBlur} />
@@ -126,7 +192,7 @@ export default function SignUp({ onSubmit }) {
             />
             {errors.pwCheck && <div style={{ color: 'red' }}>{errors.pwCheck}</div>}
           </div>
-        </div>
+        </div> */}
         <button type="submit">가입하기 </button>
       </form>
       <LoginLink sentence={'이미 가입하셨나요?'} linktitle={'로그인하기'} link={'/login'} />
