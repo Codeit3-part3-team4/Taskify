@@ -5,11 +5,8 @@ import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
 import { cookies } from 'next/headers';
 
-const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
-  const accessToken = cookies().get('accessToken');
-
-  const result = await getMembersApi(dashboardId, pageIndex, size);
-  return result;
+export const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
+  return await getMembersApi(dashboardId, pageIndex, size);
 };
 
 export default async function MemeberList({ dashboardId, searchParams }: { dashboardId: string; searchParams: searchParamsProps }) {

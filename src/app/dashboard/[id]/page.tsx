@@ -5,13 +5,16 @@ import { ColumnList, getColumnListApi } from '@/api/columnApi';
 import TodoForm from '@/components/Todo/TodoForm';
 import Column from '@/components/column/Column';
 import { useModal } from '@/components/hooks/useModal/useModal';
+import { DashboardContext } from '@/context/DashboardContext';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
-
+  const { setDashboardId } = useContext(DashboardContext);
   const { openModal } = useModal();
+
+  setDashboardId(Number(id));
 
   useEffect(() => {
     async function fetchColumnData() {
