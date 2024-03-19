@@ -168,7 +168,7 @@ export const detailCardApi = async (cardId: number) => {
 // 카드 삭제
 export const deleteCardApi = async (cardId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4}/cards/${cardId}`, {
+    .fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {

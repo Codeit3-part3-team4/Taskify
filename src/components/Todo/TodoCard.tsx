@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
-import { detailCardApi } from '@/api/cardApi';
+import { deleteCardApi, detailCardApi } from '@/api/cardApi';
 
 interface CardDetails {
   description: string;
@@ -34,6 +34,19 @@ export default function TodoCard({ cardId }) {
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
+  const handleDeleteClick = async () => {
+    if (window.confirm('이 카드를 삭제하시겠습니까?')) {
+      try {
+        await deleteCardApi(cardId);
+        alert('카드가 삭제되었습니다.');
+        // 페이지 새로고침 or 리다이렉션
+        window.location.reload();
+      } catch (error) {
+        console.error('카드 삭제 실패:', error);
+      }
+    }
+  };
+
   return (
     <div>
       <button className="absolute btn btn-sm btn-circle btn-ghost top-6 right-12" onClick={toggleDropdown}>
@@ -45,7 +58,9 @@ export default function TodoCard({ cardId }) {
             <li className="px-4 py-2 hover:bg-blue-300 cursor-pointer" onClick={handleEditClick}>
               수정하기
             </li>
-            <li className="px-4 py-2 hover:bg-blue-300 cursor-pointer">삭제하기</li>
+            <li className="px-4 py-2 hover:bg-blue-300 cursor-pointer" onClick={handleDeleteClick}>
+              삭제하기
+            </li>
           </ul>
         </div>
       )}
