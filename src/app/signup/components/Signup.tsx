@@ -1,6 +1,6 @@
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function SignUp({ onSubmit }) {
   const [newUserValues, setNewUserValues] = useState({
@@ -18,6 +18,12 @@ export default function SignUp({ onSubmit }) {
   });
 
   const [isValueLook, setIsValueLook] = useState(false);
+  const [isAgreed, setIsAgreed] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    setIsFormValid();
+  });
 
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
@@ -26,7 +32,7 @@ export default function SignUp({ onSubmit }) {
       ...newUserValues,
       [id]: value,
     });
-    console.log(newUserValues)
+    console.log(newUserValues);
   };
 
   const validateForm = () => {
@@ -62,12 +68,12 @@ export default function SignUp({ onSubmit }) {
     }
 
     setErrors(newErrors);
-    return isValid;
+    return isValid && isAgreed;
   };
 
-  
   const onSubmitForm = async e => {
     e.preventDefault();
+    console.log(validateForm());
     if (validateForm()) {
       console.log('회원가입 시도:', newUserValues);
       onSubmit(newUserValues);
@@ -77,7 +83,7 @@ export default function SignUp({ onSubmit }) {
   const onBlur = () => {
     validateForm();
   };
-  
+
   const handlePasswordLook = () => {
     setIsValueLook(!isValueLook);
   };
@@ -90,11 +96,16 @@ export default function SignUp({ onSubmit }) {
     }
   };
 
+  const handleAgreedChange = () => {
+    setIsAgreed(!isAgreed);
+    console.log(isAgreed);
+  };
+
   return (
     <div className="flex flex-col items-center t-[574px] ">
       <h2>회원가입</h2>
       <form onSubmit={onSubmitForm}>
-      <div>
+        <div>
           <InputUserInfo
             label={'이메일'}
             id={'email'}
@@ -144,56 +155,16 @@ export default function SignUp({ onSubmit }) {
             error={errors.pwCheck}
           />
         </div>
-        {/* <div>
-          <label htmlFor="email">이메일</label>
-          <div>
-            <input type="text" id="email" value={newUserValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeSignupSubmit} onBlur={onBlur} />
-            {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-          </div>
-        </div>
         <div>
-          <label htmlFor="nickname">닉네임</label>
-          <div>
-            <input
-              type="text"
-              id="nickname"
-              value={newUserValues.nickname}
-              placeholder="닉네임을 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-              onBlur={onBlur}
-            />
-            {errors.nickname && <div style={{ color: 'red' }}>{errors.nickname}</div>}
-          </div>
+          <label>
+            <input type="checkbox" onChange={handleAgreedChange} checked={isAgreed} />
+            약관에 동의합니다.
+          </label>
         </div>
-        <div>
-          <label htmlFor="password">비밀번호</label>
-          <div>
-            <input
-              type="password"
-              id="password"
-              value={newUserValues.password}
-              placeholder="비밀번호를 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-              onBlur={onBlur}
-            />
-            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-          </div>
-        </div>
-        <div>
-          <label htmlFor="pwCheck">비밀번호</label>
-          <div>
-            <input
-              type="password"
-              id="pwCheck"
-              value={newUserValues.pwCheck}
-              placeholder="비밀번호를 한번 더 입력해 주세요"
-              onChange={onChangeSignupSubmit}
-              onBlur={onBlur}
-            />
-            {errors.pwCheck && <div style={{ color: 'red' }}>{errors.pwCheck}</div>}
-          </div>
-        </div> */}
-        <button type="submit">가입하기 </button>
+
+        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] ">
+          가입하기
+        </button>
       </form>
       <LoginLink sentence={'이미 가입하셨나요?'} linktitle={'로그인하기'} link={'/login'} />
     </div>
