@@ -34,10 +34,6 @@ export const loginApi = async (userValues: UserValues) => {
       }
     });
 
-  // .catch(error => {
-  //   console.log(error);
-  //   return null;
-  // });
   console.log('로그인 성공', res);
   return res;
 };

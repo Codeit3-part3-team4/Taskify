@@ -11,9 +11,3 @@ export default function MainLogo({ title }) {
     </div>
   );
 }
-
-/*
-w md:w lg
-
-
- */

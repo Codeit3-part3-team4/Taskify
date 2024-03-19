@@ -19,11 +19,7 @@ export default function SignUp({ onSubmit }) {
 
   const [isValueLook, setIsValueLook] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
 
-  useEffect(() => {
-    setIsFormValid();
-  });
 
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
@@ -135,6 +131,7 @@ export default function SignUp({ onSubmit }) {
             id={'password'}
             type={typeValue()}
             value={newUserValues.password}
+            password={true}
             placeholder={'8자 이상 입력해 주세요'}
             onChange={onChangeSignupSubmit}
             onBlur={onBlur}
@@ -148,6 +145,7 @@ export default function SignUp({ onSubmit }) {
             id={'pwCheck'}
             type={typeValue()}
             value={newUserValues.pwCheck}
+            password={true}
             placeholder={'비밀번호를 한번 더 입력해 주세요'}
             onChange={onChangeSignupSubmit}
             onBlur={onBlur}
