@@ -1,6 +1,6 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-export default function Footer(){
+export default function Footer() {
   return (
     <footer className="flex flex-col justify-center items-center text-gray-400 md:flex-row md:justify-between md:px-10 md:h-24 2xl:px-36">
       <div className="mb-3 text-gray_9FA6B2 md:mb-0">

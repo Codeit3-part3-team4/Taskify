@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function DashboardBack() {
   return (
@@ -10,5 +10,5 @@ export default function DashboardBack() {
         <strong className="text-sm">돌아가기</strong>
       </div>
     </>
-  )
+  );
 }

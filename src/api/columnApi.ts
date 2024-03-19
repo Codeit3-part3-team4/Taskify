@@ -1,8 +1,7 @@
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 const TEAM_ID = '3-4';
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyMCwidGVhbUlkIjoiMy00IiwiaWF0IjoxNzA5OTkyNTU3LCJpc3MiOiJzcC10YXNraWZ5In0.K1rM2R-ywv-P73rUvYWw1WyWfzyk3_vMe8ZS2_84Y4c';
+const token = typeof window !== 'undefined' ? 'accessToken' : null;
 
 export interface CreateColumn {
   title: string;
@@ -28,9 +27,10 @@ export interface CreateCardImage {
 }
 
 // 컬럼 생성
-export const createColumnApi = async (teamId = '3-4') => {
+export const createColumnApi = async () => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns`, {
     method: 'POST',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -54,9 +54,10 @@ export const createColumnApi = async (teamId = '3-4') => {
 };
 
 // 컬럼 목록 조회
-export const getColumnListApi = async (teamId = '3-4', dashboardId = 4685) => {
-  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/?${dashboardId}`, {
+export const getColumnListApi = async (dashboardId: number) => {
+  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/?dashboardId=${dashboardId}`, {
     method: 'GET',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -77,9 +78,10 @@ export const getColumnListApi = async (teamId = '3-4', dashboardId = 4685) => {
 };
 
 // 컬럼 수정
-export const editColumnApi = async (teamId = '3-4', columnId = 16254) => {
+export const editColumnApi = async (columnId: number) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
     method: 'PUT',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: 'application/json',
@@ -103,9 +105,10 @@ export const editColumnApi = async (teamId = '3-4', columnId = 16254) => {
 };
 
 // 컬럼 삭제
-export const deleteColumnApi = async (teamId = '3-4', columnId = 16254) => {
+export const deleteColumnApi = async (columnId: number) => {
   const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
     method: 'DELETE',
+    cache: 'no-cache',
     headers: {
       Authorization: `Bearer ${token}`,
       accept: '*/*',
@@ -126,18 +129,16 @@ export const deleteColumnApi = async (teamId = '3-4', columnId = 16254) => {
 };
 
 // 카드 이미지 업로드
-export const uploadCardImage = async (teamId = '3-4', columnId = 16254) => {
-  const res = await fetch(
-    `${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
+export const uploadCardImage = async (columnId: number) => {
+  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`, {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
-  )
+  })
     .then(res => {
       if (res.ok) {
         return res.json();

@@ -1,14 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, MouseEvent } from 'react';
 
 interface ImageUploadProps {
-  onImageUpload: (file: File | null) => void;
+  onImageUpload: () => void;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null); // HTMLInputElement 타입 지정
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     fileInputRef.current?.click();
   };
@@ -18,7 +18,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string);
+        const result = reader.result as string;
+        setImagePreview(result);
         onImageUpload(file);
       };
       reader.readAsDataURL(file);
@@ -30,28 +31,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
 
   return (
     <div>
-      {imagePreview && (
-        <img
-          src={imagePreview}
-          alt="Preview"
-          className="image-preview"
-          onClick={handleButtonClick}
-          style={{ cursor: 'pointer', width: '200px', height: '200px' }}
-        />
-      )}
+      {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview cursor-pointer w-200 h-200" onClick={handleButtonClick} />}
       {!imagePreview && (
         <button onClick={handleButtonClick} className="btn">
-          <img src="/images/add.svg" />
+          <img src="/images/add.svg" alt="Upload" />
         </button>
       )}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-        className="hidden"
-        accept="image/*"
-        style={{ display: 'none' }}
-      />
+      <input type="file" ref={fileInputRef} onChange={handleImageChange} className="hidden" accept="image/*" style={{ display: 'none' }} />
     </div>
   );
 };

@@ -9,10 +9,35 @@ export interface UserInfo {
   createdAt: string;
   updatedAt: string;
 }
+
+// 회원 가입
+export const signupApi = async newUserValues => {
+  try {
+    const res = await fetch(`${BASE_URL}/3-4/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUserValues),
+    });
+
+    if (!res.ok) {
+      throw new Error('회원가입 실패');
+    }
+
+    const data = await res.json();
+    console.log('서버에서 받은 데이터:', data);
+  } catch (error) {
+    console.error('회원가입 에러:', error);
+  }
+};
+
+// 내 정보 조회
 export const getUserInfo = async (token: string): Promise<UserInfo> => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'GET',
+      cache: 'no-cache',
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${token}`,
@@ -31,6 +56,7 @@ export const updateUserInfo = async updateUserValues => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
