@@ -1,4 +1,6 @@
+import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
+import validateForm from '@/components/login/validateForm';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -53,10 +55,6 @@ export default function Login({ onSubmit }) {
     e.preventDefault();
     console.log('로그인 시도:', userValues);
     onSubmit(userValues);
-    if (validateForm()) {
-      console.log('로그인 시도:', userValues);
-      onSubmit(userValues);
-    }
   };
 
   const onBlur = () => {
@@ -76,24 +74,34 @@ export default function Login({ onSubmit }) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center t-[574px] ">
       <form onSubmit={onSubmitForm}>
-        <div flex>
-          <label htmlFor="email">이메일</label>
-          <div>
-            <input type="text" id="email" value={userValues.email} placeholder="이메일을 입력해 주세요" onChange={onChangeLoginSubmit} onBlur={onBlur} />
-            {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-          </div>
+        <div>
+          <InputUserInfo
+            label={'이메일'}
+            id={'email'}
+            type={'text'}
+            value={userValues.email}
+            placeholder={'이메일을 입력해 주세요'}
+            onChange={onChangeLoginSubmit}
+            onBlur={onBlur}
+            error={errors.email}
+          />
         </div>
         <div>
-          <label htmlFor="password">비밀번호</label>
-          <div>
-            <input type={typeValue()} id="password" value={userValues.password} placeholder="비밀번호를 입력해 주세요" onChange={onChangeLoginSubmit} />
-            <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} />
-            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-          </div>
+          <InputUserInfo
+            label={'비밀번호'}
+            id={'password'}
+            type={typeValue()}
+            value={userValues.password}
+            placeholder={'비밀번호를 입력해 주세요'}
+            onChange={onChangeLoginSubmit}
+            onBlur={onBlur}
+            handlePasswordLook={handlePasswordLook}
+            error={errors.password}
+          />
         </div>
-        <button type="submit" onClick={onSubmitForm}>
+        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] ">
           로그인
         </button>
       </form>
