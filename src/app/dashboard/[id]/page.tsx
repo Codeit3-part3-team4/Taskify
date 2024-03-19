@@ -1,6 +1,7 @@
 'use client';
 
 import { ColumnList, getColumnListApi } from '@/api/columnApi';
+import TodoForm from '@/components/Todo/TodoForm';
 import AddColumn from '@/components/column/AddColumn';
 import Column from '@/components/column/Column';
 import EditColumn from '@/components/column/EditColumn';
@@ -30,13 +31,13 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
       {columnList?.map(column => <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} />)}
       <div className="flex items-center w-80 md:w-594 lg:w-96 lg:h-1080 lg:px-4 pt-4 bg-gray-100 border border-slate-300">
         <div className="w-80 md:w-594 lg:w-96">
-          <button
+          <div
             className="flex w-72 md:w-537 lg:w-80 lg:h-16 items-center m-auto bg-white border border-slate-300 justify-center gap-3 pt-3 lg:mt-10 pb-3 mb-3 rounded-lg cursor-pointer"
             onClick={openModal}
           >
             <div className="text-base font-bold">새로운 컬럼 추가하기</div>
             <AddColumn />
-          </button>
+          </div>
         </div>
       </div>
     </div>

@@ -9,7 +9,10 @@ export const useModal = (initialState = false) => {
   const openModal = () => setIsOpen(true);
 
   // 모달을 닫기 위한 함수
-  const closeModal = () => setIsOpen(false);
+  const closeModal = e => {
+    e?.stopPropagation();
+    setIsOpen(false);
+  };
 
   // 상태 및 제어 함수를 포함하는 객체 반환
   return { isOpen, openModal, closeModal };

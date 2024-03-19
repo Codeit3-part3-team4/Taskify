@@ -139,7 +139,7 @@ export const uploadCardImage = async (columnId: number, imageFile: File) => {
   const formData = new FormData();
   formData.append('image', imageFile);
   try {
-    const response = await authInstance.fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`, {
+    const response = await authInstance.fetch(`${BASE_URL}/3-4/columns/${columnId}/card-image`, {
       method: 'POST',
       body: formData,
     });
