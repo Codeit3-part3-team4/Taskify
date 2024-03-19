@@ -40,6 +40,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           </button>
           <AddColumn />
           <EditColumn />
+          <TodoForm />
         </div>
       </div>
     </div>
