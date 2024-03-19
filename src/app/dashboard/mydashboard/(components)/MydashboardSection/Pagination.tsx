@@ -9,7 +9,7 @@ interface Pagination {
 }
 
 export default function Pagination({ count, page, setPage }: Pagination) {
-  const maxPage = Math.ceil(count / ITEMS_PER_PAGE);
+  const maxPage = Math.max(1, Math.ceil(count / ITEMS_PER_PAGE));
 
   const handlePrevPageClick = () => {
     setPage(page - 1);
