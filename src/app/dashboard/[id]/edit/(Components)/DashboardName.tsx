@@ -1,6 +1,5 @@
 'use client';
 
-import { getRequestCookies } from '@/api/AuthApi';
 import { getDashboardDetailsApi, putDashboardDetailsApi } from '@/api/dashboardsApi';
 import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
 import Image from 'next/image';
@@ -9,9 +8,6 @@ import { useEffect, useState } from 'react';
 const colorList: string[] = ['#7AC555', '#760DDE', '#76A5EA', '#E876EA', '#FFA500'];
 
 const getDashboardDetails = async (dashboardId: string) => {
-  const accessToken = await getRequestCookies('accessToken');
-  console.log('getDashboard accessToken', accessToken);
-
   return await getDashboardDetailsApi(Number(dashboardId));
 };
 

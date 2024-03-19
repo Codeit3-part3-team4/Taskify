@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { authInstance } from '@/utils/functionalFetch';
 
 export async function POST(request: NextRequest) {
   if (!request.body) {
@@ -12,6 +13,10 @@ export async function POST(request: NextRequest) {
   }
   cookies().set(body.key, String(body.value));
 
+  // Set the token to the authInstance in server side
+  if (body.key === 'accessToken') {
+    authInstance.setOptions({ headers: { Authorization: `Bearer ${body.value}` } });
+  }
   return NextResponse.json({ status: 200 });
 }
 
