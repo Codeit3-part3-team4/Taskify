@@ -17,8 +17,8 @@ export default function SignUpPage() {
   return (
     <div>
       <MainLogo title={'첫 방문을 환영합니다!'} />
-      {/* <SignUp onSubmit={handleSignUpSubmit} /> */}
-      <SignUptest onSubmit={handleSignUpSubmit} />
+      <SignUp onSubmit={handleSignUpSubmit} />
+      {/* <SignUptest onSubmit={handleSignUpSubmit} /> */}
     </div>
   );
 }
