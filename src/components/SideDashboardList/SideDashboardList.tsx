@@ -16,7 +16,7 @@ export default function SideDashboardList() {
     return <SideDashboardSkeleton />;
   }
   return (
-    <div className="flex flex-col mx-3">
+    <div className=" w-20 fixed flex flex-col h-screen overflow-y-auto items-center">
       <Link href="/dashboard/mydashboard">
         <div className="flex justify-center mt-5 mb-2">
           <div className="">
@@ -31,7 +31,7 @@ export default function SideDashboardList() {
       </div>
       <div className="flex flex-col gap-y-1">
         {data &&
-          data.dashboards.map(dashboard => (
+          data.dashboards?.map(dashboard => (
             <div key={dashboard.id} className="flex justify-center">
               <Link href={`/dashboard/${dashboard.id}`}>
                 <SideDashboardCard color={dashboard.color} title={dashboard.title} createdByMe={dashboard.createdByMe} />

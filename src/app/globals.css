@@ -6,10 +6,15 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -ms-overflow-style: none;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
