@@ -1,8 +1,8 @@
-import DashboardBack from './(Components)/DashboardBack';
-import DashboardDelete from './(Components)/DashboardDelete';
-import DashboardName from './(Components)/DashboardName';
-import InviteList from './(Components)/InviteList';
-import MemeberList from './(Components)/MemberList';
+import DashboardBack from './(components)/DashboardBack';
+import DashboardDelete from './(components)/DashboardDelete';
+import DashboardName from './(components)/DashboardName';
+import InviteList from './(components)/InviteList';
+import MemeberList from './(components)/MemberList';
 import { deleteMemberApi } from '@/api/membersApi';
 import { deleteDashboardInvitationsCancelApi } from '../../../../api/dashboardsApi';
 
