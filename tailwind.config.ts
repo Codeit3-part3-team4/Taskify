@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 import daisyui from 'daisyui';
 
 const config: Config = {
-  mode:'jit',
+  mode: 'jit',
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,8 +15,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       width: {
         '217': '217px',
@@ -52,26 +51,28 @@ const config: Config = {
         '600': '600px',
         '686': '686px',
         '972': '972px',
+        '1080': '1080px',
       },
       colors: {
-        'black_000000': '#000000',
-        'black_171717': '#171717',
-        'black_333236': '#333236',
-        'black_4B4B4B': '#4B4B4B',
-        'gray_787486' : '#787486',
-        'gray_9FA6B2' : '#9FA6B2',
-        'gray_D9D9D9' : '#D9D9D9',
-        'gray_EEEEEE' : '#EEEEEE',
-        'gray_FAFAFA' : '#FAFAFA',
-        'white_FFFFFF': '#FFFFFF',
-        'violet_5534DA': '#5534DA',
-        'violet_8%': '#F1EFFD',
-        'red_D6173A': '#D6173A',
-        'green_7AC555': '#7AC555',
-        'purple_760DDE': '#760DDE',
-        'orange_FFA500': '#FFA500',
-        'blue_76A6EA': '#76A6EA',
-        'pink_E876EA': '#E876EA',
+        'black-000000': '#000000',
+        'black-171717': '#171717',
+        'black-333236': '#333236',
+        'black-4B4B4B': '#4B4B4B',
+        'gray-787486': '#787486',
+        'gray-9FA6B2': '#9FA6B2',
+        'gray-D9D9D9': '#D9D9D9',
+        'gray-EEEEEE': '#EEEEEE',
+        'gray-FAFAFA': '#FAFAFA',
+        'white-FFFFFF': '#FFFFFF',
+        'violet-5534DA': '#5534DA',
+        'violet-8%': '#F1EFFD',
+        'red-D6173A': '#D6173A',
+        'green-7AC555': '#7AC555',
+        'green-A3C4A2': '#A3C4A2',
+        'purple-760DDE': '#760DDE',
+        'orange-FFA500': '#FFA500',
+        'blue-76A6EA': '#76A6EA',
+        'pink-E876EA': '#E876EA',
       },
     },
   },

@@ -5,7 +5,6 @@ import { Invitation } from '@/api/InvitationApi';
 import { getInvitationList } from '@/api/InvitationApi';
 import SearchForm from './SearchForm';
 import InvitationList from './InvitationList';
-import { DashboardsInf } from '@/api/dashboardsApi';
 
 export default function InvitationDashboard() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
@@ -24,19 +23,12 @@ export default function InvitationDashboard() {
         if (item.isIntersecting) {
           setLoading(true); // Intersection Observer 콜백 실행 전에 로딩 상태 변경
           const handleInvitationList = async () => {
-            const { invitations, cursorId } = await getInvitationList(
-              8,
-              cursorIdRef.current,
-              inputValue,
-            );
+            const { invitations, cursorId } = await getInvitationList(8, cursorIdRef.current, inputValue);
             cursorIdRef.current = cursorId;
             if (cursorIdRef.current === null) {
               isCloseFncRef.current = true;
             }
-            setInvitations(prevInvitations => [
-              ...prevInvitations,
-              ...invitations,
-            ]);
+            setInvitations(prevInvitations => [...prevInvitations, ...invitations]);
             setLoading(false);
           };
           handleInvitationList();
@@ -65,15 +57,18 @@ export default function InvitationDashboard() {
   };
 
   return (
-    <div>
-      <h2>초대받은 대시보드</h2>
-      <SearchForm onSubmit={handleSearchSubmit} />
-      <InvitationList
-        invitations={invitations}
-        setInvitations={setInvitations}
-      />
+    <div className="flex flex-col">
+      <h2 className="text-xl mb-5">초대받은 대시보드</h2>
+      <div className="mb-5">
+        <SearchForm onSubmit={handleSearchSubmit} />
+      </div>
+      <InvitationList invitations={invitations} setInvitations={setInvitations} />
       <div ref={sentinelRef}></div> {/* Intersection Observer 타겟 */}
-      {loading && <p>불러오는 중이에요!!!</p>}
+      {loading && (
+        <div className="flex justify-center h-44 items-center">
+          <svg className="animate-spin h-10 w-10 border-4 rounded-full border-t-indigo-500" viewBox="0 0 24 24"></svg>
+        </div>
+      )}
     </div>
   );
 }

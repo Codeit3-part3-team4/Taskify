@@ -1,40 +1,33 @@
-import ColorSelectButton from './ColorSelectButton';
+import { ChangeEvent } from 'react';
 
-interface ColorPikerPorps {
+interface ColorPickerProps {
   setSelectedColor: (color: string) => void;
-  selectedColor: string;
 }
 
-export default function ColorPicker({
-  setSelectedColor,
-  selectedColor,
-}: ColorPikerPorps) {
+export default function ColorPicker({ setSelectedColor }: ColorPickerProps) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedColor(e.target.value);
+  };
+
   return (
-    <div>
-      <ColorSelectButton
-        color="#7AC555"
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      <img
+        src="/images/color-picker-icon.svg"
+        alt="Spoit Image"
+        style={{ width: '30px', height: '30px', cursor: 'pointer' }}
+        onClick={() => {
+          const colorInput = document.getElementById('colorInput');
+          if (colorInput) {
+            colorInput.click();
+          }
+        }}
       />
-      <ColorSelectButton
-        color="#760DDE"
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
-      />
-      <ColorSelectButton
-        color="#FFA500"
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
-      />
-      <ColorSelectButton
-        color="#76A5EA"
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
-      />
-      <ColorSelectButton
-        color="#E876EA"
-        setSelectedColor={setSelectedColor}
-        selectedColor={selectedColor}
+      <input
+        id="colorInput"
+        type="color"
+        value="#000000"
+        onChange={handleChange}
+        style={{ position: 'absolute', top: 0, left: 0, width: '30px', height: '30px', opacity: 0, zIndex: -1 }}
       />
     </div>
   );
