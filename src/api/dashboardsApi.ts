@@ -1,9 +1,7 @@
 import { authInstance } from '@/utils/functionalFetch';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIwNywidGVhbUlkIjoiMy00IiwiaWF0IjoxNzA5NzExMDE0LCJpc3MiOiJzcC10YXNraWZ5In0.h8TMK9il9gbWP30rQg0l21SA6DTvw8ozt4ygzit7RYg';
-//token 변수에 로그인 시 받은 accessToken을 연결하면 됩니다
+
 export interface Dashboard {
   id: number;
   title: string;
@@ -48,19 +46,29 @@ export interface InvitationsInf {
 }
 
 export const addDashboardApi = async (title: string, color: string) => {
-  const res = await fetch(`${BASE_URL}/3-4/dashboards`, {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-    },
-    body: JSON.stringify({
-      title: title,
-      color: color,
-    }),
-  });
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/dashboards`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        title: title,
+        color: color,
+      }),
+    })
+    .then(res => {
+      if (res.status === 201) {
+        console.log(res);
+        return res.json();
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
   return res;
 };
 
@@ -138,12 +146,11 @@ export const deleteDashboardApi = async (id: number) => {
 };
 
 export const getDashboardsByPaginationApi = async (page: number, size: number): Promise<DashboardsInf> => {
-  const res = await fetch(`${BASE_URL}/3-4/dashboards?navigationMethod=pagination&page=${page}&size=${size}`, {
+  const res = await authInstance.fetch(`${BASE_URL}/3-4/dashboards?navigationMethod=pagination&page=${page}&size=${size}`, {
     method: 'GET',
     cache: 'no-cache',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${token}`,
     },
   });
   return await res.json();
