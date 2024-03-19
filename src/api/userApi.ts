@@ -20,16 +20,33 @@ export const signupApi = async newUserValues => {
       },
       body: JSON.stringify(newUserValues),
     });
+    // .then(res => res.json())
+    // .then(data => {
+    //   if (data.ok) {
+    //     console.log('데이타 오케 ' + data);
+    //     // const data = await res.json();
+    //     console.log('서버에서 받은 데이터:', data);
+    //   } else {
+    //     console.log('데이타 낫오케' + data.statusText);
+    //     console.log(res);
+    //   }
+    // })
 
-    if (!res.ok) {
-      throw new Error('회원가입 실패');
+    if (res.ok) {
+      const data = await res.json();
+      console.log('회원가입api 성공', data);
+    } else if (res.status === 409) {
+      console.log('409에러닷');
+    } else {
+      console.log('다른 상태 오류');
     }
-    
-    const data = await res.json();
-    console.log('서버에서 받은 데이터:', data);
+    // if (!res.ok) {
+    //   console.log('회원가입api' + res.message);
+    //   throw new Error('회원가입 실패');
+    // }
+    return res;
   } catch (error) {
     console.error('회원가입 에러:', error);
-    console.locg(data.message);
   }
 };
 
