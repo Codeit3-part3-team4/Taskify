@@ -1,10 +1,6 @@
 'use client';
-import { ColumnList } from '@/api/columnApi';
 import GetCard from '../getCard/GetCard';
 import { CardList, getCardListApi } from '@/api/cardApi';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useModal } from '../hooks/useModal/useModal';
 import { useEffect, useState } from 'react';
 import TodoForm from '../Todo/TodoForm';
 
