@@ -15,11 +15,13 @@ const GetCard = ({ card }: { card: Card }) => {
     setIsOpen(false);
   };
 
+  console.log(card.imageUrl);
+
   return (
     <>
       <div className="flex flex-col gap-2.5" key={card.id}>
         <div
-          className="flex flex-col md:flex-row m-auto w-72 md:w-537 lg:w-80 h-full bg-white items-center pt-3 pb-3 mb-3 rounded-lg border border-slate-300 cursor-pointer bg-red-100"
+          className="flex flex-col md:flex-row m-auto w-72 md:w-537 lg:w-80 h-full bg-white items-center pt-3 pb-3 mb-3 rounded-lg border-2 border-slate-100 hover:border-purple-760DDE cursor-pointer bg-red-100"
           onClick={clickOpenModal}
         >
           <Modal
@@ -32,11 +34,11 @@ const GetCard = ({ card }: { card: Card }) => {
             <TodoCard cardId={card.id} isOpen={isOpen} />
           </Modal>
           <div className="md:flex lg:flex-col md:m-auto md:gap-4">
-            <div>
-              {/* {card.imageUrl && <img className="w-64 md:w-24 lg:w-72" src={card.imageUrl} alt="Card Image" />} */}
-              <img className="w-64 md:w-24 lg:w-72" src="/images/image-test.png" alt="Card Image" />
-            </div>
-            {/* <div className="bg-red-200"> */}
+            {card.imageUrl && (
+              <div>
+                <img className="w-64 md:w-24 lg:w-72" src={card.imageUrl} alt="Card Image" />
+              </div>
+            )}
             <div className="w-64 md:w-96 lg:w-72 pt-3 md:pt-0 md:flex-row ">
               <div>
                 <div className="text-sm font-medium leading-4 pb-1.5">{card.title}</div>

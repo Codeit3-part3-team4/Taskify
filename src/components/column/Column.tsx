@@ -39,7 +39,7 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
           </div>
           <div className="flex md: justify-center">
             <button
-              className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border border-slate-300"
+              className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-100 hover:border-purple-760DDE"
               onClick={openModal}
             >
               <TodoForm dashboardId={dashboardId} columnId={columnId} />

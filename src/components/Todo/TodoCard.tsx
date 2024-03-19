@@ -26,7 +26,6 @@ export default function TodoCard({ cardId }) {
     loadCardDetails();
   }, [cardId]);
 
-  console.log(cardDetails);
   const handleEditClick = () => {
     setUpdateModalOpen(true);
     setIsDropdownOpen(false);
