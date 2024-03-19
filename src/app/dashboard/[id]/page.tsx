@@ -3,7 +3,8 @@
 import { CardList, getCardListApi } from '@/api/cardApi';
 import { ColumnList, getColumnListApi } from '@/api/columnApi';
 import TodoForm from '@/components/Todo/TodoForm';
-import Column from '@/components/column/Column';
+import AddColumn from '@/components/column/AddColumn';
+import EditColumn from '@/components/column/EditColumn';
 import { useModal } from '@/components/hooks/useModal/useModal';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -37,6 +38,8 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
             <div className="text-base font-bold">새로운 컬럼 추가하기</div>
             <Image src="/images/add.svg" width="20" height="20" alt="컬럼 추가하기 버튼 아이콘" />
           </button>
+          <AddColumn />
+          <EditColumn />
         </div>
       </div>
     </div>

@@ -26,29 +26,37 @@ export interface CreateCardImage {
 }
 
 // 컬럼 생성
-export const createColumnApi = async () => {
+export const createColumnApi = async (title, dashboardId) => {
+  const bodyData = {
+    title,
+    dashboardId,
+  };
+
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/columns`, {
+    .fetch(`${BASE_URL}/${TEAM_ID}/columns`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
-        accept: 'application/json',
+        // Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(bodyData),
     })
     .then(res => {
       if (res.ok) {
         return res.json();
       } else if (res.status === 400) {
-        throw new Error('error');
+        throw new Error('잘못된 요청입니다.');
       } else if (res.status === 404) {
-        throw new Error('404 not found');
+        throw new Error('대시보드가 존재하지 않습니다.');
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error('API 호출 중 오류 발생:', error);
       return null;
     });
+
   return res;
 };
 
