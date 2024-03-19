@@ -1,5 +1,4 @@
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const token = localStorage.getItem('accessToken');
 
 export interface UserInfo {
   id: number;
