@@ -53,21 +53,21 @@ export default function TodoForm({ dashboardId, columnId }) {
 
     const { assigneeUserId, title, description, deadline, tags, selectedImage } = formData;
 
-    try {
-      const cardData = {
-        assigneeUserId: parseInt(assigneeUserId, 10),
-        dashboardId,
-        columnId,
-        title,
-        description,
-        dueDate: deadline.toISOString().slice(0, 16).replace('T', ' '),
-        tags: tags.split(',').map(tag => tag.trim()),
-        imageUrl: selectedImage,
-      };
+    const cardData = {
+      assigneeUserId: parseInt(assigneeUserId, 10),
+      dashboardId,
+      columnId,
+      title,
+      description,
+      dueDate: deadline.toISOString().slice(0, 16).replace('T', ' '),
+      tags: tags.split(',').map(tag => tag.trim()),
+      ...(selectedImage && { imageUrl: selectedImage }),
+    };
 
-      console.log(cardData);
+    try {
       await postCardApi(cardData);
       closeModal();
+      location.reload();
     } catch (error) {
       console.error('Error creating card:', error);
     }
@@ -167,7 +167,7 @@ export default function TodoForm({ dashboardId, columnId }) {
               <label htmlFor="file" className="block font-bold text-sm mb-1">
                 이미지
               </label>
-              <ImageUpload onImageUpload={handleImageUpload} />
+              <ImageUpload columnId={columnId} onImageUpload={handleImageUpload} />
             </div>
             <div className="flex justify-end space-x-2">
               <button type="button" className="btn w-32" onClick={closeModal}>
