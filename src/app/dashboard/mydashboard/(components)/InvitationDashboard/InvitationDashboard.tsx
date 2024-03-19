@@ -59,7 +59,9 @@ export default function InvitationDashboard() {
   return (
     <div className="flex flex-col">
       <h2 className="text-xl mb-5">초대받은 대시보드</h2>
-      <SearchForm onSubmit={handleSearchSubmit} />
+      <div className="mb-5">
+        <SearchForm onSubmit={handleSearchSubmit} />
+      </div>
       <InvitationList invitations={invitations} setInvitations={setInvitations} />
       <div ref={sentinelRef}></div> {/* Intersection Observer 타겟 */}
       {loading && (
