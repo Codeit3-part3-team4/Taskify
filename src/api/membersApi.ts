@@ -1,5 +1,5 @@
+import { authInstance } from '../utils/functionalFetch';
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const token = localStorage.getItem('accessToken');
 
 export interface Member {
   id: number;
@@ -18,14 +18,14 @@ export interface MembersInf {
 }
 
 export const getMembersApi = async (id: number, page: number, size: number) => {
-  const res: MembersInf = await fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
-    method: 'GET',
-    cache: 'no-cache',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  const res: MembersInf = await authInstance
+    .fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: {
+        accept: 'application/json',
+      },
+    })
     .then(res => {
       if (res.status === 404) {
         throw new Error('404 not found');
@@ -40,15 +40,14 @@ export const getMembersApi = async (id: number, page: number, size: number) => {
 };
 
 export const deleteMemberApi = async (memberId: number) => {
-  console.log(`${BASE_URL}/3-4/members/${memberId}`);
-  const res = await fetch(`${BASE_URL}/3-4/members/${memberId}`, {
-    method: 'DELETE',
-    cache: 'no-cache',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/members/${memberId}`, {
+      method: 'DELETE',
+      cache: 'no-cache',
+      headers: {
+        accept: 'application/json',
+      },
+    })
     .then(res => {
       if (res.status === 403) {
         throw new Error(`403 Forbidden`);
