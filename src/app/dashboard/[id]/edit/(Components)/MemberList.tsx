@@ -16,12 +16,18 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   const dashboard = Number(dashboardId);
 
   const MemberItem = ({ member }: { member: Member }) => {
-    const profileUrl = member.profileImageUrl ? member.profileImageUrl : '/images/crown-icon.svg';
+    const profileUrl = member.profileImageUrl ? member.profileImageUrl : null;
 
     return (
       <li className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
         <div className="flex flex-row items-center gap-2">
-          <Image src={profileUrl} width="32" height="32" alt="profile" />
+          {profileUrl ? (
+            <Image src={profileUrl} width="32" height="32" alt="profile" />
+          ) : (
+            <div className="flex justify-center items-center w-8 h-8 bg-violet-5534DA rounded-full text-sm text-white">
+              <strong>{member.nickname.slice(0, 1)}</strong>
+            </div>
+          )}
           <span className="text-sm">{member.nickname}</span>
         </div>
         <LinkText
