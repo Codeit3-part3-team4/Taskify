@@ -24,26 +24,32 @@ export default function InvitationList({ invitations, setInvitations }: Invitati
   };
   return (
     <div>
-      <div className="hidden md:flex md:justify-between">
-        <div>이름</div>
-        <div>초대자</div>
-        <div>수락 여부</div>
+      <div className="hidden md:flex md:justify-around p-4">
+        <div className="w-52 flex justify-around">이름</div>
+        <div className="w-52 flex justify-around">초대자</div>
+        <div className="w-52 flex justify-around">수락 여부</div>
       </div>
       {invitations.map(invitation => (
-        <div className="p-4 border-b flex flex-col text-sm md:flex-row md:justify-between " key={invitation.id}>
+        <div className="p-4 border-b flex flex-col text-sm md:flex-row md:justify-around" key={invitation.id}>
           <div className="flex mb-2.5">
             <p className="w-16 md:hidden">이름</p>
-            <p>{invitation.dashboard.title}</p>
+            <p className="w-52 flex justify-around">{invitation.dashboard.title}</p>
           </div>
           <div className="flex mb-4">
             <p className="w-16 md:hidden">초대자</p>
-            <p>{invitation.inviter.nickname}</p>
+            <p className="w-52 flex justify-around">{invitation.inviter.nickname}</p>
           </div>
-          <div className="text-xs flex gap-2">
-            <button className="w-24 h-7 border border-gray_D9D9D9 rounded-lg" onClick={() => handlePutInvitation(invitation.id, true)}>
+          <div className="w-52 text-xs flex gap-2">
+            <button
+              className="w-24 h-7 border border-gray_D9D9D9 rounded-lg bg-purple-760DDE hover:bg-violet-5534DA text-white"
+              onClick={() => handlePutInvitation(invitation.id, true)}
+            >
               수락
             </button>
-            <button className="w-24 h-7 border border-gray_D9D9D9 rounded-lg" onClick={() => handlePutInvitation(invitation.id, false)}>
+            <button
+              className="w-24 h-7 border border-gray_D9D9D9 rounded-lg text-purple-760DDE hover:bg-gray-D9D9D9"
+              onClick={() => handlePutInvitation(invitation.id, false)}
+            >
               거절
             </button>
           </div>
