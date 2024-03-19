@@ -1,6 +1,5 @@
 import { authInstance } from '../utils/functionalFetch';
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const token = localStorage.getItem('accessToken');
 
 export interface Member {
   id: number;
@@ -41,14 +40,14 @@ export const getMembersApi = async (id: number, page: number, size: number) => {
 };
 
 export const deleteMemberApi = async (memberId: number) => {
-  const res = await fetch(`${BASE_URL}/3-4/members/${memberId}`, {
-    method: 'DELETE',
-    cache: 'no-cache',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/members/${memberId}`, {
+      method: 'DELETE',
+      cache: 'no-cache',
+      headers: {
+        accept: 'application/json',
+      },
+    })
     .then(res => {
       if (res.status === 403) {
         throw new Error(`403 Forbidden`);

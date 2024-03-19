@@ -1,6 +1,6 @@
 'use client';
 
-import { getRequestCookies, loginApi, postRequestCookies } from '@/api/AuthApi';
+import { loginApi, postRequestCookies } from '@/api/AuthApi';
 import MainLogo from '@/components/login/MainLogo';
 import { useRouter } from 'next/navigation';
 import Login from './components/Login';

@@ -87,19 +87,19 @@ export const getDashboardDetailsApi = async (id: number) => {
 };
 
 export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
-  const res: Dashboard = await fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
-    method: 'PUT',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-    },
-    body: JSON.stringify({
-      title: title,
-      color: color,
-    }),
-  })
+  const res: Dashboard = await authInstance
+    .fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+      method: 'PUT',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        title: title,
+        color: color,
+      }),
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
@@ -150,18 +150,18 @@ export const getDashboardsByPaginationApi = async (page: number, size: number): 
 };
 
 export const postDashboardInvitationsApi = async (id: number, email: string) => {
-  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations`, {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-    },
-    body: JSON.stringify({
-      email: email,
-    }),
-  })
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
@@ -203,13 +203,11 @@ export const getDashboardInvitationsApi = async (id: number, page: number, size:
 };
 
 export const deleteDashboardInvitationsCancelApi = async (id: number, invitationId: number) => {
-  const res = await fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
-    method: 'DELETE',
-    cache: 'no-cache',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
+      method: 'DELETE',
+      cache: 'no-cache',
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
