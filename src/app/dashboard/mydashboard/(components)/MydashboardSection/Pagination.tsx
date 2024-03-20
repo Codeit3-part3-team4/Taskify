@@ -20,8 +20,8 @@ export default function Pagination({ count, page, setPage }: Pagination) {
   };
 
   return (
-    <div className="flex items-center justify-end w-full">
-      <div>
+    <div className="flex items-center">
+      <div className="mr-4">
         <span>
           {page}/{maxPage}
         </span>
