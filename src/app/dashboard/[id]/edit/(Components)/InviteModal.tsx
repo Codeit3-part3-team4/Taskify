@@ -4,28 +4,32 @@ import { postDashboardInvitationsApi } from '@/api/dashboardsApi';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const postDashboardInvitations = async (dashboardId: string, email: string) => {
-  return await postDashboardInvitationsApi(Number(dashboardId), email);
+const postDashboardInvitations = async (dashboardId: number, email: string) => {
+  return await postDashboardInvitationsApi(dashboardId, email);
 };
 
 interface InviteModalProps {
-  id: string;
+  id: number;
   pathname: string;
-  query: string;
+  query?: string;
+  onClose?: () => void;
 }
 
-export default function InviteModal({ id, pathname, query }: InviteModalProps) {
+export default function InviteModal({ id, pathname, query, onClose }: InviteModalProps) {
   const [inviteEmail, setInviteEmail] = useState<string>('');
 
   const router = useRouter();
+  console.log(router);
 
   const onClickCancel = () => {
-    router.push(`${pathname}?${query}&inviteModal=off`);
+    if (onClose) onClose();
+    else router.push(`${pathname}?${query}&inviteModal=off`);
   };
 
   const onClickInvite = () => {
     postDashboardInvitations(id, inviteEmail).then(res => {
-      router.push(`${pathname}?${query}&inviteModal=off`);
+      if (onClose) onClose();
+      else router.push(`${pathname}?${query}&inviteModal=off`);
     });
   };
 

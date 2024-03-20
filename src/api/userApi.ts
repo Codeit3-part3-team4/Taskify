@@ -1,5 +1,6 @@
+import { authInstance } from '@/utils/functionalFetch';
+
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const token = localStorage.getItem('accessToken');
 
 export interface UserInfo {
   id: number;
@@ -21,26 +22,29 @@ export const signupApi = async newUserValues => {
       body: JSON.stringify(newUserValues),
     });
 
-    if (!res.ok) {
-      throw new Error('회원가입 실패');
+    if (res.ok) {
+      const data = await res.json();
+      console.log('회원가입api 성공', data);
+    } else if (res.status === 409) {
+      console.log('409에러닷');
+    } else {
+      console.log('다른 상태 오류');
     }
 
-    const data = await res.json();
-    console.log('서버에서 받은 데이터:', data);
+    return res;
   } catch (error) {
     console.error('회원가입 에러:', error);
   }
 };
 
 // 내 정보 조회
-export const getUserInfo = async (token: string): Promise<UserInfo> => {
+export const getUserInfo = async (): Promise<UserInfo> => {
   try {
-    const res = await fetch(`${BASE_URL}/3-4/users/me`, {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
         accept: 'application/json',
-        Authorization: `Bearer ${token}`,
       },
     });
     const data = await res.json();
