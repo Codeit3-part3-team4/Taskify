@@ -7,7 +7,7 @@ import SearchForm from './SearchForm';
 import InvitationList from './InvitationList';
 
 export default function InvitationDashboard() {
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  const [processedInvitations, setProcessedInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -25,10 +25,10 @@ export default function InvitationDashboard() {
           const handleInvitationList = async () => {
             const { invitations, cursorId } = await getInvitationList(8, cursorIdRef.current, inputValue);
             cursorIdRef.current = cursorId;
-            if (cursorIdRef.current === null) {
+            if (!cursorIdRef.current) {
               isCloseFncRef.current = true;
             }
-            setInvitations(prevInvitations => [...prevInvitations, ...invitations]);
+            setProcessedInvitations(prevInvitations => [...prevInvitations, ...invitations]);
             setLoading(false);
           };
           handleInvitationList();
@@ -45,15 +45,24 @@ export default function InvitationDashboard() {
         observer.unobserve(sentinelRef.current);
       }
     };
-  }, [inputValue, invitations, loading]);
+  }, [inputValue, processedInvitations, loading]);
 
   const handleSearchSubmit = async (value: string) => {
-    setInputValue(value);
-    setLoading(true);
-    const { invitations, cursorId } = await getInvitationList(8, null, value);
-    setInvitations(invitations);
-    cursorIdRef.current = cursorId;
-    setLoading(false);
+    try {
+      setLoading(true);
+      setInputValue(value);
+      const { invitations, cursorId } = await getInvitationList(8, null, value);
+      setProcessedInvitations(invitations);
+      cursorIdRef.current = cursorId;
+      console.log(cursorId);
+      if (!cursorIdRef.current) {
+        isCloseFncRef.current = true;
+      }
+    } catch (error) {
+      console.error('Error occurred:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,7 +71,7 @@ export default function InvitationDashboard() {
       <div className="mb-5">
         <SearchForm onSubmit={handleSearchSubmit} />
       </div>
-      <InvitationList invitations={invitations} setInvitations={setInvitations} />
+      <InvitationList processedInvitations={processedInvitations} setProcessedInvitations={setProcessedInvitations} />
       <div ref={sentinelRef}></div> {/* Intersection Observer 타겟 */}
       {loading && (
         <div className="flex justify-center h-44 items-center">

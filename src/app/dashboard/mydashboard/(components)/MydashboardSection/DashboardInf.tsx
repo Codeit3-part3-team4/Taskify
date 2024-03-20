@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 interface DashboardInfProps {
   color: string;
   title: string;
@@ -8,7 +6,12 @@ interface DashboardInfProps {
 
 export default function DashboardInf({ color, title, createdByMe }: DashboardInfProps) {
   return (
-    <div className="flex items-center">
+    <div
+      className="flex items-center w-full h-full border border-gray_D9D9D9 rounded-lg"
+      style={{
+        borderColor: `${color}`,
+      }}
+    >
       <div
         className="w-4 h-4 m-3"
         style={{
