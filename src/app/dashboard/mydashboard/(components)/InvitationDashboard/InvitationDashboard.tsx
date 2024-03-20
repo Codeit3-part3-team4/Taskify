@@ -54,7 +54,6 @@ export default function InvitationDashboard() {
       const { invitations, cursorId } = await getInvitationList(8, null, value);
       setProcessedInvitations(invitations);
       cursorIdRef.current = cursorId;
-      console.log(cursorId);
       if (!cursorIdRef.current) {
         isCloseFncRef.current = true;
       }

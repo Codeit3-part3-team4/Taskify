@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 interface SideDashboardCardProps {
   color: string;
   title: string;
@@ -15,7 +13,7 @@ export default function SideDashboardCard({ color, title, createdByMe }: SideDas
         </div>
       ) : null}
       <div
-        className="rounded-full duration-300 hover:translate-x-2 hover:rounded-2xl w-14 h-14 text-xs flex items-center justify-center truncate text-white"
+        className="rounded-full duration-300  hover:rounded-2xl w-14 h-14 text-xs flex items-center justify-center truncate text-white"
         style={{
           backgroundColor: `${color}`,
         }}
