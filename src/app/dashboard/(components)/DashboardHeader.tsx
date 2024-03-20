@@ -92,6 +92,7 @@ export const FunctionalHeader = () => {
 
   const slicedMembers = membersInf.members.slice(0, showMemberCount);
   const displayMemberCount = showMemberCount < membersInf.totalCount ? `+${membersInf.totalCount - showMemberCount + 1}` : null;
+  const layoutMemeberCount = slicedMembers.length < showMemberCount ? slicedMembers.length : showMemberCount;
 
   return (
     <div className="flex flex-row justify-center items-center h-full mr-3 md:mr-5">
@@ -113,8 +114,8 @@ export const FunctionalHeader = () => {
       </button>
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
-          const moveX = (showMemberCount - index - 1) * 15;
-          const nickname = index === showMemberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
+          const moveX = (layoutMemeberCount - index - 1) * 15;
+          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
           return <ProfileImage key={index} nickname={nickname} profileImageUrl={member.profileImageUrl} style={`translateX(${moveX}%)`} />;
         })}
       </div>
