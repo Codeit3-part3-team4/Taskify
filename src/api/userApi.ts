@@ -94,9 +94,9 @@ export const updateUserProfileImg = async (imageFile: File) => {
 
     console.log('프로필 이미지 업로드 api 실행', imageFile);
 
-    if (!res.ok) {
-      throw new Error('프로필 이미지 업로드 실패', res.statusText);
-    }
+    // if (!res.ok) {
+    //   throw new Error(`프로필 이미지 업로드 실패', ${res.status}`);
+    // }
   } catch (error) {
     console.error('프로필 api 에러:', error);
   }
