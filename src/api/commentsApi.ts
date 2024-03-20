@@ -1,9 +1,19 @@
+import { authInstance } from './../utils/functionalFetch';
 const BASE_URL = 'https://sp-taskify-api.vercel.app/3-4';
+
+interface Author {
+  profileImageUrl: string;
+  nickname: string;
+  id: number;
+}
 
 interface Comment {
   id: number;
   content: string;
+  createdAt: string;
+  updatedAt: string;
   cardId: number;
+  author: Author;
 }
 
 type CreateCommentProps = {
@@ -15,7 +25,9 @@ type CreateCommentProps = {
 
 // 댓글 생성
 export const createComment = async ({ content, cardId, columnId, dashboardId }: CreateCommentProps): Promise<Comment> => {
-  const response = await fetch(`${BASE_URL}/comments`, {
+  console.log('Sending payload:', { content, cardId, columnId, dashboardId });
+
+  const response = await authInstance.fetch(`${BASE_URL}/comments`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +42,7 @@ export const createComment = async ({ content, cardId, columnId, dashboardId }: 
 
 // 댓글 목록 조회
 export const fetchComments = async (cardId: number): Promise<Comment[]> => {
-  const response = await fetch(`${BASE_URL}/comments?cardId=${cardId}`, {
+  const response = await authInstance.fetch(`${BASE_URL}/comments?cardId=${cardId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +56,7 @@ export const fetchComments = async (cardId: number): Promise<Comment[]> => {
 
 // 댓글 수정
 export const updateComment = async (commentId: number, content: string): Promise<Comment> => {
-  const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+  const response = await authInstance.fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +71,7 @@ export const updateComment = async (commentId: number, content: string): Promise
 
 // 댓글 삭제
 export const deleteComment = async (commentId: number): Promise<void> => {
-  const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+  const response = await authInstance.fetch(`${BASE_URL}/comments/${commentId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
