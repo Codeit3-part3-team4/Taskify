@@ -2,18 +2,21 @@
 
 import { ColumnList, getColumnListApi } from '@/api/columnApi';
 import TodoForm from '@/components/Todo/TodoForm';
+import TodoUpdate from '@/components/Todo/TodoUpdate';
 import AddColumn from '@/components/column/AddColumn';
 import Column from '@/components/column/Column';
 import EditColumn from '@/components/column/EditColumn';
 import { useModal } from '@/components/hooks/useModal/useModal';
 import { DashboardContext } from '@/context/DashboardContext';
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Page({ params: { id } }: { params: { id: number } }) {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
   const { setDashboardId } = useContext(DashboardContext);
   const { openModal } = useModal();
+  const router = useRouter();
 
   setDashboardId(Number(id));
 
@@ -21,6 +24,9 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
     async function fetchColumnData() {
       try {
         const result = await getColumnListApi(id);
+        if (result === null) {
+          router.push('/dashboard/mydashboard');
+        }
         setColumnList(result.data);
       } catch (e) {
         console.log(e);

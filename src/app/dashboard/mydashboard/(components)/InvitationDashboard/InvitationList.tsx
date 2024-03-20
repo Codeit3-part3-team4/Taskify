@@ -1,26 +1,24 @@
 import React, { useContext } from 'react';
 import { Invitation, putInvitation } from '@/api/InvitationApi';
-import { getDashboardsByPaginationApi } from '@/api/dashboardsApi';
 import { DashboardContext } from '@/context/DashboardContext';
 
 interface InvitationListProps {
-  invitations: Invitation[];
-  setInvitations: (invitations: Invitation[]) => void;
+  processedInvitations: Invitation[];
+  setProcessedInvitations: (invitations: Invitation[]) => void;
 }
 
-export default function InvitationList({ invitations, setInvitations }: InvitationListProps) {
-  const { setData } = useContext(DashboardContext);
+export default function InvitationList({ processedInvitations, setProcessedInvitations }: InvitationListProps) {
+  const { refresh, setRefresh } = useContext(DashboardContext);
 
   const handlePutInvitation = async (invitationId: number, isAccepted: boolean) => {
     const res = await putInvitation(invitationId, isAccepted);
     if (res.status === 200) {
-      const data = await getDashboardsByPaginationApi(1, 3000);
-      setData(data);
+      setRefresh(!refresh);
     }
-    const updatedInvitations = invitations.filter(invitation => invitation.id !== invitationId);
+    const updatedInvitations = processedInvitations.filter(invitation => invitation.id !== invitationId);
 
     // 새로운 초대 목록을 상태로 설정하여 컴포넌트를 다시 렌더링합니다.
-    setInvitations(updatedInvitations);
+    setProcessedInvitations(updatedInvitations);
   };
   return (
     <div>
@@ -29,7 +27,7 @@ export default function InvitationList({ invitations, setInvitations }: Invitati
         <div className="w-52 flex justify-around">초대자</div>
         <div className="w-52 flex justify-around">수락 여부</div>
       </div>
-      {invitations.map(invitation => (
+      {processedInvitations.map(invitation => (
         <div className="p-4 border-b flex flex-col text-sm md:flex-row md:justify-around" key={invitation.id}>
           <div className="flex mb-2.5">
             <p className="w-16 md:hidden">이름</p>

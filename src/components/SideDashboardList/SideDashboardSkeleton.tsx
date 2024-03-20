@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function SideDashboardSkeleton() {
   return (
-    <div className="flex flex-col mx-3 items-center animate-pulse">
+    <div className="fixed flex flex-col mx-3 items-center animate-pulse">
       <div className="flex justify-center mt-5 mb-2">
         <div className="">
           <Image src="/images/taskify-logo-light.svg" alt="로고" width={32} height={32} />

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
-import { detailCardApi } from '@/api/cardApi';
+import { useModal } from '../hooks/useModal/useModal';
+import { deleteCardApi, detailCardApi } from '@/api/cardApi';
 
 interface CardDetails {
   description: string;
@@ -9,9 +11,9 @@ interface CardDetails {
   dueDate: string;
 }
 
-export default function TodoCard({ cardId }) {
+export default function TodoCard({ cardId, dashboardId, columnId, card, columnTitle }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const { isOpen: isUpdateModalOpen, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModal();
   const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
 
   useEffect(() => {
@@ -26,12 +28,32 @@ export default function TodoCard({ cardId }) {
     loadCardDetails();
   }, [cardId]);
 
-  const handleEditClick = () => {
-    setUpdateModalOpen(true);
-    setIsDropdownOpen(false);
+  console.log(cardDetails);
+
+  const handleEditClick = async () => {
+    try {
+      const details = await detailCardApi(cardId);
+      setCardDetails(details);
+      openUpdateModal();
+      setIsDropdownOpen(false);
+    } catch (error) {
+      console.error('카드 상세 정보를 가져오는 데 실패했습니다.', error);
+    }
   };
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const handleDeleteClick = async () => {
+    if (window.confirm('이 카드를 삭제하시겠습니까?')) {
+      try {
+        await deleteCardApi(cardId);
+        alert('카드가 삭제되었습니다.');
+        window.location.reload();
+      } catch (error) {
+        console.error('카드 삭제 실패:', error);
+      }
+    }
+  };
 
   return (
     <div>
@@ -44,36 +66,50 @@ export default function TodoCard({ cardId }) {
             <li className="px-4 py-2 hover:bg-blue-300 cursor-pointer" onClick={handleEditClick}>
               수정하기
             </li>
-            <li className="px-4 py-2 hover:bg-blue-300 cursor-pointer">삭제하기</li>
+            <li className="px-4 py-2 hover:bg-blue-300 cursor-pointer" onClick={handleDeleteClick}>
+              삭제하기
+            </li>
           </ul>
         </div>
       )}
 
-      {isUpdateModalOpen && <TodoUpdate closeModal={() => setUpdateModalOpen(false)} cardDetails={cardDetails} cardId={cardId} />}
-
-      <div className="flex flex-col gap-3 w-full">
+      <TodoUpdate
+        isOpen={isUpdateModalOpen}
+        closeModal={closeUpdateModal}
+        cardDetails={cardDetails}
+        cardId={cardId}
+        dashboardId={dashboardId}
+        columnId={columnId}
+      />
+      <div className="flex flex-col relative gap-3 w-full">
         {cardDetails && (
           <>
             <div className="flex gap-5">
-              <img src="/images/test1.svg" alt="Test 1" />
+              <div className="bg-blue-500 text-blue-300 w-50 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">{columnTitle}</div>
+
               <div className="text-gray-300">|</div>
-              <img src="/images/test2.svg" alt="Test 2" />
+              <div className="bg-lime-100 text-lime-400 w-50 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">{card.tags}</div>
             </div>
             <div className="flex">
-              <div>{cardDetails.description}</div>
-
-              <div className="flex flex-col border p-3 gap-3 w-96 h-40">
-                <div className="font-bold">담당자</div>
-                <div>{cardDetails.assignee ? cardDetails.assignee.nickname : '할당되지 않음'}</div>
-                <div className="font-bold">마감일</div>
-                <div>{cardDetails.dueDate}</div>
+              <div className="flex flex-col">
+                <div className="flex w-full p-5">{cardDetails.description}</div>
+                <div className="flex w-full p-5">
+                  {' '}
+                  {cardDetails?.imageUrl && <Image src={cardDetails.imageUrl} alt="Card Image" width={500} height={300} layout="responsive" />}
+                </div>
+              </div>
+              <div className="flex flex-col border p-2 gap-2 w-full h-full">
+                <div className="text-m font-bold">담당자</div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full">{card.assignee.profileImageUrl}</div>
+                  <div className="text-sm">{card.assignee.nickname}</div>
+                </div>
+                <div className="text-m font-bold">마감일</div>
+                <div className="text-sm">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
               </div>
             </div>
-            <div>
-              <img src="/images/test3.svg" alt="Test 3" />
-            </div>
 
-            <Comment />
+            <Comment cardId={cardId} dashboardId={dashboardId} columnId={columnId} />
           </>
         )}
       </div>

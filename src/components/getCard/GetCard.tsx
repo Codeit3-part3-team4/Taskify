@@ -4,7 +4,7 @@ import { useState } from 'react';
 import TodoCard from '../Todo/TodoCard';
 import Modal from '../Modal/Modal';
 
-const GetCard = ({ card }: { card: Card }) => {
+const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const clickOpenModal = () => {
@@ -29,9 +29,9 @@ const GetCard = ({ card }: { card: Card }) => {
             onClose={() => {
               onCloseModal();
             }}
-            title="새로운 일정 관리 Taskify"
+            title={card.title}
           >
-            <TodoCard cardId={card.id} isOpen={isOpen} />
+            <TodoCard cardId={card.id} isOpen={isOpen} dashboardId={dashboardId} columnId={columnId} card={card} columnTitle={columnTitle} />
           </Modal>
           <div className="md:flex lg:flex-col w-full">
             {card.imageUrl !== 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/asdasd.png' && card.imageUrl !== null && (

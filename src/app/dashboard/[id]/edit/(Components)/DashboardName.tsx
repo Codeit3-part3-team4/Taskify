@@ -1,9 +1,10 @@
 'use client';
 
 import { getDashboardDetailsApi, putDashboardDetailsApi } from '@/api/dashboardsApi';
+import ColorPicker from '@/app/dashboard/mydashboard/(components)/DashboarderMaker/ColorPicker';
 import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const colorList: string[] = ['#7AC555', '#760DDE', '#76A5EA', '#E876EA', '#FFA500'];
 
@@ -41,17 +42,22 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
   return (
     <form className="flex flex-col rounded-md p-5 bg-white" onSubmit={onSubmit}>
       <div className="flex flex-row justify-between items-center mb-6">
-        <strong className="text-xl">{title}</strong>
+        <div className="flex flex-row gap-2">
+          <button className="flex justify-center items-center w-7 h-7 rounded-full" style={{ backgroundColor: color }} />
+          <strong className="text-xl">{title}</strong>
+        </div>
         <div className="flex flex-row items-center gap-1">
           {mediaQuery !== MediaQueryType.MOBILE &&
             colorList.map(item => {
               return (
-                <button className="flex justify-center items-center w-7 h-7 rounded-full" style={{ backgroundColor: item }} onClick={() => onClickColor(item)}>
-                  {item === color ? <Image src="/images/crown-icon.svg" width="16" height="16" alt="checker" /> : null}
-                </button>
+                <button
+                  className="flex justify-center items-center w-7 h-7 rounded-full"
+                  style={{ backgroundColor: item }}
+                  onClick={() => onClickColor(item)}
+                />
               );
             })}
-          <input className="bg-transparent w-20 h-9" name="color" type="color" value={color} onChange={e => setColor(e.target.value)} />
+          <ColorPicker setSelectedColor={color => setColor(color)} />
         </div>
       </div>
       <strong className="mb-3">대시보드 이름</strong>

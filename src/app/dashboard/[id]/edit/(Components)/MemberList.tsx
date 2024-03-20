@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
+import { redirect } from 'next/navigation';
 
-export const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
+const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getMembersApi(dashboardId, pageIndex, size);
 };
 
@@ -15,11 +16,13 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   const invitePage = Number(searchParams.invitePage);
   const dashboard = Number(dashboardId);
 
-  const MemberItem = ({ member }: { member: Member }) => {
-    const profileUrl = member.profileImageUrl ? member.profileImageUrl : null;
+  const MemberItem = ({ key, member }: { key: string; member: Member }) => {
+    const profileUrl = member.profileImageUrl
+      ? member.profileImageUrl
+      : 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/3-4_15418_1710925320857.jpeg?format=webp&width=755&height=518';
 
     return (
-      <li className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
+      <li key={key} className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
         <div className="flex flex-row items-center gap-2">
           {profileUrl ? (
             <Image src={profileUrl} width="32" height="32" alt="profile" />
@@ -52,7 +55,9 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   };
 
   const result = await getMembers(dashboard, page, showMemberCount);
-  if (result === null) return;
+  if (result === null) {
+    redirect('/dashboard/mydashboard');
+  }
 
   const maxPage = Math.ceil(result.totalCount / showMemberCount);
   const disabledNext = page === maxPage ? 'pointer-events-none' : '';

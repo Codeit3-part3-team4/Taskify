@@ -48,7 +48,7 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
           {cardList &&
             cardList?.cards?.map(card => (
               <div key={card.id}>
-                <GetCard card={card} />
+                <GetCard card={card} dashboardId={dashboardId} columnId={columnId} columnTitle={columnTitle} />
               </div>
             ))}
         </div>

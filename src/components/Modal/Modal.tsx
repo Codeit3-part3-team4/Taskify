@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 interface ModalProps {
   isOpen: boolean; // 모달이 열려 있는지 여부를 나타내는 상태
@@ -17,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showClo
     if (onClose) onClose();
   };
 
-  return (
+  const modal = (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
       <dialog className="modal" open>
         <div className="modal-box relative">
@@ -32,6 +33,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showClo
         </div>
       </dialog>
     </div>
+  );
+
+  return ReactDOM.createPortal(
+    modal,
+    document.body, // body의 맨 마지막에 모달을 렌더링합니다.
   );
 };
 
