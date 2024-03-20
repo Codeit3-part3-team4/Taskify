@@ -186,7 +186,7 @@ export const postDashboardInvitationsApi = async (id: number, email: string) => 
 };
 
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
-  const res = await authInstance
+  const res: InvitationsInf = await authInstance
     .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
       method: 'GET',
       cache: 'no-cache',

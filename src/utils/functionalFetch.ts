@@ -19,7 +19,6 @@ class FunctionalFetch {
       }
     }
 
-    console.log('functional fetch', this.init, isAuthField);
     if (!isAuthField) {
       if (typeof window !== 'undefined') {
         const token = await getRequestCookies('accessToken');
