@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <DashboardProvider>
         <div className="flex flex-row">
           <SideDashboardList />
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full ml-20">
             <DashboardHeader>
               <FunctionalHeader />
             </DashboardHeader>

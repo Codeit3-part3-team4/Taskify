@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Invitation, putInvitation } from '@/api/InvitationApi';
-import { getDashboardsByPaginationApi } from '@/api/dashboardsApi';
 import { DashboardContext } from '@/context/DashboardContext';
 
 interface InvitationListProps {
@@ -9,13 +8,12 @@ interface InvitationListProps {
 }
 
 export default function InvitationList({ processedInvitations, setProcessedInvitations }: InvitationListProps) {
-  const { setData } = useContext(DashboardContext);
+  const { refresh, setRefresh } = useContext(DashboardContext);
 
   const handlePutInvitation = async (invitationId: number, isAccepted: boolean) => {
     const res = await putInvitation(invitationId, isAccepted);
     if (res.status === 200) {
-      const data = await getDashboardsByPaginationApi(1, 3000);
-      setData(data);
+      setRefresh(!refresh);
     }
     const updatedInvitations = processedInvitations.filter(invitation => invitation.id !== invitationId);
 
