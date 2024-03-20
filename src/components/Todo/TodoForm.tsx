@@ -88,14 +88,14 @@ export default function TodoForm({ dashboardId, columnId }) {
       </button>
       {isOpen && (
         <Modal isOpen={isOpen} onClose={closeModal} title="할 일 생성" showCloseButton={false}>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4 ">
             <div>
-              <label htmlFor="assigneeUserId" className="block font-bold text-sm mb-1">
+              <label htmlFor="assigneeUserId" className="flex font-bold text-sm mb-4">
                 담당자
               </label>
-              <div className="relative w-full">
+              <div className="flex relative w-full">
                 <div tabIndex={0} className="dropdown">
-                  <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
+                  <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white w-full">
                     {members.find(member => member.userId.toString() === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
                     <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
                   </label>
@@ -108,7 +108,7 @@ export default function TodoForm({ dashboardId, columnId }) {
                   </ul>
                 </div>
               </div>
-              <label htmlFor="title" className="block font-bold text-sm mb-1">
+              <label htmlFor="title" className="flex font-bold text-sm mb-4">
                 제목
               </label>
               <input
@@ -122,7 +122,7 @@ export default function TodoForm({ dashboardId, columnId }) {
               />
             </div>
             <div>
-              <label htmlFor="description" className="block font-bold text-sm mb-1">
+              <label htmlFor="description" className="flex font-bold text-sm mb-4">
                 설명
               </label>
               <input
@@ -135,12 +135,12 @@ export default function TodoForm({ dashboardId, columnId }) {
                 onChange={handleInputChange}
               />
             </div>
-            <div>
-              <label htmlFor="deadline" className="block font-bold text-sm mb-1">
+            <div className="flex flex-col">
+              <label htmlFor="deadline" className="flex font-bold text-sm mb-4">
                 마감일
               </label>
               <DatePicker
-                className="input input-bordered w-2/4 mb-3"
+                className="flex cursor-pointer input input-bordered w-2/4 mb-3"
                 dateFormat="yyyy-MM-dd"
                 selected={formData.deadline}
                 onChange={date => {
@@ -151,7 +151,7 @@ export default function TodoForm({ dashboardId, columnId }) {
               />
             </div>
             <div>
-              <label htmlFor="tags" className="block font-bold text-sm mb-1">
+              <label htmlFor="tags" className="flex font-bold text-sm mb-4">
                 태그
               </label>
               <input
@@ -159,16 +159,18 @@ export default function TodoForm({ dashboardId, columnId }) {
                 name="tags"
                 type="text"
                 placeholder="입력 후 Enter"
-                className="input input-bordered w-full mb-3 "
+                className="flex input input-bordered mb-3 "
                 value={formData.tags}
                 onChange={handleInputChange}
               />
             </div>
-            <div>
-              <label htmlFor="file" className="block font-bold text-sm mb-1">
+            <div className="flex flex-col">
+              <label htmlFor="file" className="flex font-bold text-sm mb-4">
                 이미지
               </label>
-              <ImageUpload columnId={columnId} onImageUpload={handleImageUpload} />
+              <div className="flex">
+                <ImageUpload columnId={columnId} onImageUpload={handleImageUpload} />
+              </div>
             </div>
             <div className="flex justify-end space-x-2">
               <button type="button" className="btn w-32" onClick={closeModal}>

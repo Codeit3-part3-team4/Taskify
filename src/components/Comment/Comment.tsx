@@ -24,16 +24,16 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
     const loadComments = async () => {
       try {
         const { comments: commentsData, cursorId } = await fetchComments(cardId);
-        // commentsData가 배열인지 확인하고, 배열이면 상태를 업데이트
+
         if (Array.isArray(commentsData)) {
           setComments(commentsData);
         } else {
           console.error('Fetched comments data is not an array:', commentsData);
-          setComments([]); // 데이터 형식이 맞지 않을 경우 빈 배열 할당
+          setComments([]);
         }
       } catch (error) {
         console.error('Failed to load comments:', error);
-        setComments([]); // 에러 발생 시 빈 배열 할당
+        setComments([]);
       }
     };
 
