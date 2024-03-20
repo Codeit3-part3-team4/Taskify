@@ -8,7 +8,7 @@ interface Props {
   value: string;
   password?: boolean;
   placeholder: string;
-  error: string;
+  error?: string;
   onChange: ChangeEventHandler;
   onBlur: ChangeEventHandler;
   handlePasswordLook?: ChangeEventHandler;

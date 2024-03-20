@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import InputUserInfo from '@/components/login/InputUserInfo';
 
-const MyAccount: React.FC = ({ onSubmit }) => {
+const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
   const { data: userInfo } = useContext(UserContext);
   const [updateUserValues, setUpdateUserValues] = useState({
     // nickname: '',
@@ -35,10 +35,28 @@ const MyAccount: React.FC = ({ onSubmit }) => {
     });
   };
 
+  const handleProfileImageChange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setUpdateUserValues({
+        ...updateUserValues,
+        profileImageUrl: reader.result,
+      });
+      onChangeProfileImg(updateUserValues.profileImageUrl);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const onSubmitForm = e => {
     e.preventDefault();
     onSubmit(updateUserValues);
-    console.log('업뎃:' + updateUserValues);
+
+    console.log('프로필업뎃:' + updateUserValues);
   };
 
   return (
@@ -52,7 +70,15 @@ const MyAccount: React.FC = ({ onSubmit }) => {
                 {userInfo.profileImageUrl === null ? (
                   <Image src="/images/basic-profile.svg" width={182} height={182} priority={true} alt="프로필 사진" />
                 ) : (
-                  <img src={userInfo.profileImageUrl} alt="프로필 사진" />
+                  <div>
+                    <img src={userInfo.profileImageUrl} alt="프로필 사진" />
+                    <div>
+                      <button>
+                        <img src="/images/prifileimg-plus" alt="이미지 업로드" />
+                      </button>
+                    </div>
+                    <input type="file" id="profileImageUrl" onChange={handleProfileImageChange} accept="image/*" placeholder="업로드" />
+                  </div>
                 )}
                 <div>
                   <div>이메일</div>
@@ -74,4 +100,4 @@ const MyAccount: React.FC = ({ onSubmit }) => {
   );
 };
 
-export default MyAccount;
+export default MyProfile;

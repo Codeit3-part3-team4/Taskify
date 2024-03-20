@@ -5,10 +5,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import InputUserInfo from '@/components/login/InputUserInfo';
 
-const Mypassword: React.FC = ({ onSubmit }) => {
+const MyPassword: React.FC = ({ onSubmit }) => {
   const { data: userInfo } = useContext(UserContext);
 
   const [changePassword, setChangePassword] = useState({
+    password: '',
+    newPassword: '',
+    newPwcheck: '',
+  });
+
+  const [errors, setErrors] = useState({
     password: '',
     newPassword: '',
     newPwcheck: '',
@@ -24,10 +30,63 @@ const Mypassword: React.FC = ({ onSubmit }) => {
     console.log(changePassword);
   };
 
-  const onSubmitForm = e => {
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      password: '',
+      newPassword: '',
+      newPwcheck: '',
+    };
+
+    if (changePassword.newPassword.length < 8) {
+      newErrors.newPassword = '8자 이상 입력해 주세요.';
+      isValid = false;
+    }
+
+    if (changePassword.newPassword !== changePassword.newPwcheck) {
+      newErrors.newPwcheck = '비밀번호가 일치하지 않습니다.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const validateCurrentPassword = async () => {
+    try {
+      const res = await checkCurrentPassword(changePassword.password);
+      return res.isValid;
+    } catch (error) {
+      console.error('비밀번호 유효성 검사 실패', error);
+      return false;
+    }
+  };
+
+  const onSubmitForm = async e => {
     e.preventDefault();
-    onSubmit(changePassword);
-    console.log('업뎃:' + changePassword);
+    try {
+      const isPasswordValid = await validateCurrentPassword();
+      if (isPasswordValid && validateForm()) {
+        console.log('비밀번호 업뎃:', changePassword);
+        await onSubmit(changePassword);
+      }
+    } catch (error) {
+      console.error('비밀번호 업뎃 실패:', error);
+    }
+  };
+
+  const checkCurrentPassword = async password => {
+    const res = await fetch(`${BASE_URL}/3-4/auth/password`, {
+      method: 'POST',
+      body: JSON.stringify({ password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!res.ok) {
+      throw new Error('비밀번호 유효성 검사 실패');
+    }
+    return res.json();
   };
 
   return (
@@ -35,42 +94,41 @@ const Mypassword: React.FC = ({ onSubmit }) => {
       <div>
         {userInfo && (
           <div>
-            <div>
-              <h2>비밀번호 변경</h2>
-              <form onSubmit={onSubmitForm}>
-                <div>
-                  <InputUserInfo
-                    label={'현재 비밀번호'}
-                    id={'password'}
-                    type={'password'}
-                    value={changePassword.password}
-                    placeholder={'현재 비밀번호 입력'}
-                    onChange={onChangePasswordValues}
-                  />
-                </div>
-                <div>
-                  <InputUserInfo
-                    label={'새 비밀번호'}
-                    id={'newPassword'}
-                    type={'password'}
-                    value={changePassword.newPassword}
-                    placeholder={'새 비밀번호 입력'}
-                    onChange={onChangePasswordValues}
-                  />
-                </div>
-                <div>
-                  <InputUserInfo
-                    label={'새 비밀번호 확인'}
-                    id={'newPwcheck'}
-                    type={'password'}
-                    value={changePassword.newPwcheck}
-                    placeholder={'새 비밀번호 입력'}
-                    onChange={onChangePasswordValues}
-                  />
-                </div>
-              </form>
-              <button onSubmit={onSubmitForm}>변경</button>
-            </div>
+            <h2>비밀번호 변경</h2>
+            <form onSubmit={onSubmitForm}>
+              <div>
+                <InputUserInfo
+                  label={'현재 비밀번호'}
+                  id={'password'}
+                  type={'password'}
+                  value={changePassword.password}
+                  placeholder={'현재 비밀번호 입력'}
+                  onChange={onChangePasswordValues}
+                />
+              </div>
+              <div>
+                <InputUserInfo
+                  label={'새 비밀번호'}
+                  id={'newPassword'}
+                  type={'password'}
+                  value={changePassword.newPassword}
+                  placeholder={'새 비밀번호 입력'}
+                  onChange={onChangePasswordValues}
+                />
+              </div>
+              <div>
+                <InputUserInfo
+                  label={'새 비밀번호 확인'}
+                  id={'newPwcheck'}
+                  type={'password'}
+                  value={changePassword.newPwcheck}
+                  placeholder={'새 비밀번호 입력'}
+                  onChange={onChangePasswordValues}
+                  error={errors.newPwcheck}
+                />
+              </div>
+            </form>
+            <button onClick={onSubmitForm}>변경</button>
           </div>
         )}
       </div>
@@ -78,4 +136,4 @@ const Mypassword: React.FC = ({ onSubmit }) => {
   );
 };
 
-export default Mypassword;
+export default MyPassword;

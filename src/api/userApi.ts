@@ -76,3 +76,25 @@ export const updateUserInfo = async updateUserValues => {
     console.error('계정 api 페이지 수정 에러:', error);
   }
 };
+
+// 프로필 이미지 업로드
+export const updateUserProfileImg = async (imageFile: File) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  try {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me/image`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error('프로필 이미지 업로드 실패', res.statusText);
+    }
+  } catch (error) {
+    console.error('프로필 api 에러:', error);
+  }
+};

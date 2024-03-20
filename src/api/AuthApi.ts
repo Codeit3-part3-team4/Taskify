@@ -39,27 +39,27 @@ export const loginApi = async (userValues: UserValues) => {
 };
 
 // 비밀번호 변경
-export const changePasswordApi = async (newPasswordValue) => {
+export const changePasswordApi = async newPasswordValue => {
   const res = await fetch(`${BASE_URL}/3-4/auth/password`, {
     method: 'PUT',
     headers: {
-      'accept': '*/*',
+      accept: '*/*',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newPasswordValue),
   })
-  .then(res => {
-    if(res.ok) {
-      console.log('비밀번호api 변경 성공');
-    } else if(res.status === 400){
-      throw new Error('error');
-    }
-  })
-  .catch(error => {
-    console.localhost(error);
-    return null;
-  })
-}
+    .then(res => {
+      if (res.ok) {
+        console.log('비밀번호api 변경 성공');
+      } else if (res.status === 400) {
+        throw new Error('error');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return null;
+    });
+};
 
 // request router handler
 export const postRequestCookies = async (key: string, value: string) => {
