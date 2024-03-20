@@ -81,6 +81,7 @@ export const updateUserInfo = async updateUserValues => {
 export const updateUserProfileImg = async (imageFile: File) => {
   const formData = new FormData();
   formData.append('image', imageFile);
+  console.log('데이터확인 : ' + JSON.stringify(imageFile));
   try {
     const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me/image`, {
       method: 'POST',
@@ -90,6 +91,8 @@ export const updateUserProfileImg = async (imageFile: File) => {
       },
       body: formData,
     });
+
+    console.log('프로필 이미지 업로드 api 실행', imageFile);
 
     if (!res.ok) {
       throw new Error('프로필 이미지 업로드 실패', res.statusText);

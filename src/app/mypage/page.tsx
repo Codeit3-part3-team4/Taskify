@@ -21,10 +21,10 @@ export default function MyPage() {
     }
   };
 
-  const handleChangeProfileImg = async changeProfileImg => {
+  const handleChangeProfileImg = async updateProfileImg => {
     try {
-      await updateUserProfileImg(changeProfileImg);
-      console.log('계정관리 페이지 프로필 이미지 변경', changeProfileImg);
+      await updateUserProfileImg(updateProfileImg);
+      console.log('계정관리 페이지 프로필 이미지 변경', updateProfileImg);
     } catch (error) {
       console.error('프로필이미지 변경 실패', error);
     }
@@ -33,7 +33,8 @@ export default function MyPage() {
   const handleChangePassword = async changePassword => {
     try {
       const res = await changePasswordApi(changePassword);
-      console.log(res.ok);
+      console.log('지금 추가', JSON.stringify(changePassword));
+      console.log(JSON.stringify(res));
 
       console.log('비밀번호 변경 성공:', res);
     } catch (error) {

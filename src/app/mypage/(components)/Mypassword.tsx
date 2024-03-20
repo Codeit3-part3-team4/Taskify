@@ -11,23 +11,32 @@ const MyPassword: React.FC = ({ onSubmit }) => {
   const [changePassword, setChangePassword] = useState({
     password: '',
     newPassword: '',
-    newPwcheck: '',
   });
+
+  const [newPwcheck, setPwCheck] = useState('');
 
   const [errors, setErrors] = useState({
     password: '',
     newPassword: '',
-    newPwcheck: '',
+    newPwCheck: '',
   });
 
   const onChangePasswordValues = e => {
     const id = e.target.id;
     const value = e.target.value;
+    console.log('id : ' + id);
+    console.log('value :' + value);
     setChangePassword({
       ...changePassword,
       [id]: value,
     });
     console.log(changePassword);
+  };
+
+  const onChangePasswordckValues = e => {
+    const value = e.target.value;
+    setPwCheck(value);
+    console.log(newPwcheck);
   };
 
   const validateForm = () => {
@@ -43,7 +52,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
       isValid = false;
     }
 
-    if (changePassword.newPassword !== changePassword.newPwcheck) {
+    if (changePassword.newPassword !== newPwcheck) {
       newErrors.newPwcheck = '비밀번호가 일치하지 않습니다.';
       isValid = false;
     }
@@ -52,21 +61,20 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     return isValid;
   };
 
-  const validateCurrentPassword = async () => {
-    try {
-      const res = await checkCurrentPassword(changePassword.password);
-      return res.isValid;
-    } catch (error) {
-      console.error('비밀번호 유효성 검사 실패', error);
-      return false;
-    }
-  };
+  // const validateCurrentPassword = async () => {
+  //   try {
+  //     const res = await checkCurrentPassword(changePassword.password);
+  //     return res.isValid;
+  //   } catch (error) {
+  //     console.error('비밀번호 유효성 검사 실패', error);
+  //     return false;
+  //   }
+  // };
 
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
-      const isPasswordValid = await validateCurrentPassword();
-      if (isPasswordValid && validateForm()) {
+      if (validateForm()) {
         console.log('비밀번호 업뎃:', changePassword);
         await onSubmit(changePassword);
       }
@@ -75,19 +83,19 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     }
   };
 
-  const checkCurrentPassword = async password => {
-    const res = await fetch(`${BASE_URL}/3-4/auth/password`, {
-      method: 'POST',
-      body: JSON.stringify({ password }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!res.ok) {
-      throw new Error('비밀번호 유효성 검사 실패');
-    }
-    return res.json();
-  };
+  // const checkCurrentPassword = async password => {
+  //   const res = await fetch(`${BASE_URL}/3-4/auth/password`, {
+  //     method: 'POST',
+  //     body: JSON.stringify({ password }),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  //   if (!res.ok) {
+  //     throw new Error('비밀번호 유효성 검사 실패');
+  //   }
+  //   return res.json();
+  // };
 
   return (
     <div>
@@ -121,9 +129,9 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                   label={'새 비밀번호 확인'}
                   id={'newPwcheck'}
                   type={'password'}
-                  value={changePassword.newPwcheck}
+                  value={newPwcheck}
                   placeholder={'새 비밀번호 입력'}
-                  onChange={onChangePasswordValues}
+                  onChange={onChangePasswordckValues}
                   error={errors.newPwcheck}
                 />
               </div>

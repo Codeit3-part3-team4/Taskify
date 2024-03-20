@@ -1,3 +1,4 @@
+import { authInstance } from '@/utils/functionalFetch';
 import { json } from 'stream/consumers';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
@@ -40,14 +41,15 @@ export const loginApi = async (userValues: UserValues) => {
 
 // 비밀번호 변경
 export const changePasswordApi = async newPasswordValue => {
-  const res = await fetch(`${BASE_URL}/3-4/auth/password`, {
-    method: 'PUT',
-    headers: {
-      accept: '*/*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newPasswordValue),
-  })
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/auth/password`, {
+      method: 'PUT',
+      headers: {
+        accept: '*/*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newPasswordValue),
+    })
     .then(res => {
       if (res.ok) {
         console.log('비밀번호api 변경 성공');
