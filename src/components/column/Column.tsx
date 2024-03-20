@@ -12,7 +12,7 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
   useEffect(() => {
     async function fetchCardData() {
       try {
-        const result = await getCardListApi(5, 10, columnId);
+        const result = await getCardListApi(10, 10, columnId);
         setCardList(result);
         return result;
       } catch (e) {
