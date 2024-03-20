@@ -20,6 +20,7 @@ const config: Config = {
       width: {
         '217': '217px',
         '260': '260px',
+        '284': '284px',
         '287': '287px',
         '296': '296px',
         '343': '343px',
@@ -51,7 +52,6 @@ const config: Config = {
         '600': '600px',
         '686': '686px',
         '972': '972px',
-        '1080': '1080px',
       },
       colors: {
         'black-000000': '#000000',
@@ -68,7 +68,6 @@ const config: Config = {
         'violet-8%': '#F1EFFD',
         'red-D6173A': '#D6173A',
         'green-7AC555': '#7AC555',
-        'green-A3C4A2': '#A3C4A2',
         'purple-760DDE': '#760DDE',
         'orange-FFA500': '#FFA500',
         'blue-76A6EA': '#76A6EA',
