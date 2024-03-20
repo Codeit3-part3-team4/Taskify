@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../Modal/Modal';
 import { useModal } from '../hooks/useModal/useModal';
 import { createColumnApi, getColumnListApi } from '@/api/columnApi';
-import { DashboardContext } from '@/context/DashboardContext';
 
-const AddColumn = () => {
+interface AddColumnProps {
+  dashboardId: number;
+}
+
+const AddColumn: React.FC<AddColumnProps> = ({ dashboardId }) => {
   const { isOpen, openModal, closeModal } = useModal();
   const [columnName, setColumnName] = useState('');
   const [columnCount, setColumnCount] = useState(0);
   const [error, setError] = useState('');
 
-  const { data: dashboardData } = useContext(DashboardContext);
-
-  const dashboardId = dashboardData?.id;
-  console.log('dashboardId:', dashboardId, 'Type:', typeof dashboardId);
   useEffect(() => {
-    if (!dashboardId) return;
-
     const fetchColumnCount = async () => {
       try {
         const res = await getColumnListApi(dashboardId);
@@ -28,14 +25,16 @@ const AddColumn = () => {
       }
     };
 
-    fetchColumnCount();
+    if (dashboardId) {
+      fetchColumnCount();
+    }
   }, [dashboardId]);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (columnCount >= 10) {
@@ -48,6 +47,7 @@ const AddColumn = () => {
       if (response && response.id) {
         setColumnCount(prevCount => prevCount + 1);
         closeModal();
+        window.location.reload();
       }
     } catch (error) {
       console.error('Error creating column:', error);
@@ -58,7 +58,7 @@ const AddColumn = () => {
 
   return (
     <div>
-      <button onClick={openModal}>
+      <button className="flex" onClick={openModal}>
         <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="컬럼 추가하기 버튼 아이콘" />
       </button>
       {isOpen && (
