@@ -2,6 +2,7 @@
 
 import { ColumnList, getColumnListApi } from '@/api/columnApi';
 import TodoForm from '@/components/Todo/TodoForm';
+import TodoUpdate from '@/components/Todo/TodoUpdate';
 import AddColumn from '@/components/column/AddColumn';
 import Column from '@/components/column/Column';
 import EditColumn from '@/components/column/EditColumn';
