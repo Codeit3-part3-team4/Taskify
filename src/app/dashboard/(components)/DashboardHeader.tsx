@@ -52,16 +52,12 @@ export const FunctionalHeader = () => {
   const mediaQuery = useMediaQuery();
   const router = useRouter();
 
-  const onCloseModal = () => {
-    console.log('close');
-    setIsInviteModal(false);
-  };
-
   useEffect(() => {
     if (Number.isNaN(dashboardId)) return;
 
     getMembers(dashboardId, 1, 5)
       .then(res => {
+        if (res === null) return;
         setMembersInf(res);
       })
       .catch(error => {
@@ -119,7 +115,11 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
   const [ownerId, setOwnerId] = useState<number>();
 
   useEffect(() => {
+    if (Number.isNaN(dashboardId)) return;
+
     getDashboardDetailsApi(dashboardId).then(res => {
+      if (res === null) return;
+
       setOwnerId(res.userId);
       setTitle(res.title);
     });
