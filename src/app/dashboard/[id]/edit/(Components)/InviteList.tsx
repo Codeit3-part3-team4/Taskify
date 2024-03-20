@@ -28,9 +28,9 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
   const dashboard = Number(dashboardId);
   const isInviteModal = searchParams.inviteModal === 'on' ? true : false;
 
-  const InviteItem = ({ invitation }: { invitation: Invitation }) => {
+  const InviteItem = ({ key, invitation }: { key: string; invitation: Invitation }) => {
     return (
-      <li className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
+      <li key={key} className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
         <div className="flex flex-row items-center gap-2">
           <span className="text-sm">{invitation.invitee.email}</span>
         </div>

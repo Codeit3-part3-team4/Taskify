@@ -132,15 +132,15 @@ export const deleteDashboardApi = async (id: number) => {
       cache: 'no-cache',
     })
     .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error('error');
+      if (res.status === 204) {
+        return { status: res.status, data: {} };
       }
+
+      return { status: res.status, data: res.json() };
     })
     .catch(error => {
       console.log(error);
-      return null;
+      return { status: 500, data: error };
     });
 
   return res;
@@ -171,15 +171,11 @@ export const postDashboardInvitationsApi = async (id: number, email: string) => 
       }),
     })
     .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error(`${res.status} error`);
-      }
+      return { status: res.status, data: res.json() };
     })
     .catch(error => {
       console.log(error);
-      return null;
+      return { status: 500, data: error };
     });
 
   return res;
