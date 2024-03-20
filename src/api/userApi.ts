@@ -58,13 +58,12 @@ export const getUserInfo = async (): Promise<UserInfo> => {
 // 내 정보 수정
 export const updateUserInfo = async updateUserValues => {
   try {
-    const res = await fetch(`${BASE_URL}/3-4/users/me`, {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updateUserValues),
     });

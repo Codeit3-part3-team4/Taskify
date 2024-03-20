@@ -16,13 +16,13 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   const invitePage = Number(searchParams.invitePage);
   const dashboard = Number(dashboardId);
 
-  const MemberItem = ({ key, member }: { key: string; member: Member }) => {
+  const MemberItem = ({ member }: { member: Member }) => {
     const profileUrl = member.profileImageUrl
       ? member.profileImageUrl
       : 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/3-4_15418_1710925320857.jpeg?format=webp&width=755&height=518';
 
     return (
-      <li key={key} className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
+      <li className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
         <div className="flex flex-row items-center gap-2">
           {profileUrl ? (
             <Image src={profileUrl} width="32" height="32" alt="profile" />
@@ -48,7 +48,7 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
     return (
       <ul className="flex flex-col gap-[1px]">
         {members?.map(member => {
-          return <MemberItem key={`${id}-${member.userId}`} member={member} />;
+          return <MemberItem key={`${id}${member.userId}`} member={member} />;
         })}
       </ul>
     );
