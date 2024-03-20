@@ -7,6 +7,7 @@ import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
 import { LinkText, LinkImage } from './LinkComponents';
 import InviteModal from './InviteModal';
+import { redirect } from 'next/navigation';
 
 const getDashboardInvitations = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getDashboardInvitationsApi(dashboardId, pageIndex, size);
@@ -64,10 +65,11 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
     );
   };
 
-  const { totalCount, invitations } = await getDashboardInvitations(dashboard, page, showInviteCount);
-  if (invitations === null) return;
-
-  const maxPage = Math.ceil(totalCount / showInviteCount);
+  const result = await getDashboardInvitations(dashboard, page, showInviteCount);
+  if (result === null) {
+    redirect('/dashboard/mydashboard');
+  }
+  const maxPage = Math.ceil(result.totalCount / showInviteCount);
   const disabledNext = page === maxPage ? 'pointer-events-none' : '';
   const disabledPrev = page === 1 ? 'pointer-events-none' : '';
 
@@ -93,7 +95,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
         <InviteButton options="md:hidden" />
       </div>
       <div>
-        <InviteItems invitations={invitations} />
+        <InviteItems invitations={result.invitations} />
       </div>
       <Modal isOpen={isInviteModal} title={'초대하기'} showCloseButton={false}>
         <InviteModal id={Number(dashboardId)} pathname={`/dashboard/${dashboard}/edit`} query={`memberPage=${memberPage}&invitePage=${page}`} />

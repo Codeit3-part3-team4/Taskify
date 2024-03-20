@@ -84,7 +84,8 @@ export const getDashboardDetailsApi = async (id: number) => {
     .then(res => {
       if (res.status === 404) {
         throw new Error('404 not found');
-      }
+      } else if (res.status >= 400) throw new Error(`${res.status} error`);
+
       return res.json();
     })
     .catch(error => {
@@ -185,7 +186,7 @@ export const postDashboardInvitationsApi = async (id: number, email: string) => 
 };
 
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
-  const res = await authInstance
+  const res: InvitationsInf = await authInstance
     .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
       method: 'GET',
       cache: 'no-cache',
@@ -200,6 +201,8 @@ export const getDashboardInvitationsApi = async (id: number, page: number, size:
         throw new Error(`403 Forbidden`);
       } else if (res.status === 404) {
         throw new Error(`404 Not Found`);
+      } else if (res.status >= 400) {
+        throw new Error(`${res.status} error`);
       }
     })
     .catch(error => {

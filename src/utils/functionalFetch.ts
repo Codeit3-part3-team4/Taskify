@@ -1,4 +1,5 @@
 import { getRequestCookies } from '@/api/AuthApi';
+import dynamic from 'next/dynamic';
 
 class FunctionalFetch {
   private init?: RequestInit;
@@ -19,8 +20,8 @@ class FunctionalFetch {
     }
 
     if (!isAuthField) {
-      const token = await getRequestCookies('accessToken');
-      if (token && token.value) {
+      if (typeof window !== 'undefined') {
+        const token = await getRequestCookies('accessToken');
         this.init = {
           headers: {
             Authorization: `Bearer ${token.value}`,
@@ -47,6 +48,8 @@ class FunctionalFetch {
         ...newInit?.headers,
       },
     };
+
+    this.init = options;
     const res = fetch(url, options);
     return res;
   }

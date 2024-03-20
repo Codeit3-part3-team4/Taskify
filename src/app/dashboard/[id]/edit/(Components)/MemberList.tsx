@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
+import { redirect } from 'next/navigation';
 
 export const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getMembersApi(dashboardId, pageIndex, size);
@@ -52,7 +53,9 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   };
 
   const result = await getMembers(dashboard, page, showMemberCount);
-  if (result === null) return;
+  if (result === null) {
+    redirect('/dashboard/mydashboard');
+  }
 
   const maxPage = Math.ceil(result.totalCount / showMemberCount);
   const disabledNext = page === maxPage ? 'pointer-events-none' : '';
