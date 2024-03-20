@@ -1,5 +1,4 @@
 import { getRequestCookies } from '@/api/AuthApi';
-import dynamic from 'next/dynamic';
 
 class FunctionalFetch {
   private init?: RequestInit;
@@ -48,9 +47,15 @@ class FunctionalFetch {
         ...newInit?.headers,
       },
     };
-
     this.init = options;
-    const res = fetch(url, options);
+
+    if (this.init?.method?.toUpperCase() === 'GET' || this.init?.method?.toUpperCase() === 'HEAD') {
+      if (this.init?.body) {
+        delete this.init.body;
+      }
+    }
+
+    const res = fetch(url, this.init);
     return res;
   }
 }

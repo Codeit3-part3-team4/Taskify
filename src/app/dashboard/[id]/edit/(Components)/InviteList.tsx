@@ -10,7 +10,14 @@ import InviteModal from './InviteModal';
 import { redirect } from 'next/navigation';
 
 const getDashboardInvitations = async (dashboardId: number, pageIndex: number, size: number) => {
-  return await getDashboardInvitationsApi(dashboardId, pageIndex, size);
+  const result = await getDashboardInvitationsApi(dashboardId, pageIndex, size);
+  if (result.status === 200) {
+    return result.data;
+  } else if (result.status === 404 || result.status === 403) {
+    redirect('/dashboard/mydashboard');
+  } else if (result.status === 500) {
+    return null;
+  } else return null;
 };
 
 export default async function InviteList({ dashboardId, searchParams }: { dashboardId: string; searchParams: searchParamsProps }) {
@@ -66,9 +73,8 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
   };
 
   const result = await getDashboardInvitations(dashboard, page, showInviteCount);
-  if (result === null) {
-    redirect('/dashboard/mydashboard');
-  }
+  if (result === null) return;
+
   const maxPage = Math.ceil(result.totalCount / showInviteCount);
   const disabledNext = page === maxPage ? 'pointer-events-none' : '';
   const disabledPrev = page === 1 ? 'pointer-events-none' : '';

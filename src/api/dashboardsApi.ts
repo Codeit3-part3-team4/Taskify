@@ -186,30 +186,20 @@ export const postDashboardInvitationsApi = async (id: number, email: string) => 
 };
 
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
-  const res: InvitationsInf = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
+  try {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
         accept: 'application/json',
       },
-    })
-    .then(res => {
-      if (res.status === 200) {
-        return res.json();
-      } else if (res.status === 403) {
-        throw new Error(`403 Forbidden`);
-      } else if (res.status === 404) {
-        throw new Error(`404 Not Found`);
-      } else if (res.status >= 400) {
-        throw new Error(`${res.status} error`);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      return null;
     });
-  return res;
+    const data = await res.json();
+    return { status: res.status, data: data };
+  } catch (error) {
+    console.log(error);
+    return { status: 500, data: error };
+  }
 };
 
 export const deleteDashboardInvitationsCancelApi = async (id: number, invitationId: number) => {

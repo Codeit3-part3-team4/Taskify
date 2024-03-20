@@ -5,7 +5,7 @@ import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
 import { redirect } from 'next/navigation';
 
-export const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
+const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getMembersApi(dashboardId, pageIndex, size);
 };
 
