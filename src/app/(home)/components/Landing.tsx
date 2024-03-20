@@ -7,7 +7,9 @@ export default function Landing() {
     return (
       <div className="flex flex-col items-center vertical-middle text-center align-middle md:mb-44">
         <div className="mb-10">
-          <div className="w-287 h-168 rounded-lg overflow-hidden bg-white md:w-537 md:h-314 2xl:w-722 2xl:h-423">{/* <Canvas3DView /> */}</div>
+          <div className="w-[450px] h-[300px] rounded-lg overflow-hidden bg-white md:w-[720px] md:h-[480px] 2xl:w-[1200px] 2xl:h-[800px]">
+            <Canvas3DView />
+          </div>
         </div>
         <div className="flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6">
           <strong className="text-4xl mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>

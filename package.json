@@ -16,7 +16,7 @@
     "react-three-fiber": "^6.0.13"
   },
   "devDependencies": {
-    "@react-three/drei": "^9.99.7",
+    "@react-three/drei": "^9.56.24",
     "@types/node": "^20",
     "@types/react": "^18.2.64",
     "@types/react-datepicker": "^6.0.3",

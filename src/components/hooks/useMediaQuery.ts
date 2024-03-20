@@ -6,6 +6,7 @@ export enum MediaQueryType {
   MOBILE = 'MOBILE',
   TABLET = 'TABLET',
   DESKTOP = 'DESKTOP',
+  DESKTOP_2XL = 'DESKTOP_2XL',
 }
 
 export const useMediaQuery = () => {
@@ -17,8 +18,9 @@ export const useMediaQuery = () => {
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('(max-width: 768px)');
-    const tabletQuery = window.matchMedia('(min-width: 769px) and (max-width: 1024px)');
-    const desktopQuery = window.matchMedia('(min-width: 1025px)');
+    const tabletQuery = window.matchMedia('(min-width: 769px) and (max-width: 1023px)');
+    const desktopQuery = window.matchMedia('(min-width: 1024px) and (max-width: 1535px)');
+    const desktop2XLQuery = window.matchMedia('(min-width: 1536px)');
 
     if (mobileQuery.matches) {
       setMediaQuery(MediaQueryType.MOBILE);
@@ -26,6 +28,8 @@ export const useMediaQuery = () => {
       setMediaQuery(MediaQueryType.TABLET);
     } else if (desktopQuery.matches) {
       setMediaQuery(MediaQueryType.DESKTOP);
+    } else if (desktop2XLQuery.matches) {
+      setMediaQuery(MediaQueryType.DESKTOP_2XL);
     }
 
     mobileQuery.addEventListener('change', event => {
@@ -36,6 +40,9 @@ export const useMediaQuery = () => {
     });
     desktopQuery.addEventListener('change', event => {
       if (event.matches) handleMediaQuery(event, MediaQueryType.DESKTOP);
+    });
+    desktop2XLQuery.addEventListener('change', event => {
+      if (event.matches) handleMediaQuery(event, MediaQueryType.DESKTOP_2XL);
     });
   }, []);
 
