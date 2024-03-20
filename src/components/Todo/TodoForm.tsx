@@ -44,6 +44,7 @@ export default function TodoForm({ dashboardId, columnId }) {
     const { selectedImage, ...requiredFields } = formData;
     return Object.values(requiredFields).every(value => value);
   };
+
   const handleSubmit = async e => {
     e.preventDefault();
     if (!isFormValid()) {

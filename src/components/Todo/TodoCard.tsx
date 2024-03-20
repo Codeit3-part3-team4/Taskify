@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
+import { useModal } from '../hooks/useModal/useModal';
 import { deleteCardApi, detailCardApi } from '@/api/cardApi';
 
 interface CardDetails {
@@ -11,7 +12,7 @@ interface CardDetails {
 
 export default function TodoCard({ cardId, dashboardId, columnId }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const { isOpen: isUpdateModalOpen, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModal();
   const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
 
   useEffect(() => {
@@ -27,9 +28,16 @@ export default function TodoCard({ cardId, dashboardId, columnId }) {
   }, [cardId]);
 
   console.log(cardDetails);
-  const handleEditClick = () => {
-    setUpdateModalOpen(true);
-    setIsDropdownOpen(false);
+
+  const handleEditClick = async () => {
+    try {
+      const details = await detailCardApi(cardId);
+      setCardDetails(details);
+      openUpdateModal();
+      setIsDropdownOpen(false);
+    } catch (error) {
+      console.error('카드 상세 정보를 가져오는 데 실패했습니다.', error);
+    }
   };
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -39,7 +47,6 @@ export default function TodoCard({ cardId, dashboardId, columnId }) {
       try {
         await deleteCardApi(cardId);
         alert('카드가 삭제되었습니다.');
-        // 페이지 새로고침 or 리다이렉션
         window.location.reload();
       } catch (error) {
         console.error('카드 삭제 실패:', error);
@@ -65,7 +72,14 @@ export default function TodoCard({ cardId, dashboardId, columnId }) {
         </div>
       )}
 
-      {isUpdateModalOpen && <TodoUpdate closeModal={() => setUpdateModalOpen(false)} cardDetails={cardDetails} cardId={cardId} dashboardId={dashboardId} />}
+      <TodoUpdate
+        isOpen={isUpdateModalOpen}
+        closeModal={closeUpdateModal}
+        cardDetails={cardDetails}
+        cardId={cardId}
+        dashboardId={dashboardId}
+        columnId={columnId}
+      />
       <div className="flex flex-col gap-3 w-full">
         {cardDetails && (
           <>
