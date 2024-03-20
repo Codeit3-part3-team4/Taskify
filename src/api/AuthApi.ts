@@ -1,3 +1,5 @@
+import { json } from 'stream/consumers';
+
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 const LOCAL_URL = 'http://localhost:3000';
 
@@ -23,19 +25,15 @@ export const loginApi = async (userValues: UserValues) => {
     },
     body: JSON.stringify(userValues),
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else if (res.status === 400) {
-        throw new Error('error');
-      } else if (res.status === 404) {
-        throw new Error('404 not found');
+    .then(res => res.json())
+    .then(data => {
+      if (data.accessToken) {
+        return data;
+      } else {
+        alert(data.message);
       }
-    })
-    .catch(error => {
-      console.log(error);
-      return null;
     });
+
   console.log('로그인 성공', res);
   return res;
 };

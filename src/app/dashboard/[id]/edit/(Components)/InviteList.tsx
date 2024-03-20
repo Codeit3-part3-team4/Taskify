@@ -3,9 +3,9 @@ import { getDashboardInvitationsApi } from '@/api/dashboardsApi';
 import Image from 'next/image';
 import { useId } from 'react';
 import { searchParamsProps } from '../page';
-import { LinkImage, LinkText } from './LinkComponents';
 import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
+import { LinkText, LinkImage } from './LinkComponents';
 import InviteModal from './InviteModal';
 
 const getDashboardInvitations = async (dashboardId: number, pageIndex: number, size: number) => {
@@ -76,7 +76,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
       <div className="flex flex-row justify-between items-center mb-3 pt-5 px-5">
         <strong className="text-xl">초대 내역</strong>
         <div className="flex flex-row items-center gap-3">
-          <div className="text-xs">{`${totalCount} 페이지 중 ${page}`}</div>
+          <div className="text-xs">{`${maxPage} 페이지 중 ${page}`}</div>
           <div className="flex flex-row rounded-md gap-[1px] border border-gary-D9D9D9 bg-gray-D9D9D9 overflow-hidden">
             <LinkImage options={disabledPrev} pathname={`/dashboard/${dashboard}/edit`} query={{ memberPage: `${memberPage}`, invitePage: `${page - 1}` }}>
               <Image className="opacity-20 group-hover:opacity-100" src="/images/arrow-forward-left.svg" width="16" height="16" alt="arrow-left" />
@@ -96,7 +96,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
         <InviteItems invitations={invitations} />
       </div>
       <Modal isOpen={isInviteModal} title={'초대하기'} showCloseButton={false}>
-        <InviteModal id={dashboardId} pathname={`/dashboard/${dashboard}/edit`} query={`memberPage=${memberPage}&invitePage=${page}`} />
+        <InviteModal id={Number(dashboardId)} pathname={`/dashboard/${dashboard}/edit`} query={`memberPage=${memberPage}&invitePage=${page}`} />
       </Modal>
     </div>
   );
