@@ -4,9 +4,14 @@ import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import { LinkImage, LinkText } from './LinkComponents';
 import { redirect } from 'next/navigation';
+import { getUserInfo } from '../../../../../api/userApi';
 
 const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
   return await getMembersApi(dashboardId, pageIndex, size);
+};
+
+const getUser = async () => {
+  return await getUserInfo();
 };
 
 export default async function MemeberList({ dashboardId, searchParams }: { dashboardId: string; searchParams: searchParamsProps }) {
@@ -16,10 +21,8 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
   const invitePage = Number(searchParams.invitePage);
   const dashboard = Number(dashboardId);
 
-  const MemberItem = ({ member }: { member: Member }) => {
-    const profileUrl = member.profileImageUrl
-      ? member.profileImageUrl
-      : 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/3-4_15418_1710925320857.jpeg?format=webp&width=755&height=518';
+  const MemberItem = ({ member, owner }: { member: Member; owner: boolean }) => {
+    const profileUrl = member.profileImageUrl ? member.profileImageUrl : '';
 
     return (
       <li className="relative flex flex-row h-14 justify-between items-center bg-white px-5">
@@ -33,22 +36,28 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
           )}
           <span className="text-sm">{member.nickname}</span>
         </div>
-        <LinkText
-          options=""
-          pathname={`/dashboard/${dashboard}/edit`}
-          query={{ memberPage: `${page}`, invitePage: `${invitePage}`, deleteMember: `${member.id}` }}
-        >
-          <strong>삭제</strong>
-        </LinkText>
+        {owner ? (
+          <strong>관리자</strong>
+        ) : (
+          <LinkText
+            options=""
+            pathname={`/dashboard/${dashboard}/edit`}
+            query={{ memberPage: `${page}`, invitePage: `${invitePage}`, deleteMember: `${member.id}` }}
+          >
+            <strong>삭제</strong>
+          </LinkText>
+        )}
       </li>
     );
   };
 
-  const MemberItems = ({ members }: { members: Member[] }) => {
+  const MemberItems = async ({ members }: { members: Member[] }) => {
+    const owner = await getUser();
+
     return (
       <ul className="flex flex-col gap-[1px]">
         {members?.map(member => {
-          return <MemberItem key={`${id}${member.userId}`} member={member} />;
+          return <MemberItem key={`${id}${member.userId}`} member={member} owner={owner.id === member.userId} />;
         })}
       </ul>
     );

@@ -15,8 +15,12 @@ export default function Header({ theme }: HeaderProps) {
       <div
         className={`flex flex-row justify-between gap-4 text-sm mr-6 ${theme === 'dark' ? 'text-white' : 'text-black'} md:text-lg md:gap-8 md:px-10 2xl:px-20`}
       >
-        <Link href={{ pathname: '/login' }}>로그인</Link>
-        <Link href={{ pathname: '/signup' }}>회원가입</Link>
+        <Link href={{ pathname: '/login' }}>
+          <strong>로그인</strong>
+        </Link>
+        <Link href={{ pathname: '/signup' }}>
+          <strong>회원가입</strong>
+        </Link>
       </div>
     </nav>
   );

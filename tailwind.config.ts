@@ -68,12 +68,13 @@ const config: Config = {
         'violet-8%': '#F1EFFD',
         'red-D6173A': '#D6173A',
         'green-7AC555': '#7AC555',
+        'green-A3C4A2': '#A3C4A2',
         'purple-760DDE': '#760DDE',
         'orange-FFA500': '#FFA500',
         'blue-76A6EA': '#76A6EA',
         'pink-E876EA': '#E876EA',
       },
-      duration: {
+      transitionDuration: {
         '1500': '1500ms',
         '2000': '2000ms',
         '3000': '3000ms',
