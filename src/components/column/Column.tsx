@@ -33,13 +33,13 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
             <div className="flex items-center gap-2">
               <img src="/images/purple-dot.svg" alt="보라색 점 아이콘" className="w-2" />
               <div className="text-base font-bold">{columnTitle}</div>
-              <div className="flex w-5 h-5 text-sm py-1 px-1.5 bg-gray-200 rounded text-slate-500 items-center">{cardList?.totalCount}</div>
+              <div className="flex inline-block h-5 text-sm py-1 px-1.5 bg-gray-200 rounded text-slate-500 items-center">{cardList?.totalCount}</div>
             </div>
             <EditColumn columnId={columnId} initialColumnName={columnTitle} onColumnUpdated={onColumnUpdated} onColumnDeleted={onCloumnDeleted} />
           </div>
           <div className="flex md: justify-center">
             <button
-              className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-100 hover:border-purple-760DDE transition duration-500"
+              className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-200 hover:border-purple-760DDE transition duration-500"
               onClick={openModal}
             >
               <TodoForm dashboardId={dashboardId} columnId={columnId} />
