@@ -41,7 +41,6 @@ export default function MyPage() {
 
       console.log('비밀번호 변경 성공:', res);
     } catch (error) {
-      console.log('안돼');
       console.error('비밀번호 변경 실패', error);
     }
   };
@@ -70,7 +69,7 @@ export default function MyPage() {
   return (
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
-        {userInfo ? (
+        {userInfo.id ? (
           <div className="w-full h-full bg-gray-EEEEEE">
             <div className="m-10 border rounded-lg bg-white-FFFFFF">
               <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
@@ -79,7 +78,9 @@ export default function MyPage() {
             <MyPassword onSubmit={handleChangePassword} />
           </div>
         ) : (
-          <LoginPage />
+          <div>
+            <LoginPage />
+          </div>
         )}
       </UserContext.Provider>
     </div>

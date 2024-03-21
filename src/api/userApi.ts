@@ -54,6 +54,8 @@ export const getUserInfo = async (): Promise<UserInfo> => {
       },
     });
     const data = await res.json();
+
+    console.log('정보 조회 api:', data);
     return data;
   } catch (error) {
     console.error('계정 api 페이지 에러:', error);
