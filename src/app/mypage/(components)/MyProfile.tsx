@@ -87,7 +87,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
   return (
     <div>
       {userInfo && (
-        <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[355px] rounded-lg bg-white-FFFFFF">
+        <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF">
           <div className="flex flex-col">
             <h2 className="text-xl md:text-2xl font-bold">프로필</h2>
             <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">
@@ -107,12 +107,17 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
                     <input type="file" id="profileImageUrl" ref={fileInput} onChange={handleProfileImageChange} accept="image/*" className="hidden" />
                   </div>
                 </div>
-                <div>
-                  <button onClick={handleBasicProfileImg}>기본 이미지</button>
+                <div className="flex flex-col ml-2 md:ml-0 md:mt-3 lg:mt-4">
+                  <button
+                    onClick={handleBasicProfileImg}
+                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px] hover:bg-violet-5534DA"
+                  >
+                    기본 프로필
+                  </button>
                 </div>
               </div>
 
-              <div id="이메일+닉네임 영역" className="flex flex-col">
+              <div id="이메일+닉네임 영역" className="flex flex-col md:ml-4">
                 <div id="이메일 영역" className="mt-6 md:mt-0">
                   <div className="font-semibold">이메일</div>
                   <input
@@ -139,7 +144,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
               </div>
             </div>
             <div className="flex justify-end">
-              <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[32px] rounded mt-4">
+              <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
                 저장
               </button>
             </div>
