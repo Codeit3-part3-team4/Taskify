@@ -64,7 +64,7 @@ export interface DetailCard {
 }
 
 // 카드 생성
-export const postCardApi = async cardData => {
+export const postCardApi = async (cardData: PostCard) => {
   const res = await authInstance
     .fetch(`${BASE_URL}/3-4/cards`, {
       method: 'POST',
@@ -115,7 +115,7 @@ export const getCardListApi = async (size: number, cursorId: number, columnId: n
 };
 
 // 카드 수정
-export const editCardApi = async (cardId: number, cardData: any) => {
+export const editCardApi = async (cardId: number, cardData: Partial<EditCard>) => {
   const res = await authInstance.fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
     method: 'PUT',
     body: JSON.stringify(cardData),
