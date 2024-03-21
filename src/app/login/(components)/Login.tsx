@@ -71,7 +71,7 @@ export default function Login({ onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col items-center t-[574px] ">
+    <div className="flex flex-col items-center ">
       <form onSubmit={onSubmitForm}>
         <div className="mt-[40px] md:mt-[60px] lg:mt-[38px]">
           <InputUserInfo
