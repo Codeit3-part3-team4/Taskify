@@ -91,6 +91,7 @@ export default function Login({ onSubmit }) {
             id={'password'}
             type={typeValue()}
             value={userValues.password}
+            password={true}
             placeholder={'비밀번호를 입력해 주세요'}
             onChange={onChangeLoginSubmit}
             onBlur={onBlur}
