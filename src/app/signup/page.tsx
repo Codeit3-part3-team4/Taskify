@@ -1,9 +1,8 @@
 'use client';
 
 import { signupApi } from '@/api/userApi';
-import SignUp from './components/Signup';
+import SignUp from './(components)/Signup';
 import { useRouter } from 'next/navigation';
-import SignUptest from './components/Signuptest';
 import MainLogo from '@/components/login/MainLogo';
 import { useState } from 'react';
 import Modal from '@/components/Modal/Modal';

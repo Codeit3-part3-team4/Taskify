@@ -1,5 +1,4 @@
 import { ChangeEventHandler } from 'react';
-import validateForm from './validateForm';
 import Image from 'next/image';
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
   value: string;
   password?: boolean;
   placeholder: string;
-  error: string;
+  error?: string;
   onChange: ChangeEventHandler;
   onBlur: ChangeEventHandler;
   handlePasswordLook?: ChangeEventHandler;
