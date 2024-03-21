@@ -75,7 +75,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
   const result = await getDashboardInvitations(dashboard, page, showInviteCount);
   if (result === null) return;
 
-  const maxPage = Math.ceil(result.totalCount / showInviteCount);
+  const maxPage = Math.max(1, Math.ceil(result.totalCount / showInviteCount));
   const disabledNext = page === maxPage ? 'pointer-events-none' : '';
   const disabledPrev = page === 1 ? 'pointer-events-none' : '';
 
