@@ -37,30 +37,43 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
     });
   };
 
-  const handleProfileImageChange = e => {
+  const handleProfileImageChange = async e => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setUpdateProfileImg(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
     reader.onloadend = () => {
       // 이미지 파일이 아니라 데이터 URL
       const value = reader.result;
-      setUpdateProfileImg({
-        profileImageUrl: file,
-      });
+
       console.log('userinfo', updateUserValues);
 
       console.log('이미지 업뎃,', file);
       console.log('이미지 업뎃,', updateProfileImg);
     };
-    onChangeProfileImg(file);
+    const imageUrl = await onChangeProfileImg(file);
+    setUpdateUserValues({
+      ...updateUserValues,
+      profileImageUrl: imageUrl,
+    });
+    console.log('프로필 업로드해보자 : ', updateUserValues);
   };
 
   const onSubmitForm = e => {
     e.preventDefault();
+    // if (updateProfileImg !== null) {
+    //   const imageUrl = updateProfileImg;
+    //   setUpdateUserValues({
+    //     ...updateUserValues,
+    //     profileImageUrl: imageUrl,
+    //   });
+    // }
     onSubmit(updateUserValues);
+    console.log('api로 프로필 변경 데이터 보내줌: ' + updateUserValues);
+
     // if (updateProfileImg) {
     //   onChangeProfileImg(updateProfileImg);
     // }
@@ -76,16 +89,11 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
             <div>
               <h2>프로필</h2>
               <div>
-                <img src={userInfo.profileImageUrl} alt="프로필 사진 " width={182} height={182} />
+                <img src={updateProfileImg ? URL.createObjectURL(updateProfileImg) : userInfo.profileImageUrl} alt="프로필 사진 " width={182} height={182} />
                 {/* {userInfo.profileImageUrl === null ? (
                   <Image src="/images/basic-profile.svg" width={182} height={182} priority={true} alt="프로필 사진" />
                 ) : (
-                  <div>
-                    <img src={updateUserValues.profileImageUrl} alt="프로필 사진" />
-                    <div>
-                      <input type="file" id="profileImageUrl" onChange={handleProfileImageChange} accept="image/*" placeholder="업로드" />
-                    </div>
-                  </div>
+                  <img src={URL.createObjectURL(updateUserValues.profileImageUrl)} alt="프로필 사진" />
                 )} */}
                 <a href="#" onClick={() => fileInput.current.click()}>
                   <img src={'/images/profileimg-plus'} alt="이미지 업로드" width={15} height={15} />

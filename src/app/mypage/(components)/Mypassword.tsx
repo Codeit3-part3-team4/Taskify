@@ -37,6 +37,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     const value = e.target.value;
     setPwCheck(value);
     console.log(newPwcheck);
+    validateForm();
   };
 
   const validateForm = () => {
@@ -97,6 +98,10 @@ const MyPassword: React.FC = ({ onSubmit }) => {
   //   return res.json();
   // };
 
+  const onBlur = () => {
+    validateForm();
+  };
+
   return (
     <div>
       <div>
@@ -133,6 +138,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                   placeholder={'새 비밀번호 입력'}
                   onChange={onChangePasswordckValues}
                   error={errors.newPwcheck}
+                  onBlur={onBlur}
                 />
               </div>
             </form>
