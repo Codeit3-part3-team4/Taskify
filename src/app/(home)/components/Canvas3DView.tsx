@@ -127,16 +127,13 @@ const Laptop = ({ operateIndex }: { operateIndex: number }) => {
     switch (mediaQuery) {
       case MediaQueryType.MOBILE:
         setIframeSize([450, 300]);
-        // setIframeUrl('https://www.codeit.kr/');
         break;
       case MediaQueryType.TABLET:
       case MediaQueryType.DESKTOP:
         setIframeSize([720, 480]);
-        // setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');
         break;
       case MediaQueryType.DESKTOP_2XL:
         setIframeSize([1200, 800]);
-        // setIframeUrl('https://ohddang.github.io/this-is-FE');
         break;
     }
   }, [mediaQuery]);
