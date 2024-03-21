@@ -5,11 +5,38 @@ import { useEffect, useRef, useState } from 'react';
 import TodoForm from '../Todo/TodoForm';
 import { useModal } from '../hooks/useModal/useModal';
 import EditColumn from './EditColumn';
+import useIntersectionObserver from '@/components/hooks/useObserver/useIntersectionObserver';
 
 const Column = ({ columnId, columnTitle, dashboardId }) => {
   const [cardList, setCardList] = useState<CardList | null>(null);
-  const cursorIdRef = useRef(null);
   const { openModal } = useModal;
+  const [processedCards, setProcessedCards] = useState<CardList[]>([]);
+  const [loading, setLoading] = useState(false);
+  const cursorIdRef = useRef(null);
+  const isClosedRef = useRef<boolean>(false);
+  const hasNotNext = processedCards.length !== 0 && !cursorIdRef.current;
+
+  const handleIntersection = async () => {
+    setLoading(true);
+    try {
+      if (hasNotNext || loading) {
+        return;
+      }
+
+      const { cards, cursorId } = await getCardListApi(5, cursorIdRef.current, columnId);
+      cursorIdRef.current = cursorId;
+      if (!cursorId) {
+        isClosedRef.current = true;
+      }
+      setProcessedCards(prevCards => [...prevCards, ...cards]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const { sentinelRef } = useIntersectionObserver(handleIntersection);
 
   useEffect(() => {
     async function fetchCardData() {

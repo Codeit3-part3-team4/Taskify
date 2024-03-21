@@ -109,8 +109,10 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
               <div className="flex flex-col border rounded-md p-2 gap-2 w-2/5 h-1/2">
                 <div className="text-sm font-bold">담당자</div>
                 <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full">{card.assignee.profileImageUrl}</div>
-                  <div className="text-sm">{card.assignee.nickname}</div>
+                  <div className="flex justify-center items-center font-bold w-8 h-8 rounded-full bg-green-A3C4A2 text-white">
+                    {card.assignee.profileImageUrl ? card.assignee.profileImageUrl : card.assignee.nickname[0].toUpperCase()}
+                  </div>
+                  <div className="ml-3 text-sm">{card.assignee.nickname}</div>
                 </div>
                 <div className="text-sm font-bold">마감일</div>
                 <div className="text-sm">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
