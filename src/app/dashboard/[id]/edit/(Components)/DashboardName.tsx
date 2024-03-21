@@ -15,6 +15,7 @@ const getDashboardDetails = async (dashboardId: string) => {
 export default function DashboardName({ dashboardId }: { dashboardId: string }) {
   const [color, setColor] = useState<string>('');
   const [title, setTitle] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const mediaQuery = useMediaQuery();
 
   const onClickColor = (color: string) => {
@@ -32,12 +33,22 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getDashboardDetails(dashboardId).then(res => {
+      setIsLoading(false);
       if (res === null) return;
       setColor(res.color);
       setTitle(res.title);
     });
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center h-44 items-center">
+        <svg className="animate-spin h-10 w-10 border-4 rounded-full border-t-indigo-500" viewBox="0 0 24 24"></svg>
+      </div>
+    );
+  }
 
   return (
     <form className="flex flex-col rounded-md p-5 bg-white" onSubmit={onSubmit}>
@@ -65,7 +76,10 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
         <input className="w-full h-full focus:outline-none" name="title" type="text" />
       </div>
       <div className="flex flex-row justify-end">
-        <button className="flex flex-row justify-center items-center w-20 h-8 bg-violet-5534DA text-white text-xs rounded-md" type="submit">
+        <button
+          className="flex flex-row justify-center items-center w-20 h-8 bg-violet-5534DA text-white text-xs rounded-md transition-all hover:scale-105"
+          type="submit"
+        >
           변경
         </button>
       </div>

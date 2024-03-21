@@ -34,8 +34,11 @@ export default function DashboardDelete({ dashboardId }: { dashboardId: string }
 
   return (
     <div>
-      <div className="flex justify-center items-center w-full px-20 py-4 rounded border border-gray-D9D9D9 bg-white">
-        <button onClick={() => setShowModal(true)}>대시보드 삭제하기</button>
+      <div
+        className="flex justify-center items-center w-full px-20 py-4 rounded border border-gray-D9D9D9 bg-white hover:bg-gray-D9D9D9"
+        onClick={() => setShowModal(true)}
+      >
+        <strong>대시보드 삭제하기</strong>
       </div>
       <Modal isOpen={showModal} title="대시보드 삭제" showCloseButton={false}>
         <div className="flex flex-col">
