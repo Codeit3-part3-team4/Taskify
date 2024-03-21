@@ -1,19 +1,22 @@
 'use client';
 import GetCard from '../getCard/GetCard';
 import { CardList, getCardListApi } from '@/api/cardApi';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TodoForm from '../Todo/TodoForm';
 import { useModal } from '../hooks/useModal/useModal';
 import EditColumn from './EditColumn';
 
 const Column = ({ columnId, columnTitle, dashboardId }) => {
   const [cardList, setCardList] = useState<CardList | null>(null);
+  const cursorIdRef = useRef(null);
   const { openModal } = useModal;
+
   useEffect(() => {
     async function fetchCardData() {
       try {
-        const result = await getCardListApi(10, 10, columnId);
+        const result = await getCardListApi(10, cursorIdRef.current, columnId);
         setCardList(result);
+        cursorIdRef.current = result.cursorId;
         return result;
       } catch (e) {
         console.log(e);
