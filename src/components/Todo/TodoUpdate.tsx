@@ -45,7 +45,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     title: cardDetails ? cardDetails.title : '',
     description: cardDetails ? cardDetails.description : '',
     deadline: cardDetails && cardDetails.deadline ? new Date(cardDetails.deadline) : new Date(),
-    tags: cardDetails && cardDetails.tags ? cardDetails.tags.join(', ') : '',
+    tags: cardDetails && cardDetails.tags ? [...cardDetails.tags] : [],
     selectedImage: '',
   });
   const [members, setMembers] = useState<Member[]>([]);
@@ -65,6 +65,27 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
   useEffect(() => {
     fetchData(1, 10);
   }, [dashboardId]);
+
+  const handleTagInputKeyDown = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newTag = e.target.value.trim();
+      if (newTag && !formData.tags.includes(newTag)) {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          tags: [...prevFormData.tags, newTag],
+        }));
+        e.target.value = '';
+      }
+    }
+  };
+
+  const removeTag = tagToRemove => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
+    }));
+  };
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -86,7 +107,9 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
   };
 
   const isFormValid = () => {
-    return formData.title && formData.description && formData.deadline;
+    const { assigneeUserId, title, description, deadline, tags } = formData;
+
+    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
   };
 
   const handleSubmit = async e => {
@@ -235,9 +258,18 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
                 type="text"
                 placeholder="입력 후 Enter"
                 className="input input-bordered w-full mb-3 "
-                value={formData.tags}
-                onChange={handleInputChange}
+                onKeyDown={handleTagInputKeyDown}
               />
+              <div className="tags-list">
+                {formData.tags.map((tag, index) => (
+                  <div key={`${tag}-${index}`} className="tag">
+                    {tag}
+                    <button type="button" onClick={() => removeTag(tag)}>
+                      x
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
             <div>
               <label htmlFor="file" className="block font-bold text-sm mb-1">
