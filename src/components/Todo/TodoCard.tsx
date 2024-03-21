@@ -91,14 +91,14 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
               <div className="bg-lime-100 text-lime-400 w-50 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">{card.tags}</div>
             </div>
             <div className="flex">
-              <div className="flex flex-col">
-                <div className="flex w-full p-5">{cardDetails.description}</div>
+              <div className="flex flex-col w-3/5">
+                <div className="flex w-full p-5 break-all">{cardDetails.description}</div>
                 <div className="flex w-full p-5">
                   {' '}
                   {cardDetails?.imageUrl && <Image src={cardDetails.imageUrl} alt="Card Image" width={500} height={300} layout="responsive" />}
                 </div>
               </div>
-              <div className="flex flex-col border p-2 gap-2 w-full h-full">
+              <div className="flex flex-col border p-2 gap-2 w-2/5 h-1/2 ">
                 <div className="text-m font-bold">담당자</div>
                 <div className="flex items-center">
                   <div className="w-10 h-10 rounded-full">{card.assignee.profileImageUrl}</div>
