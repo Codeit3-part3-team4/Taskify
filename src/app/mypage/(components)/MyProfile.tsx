@@ -91,14 +91,16 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
           <div>
             <div className="">
               <h2 className="text-2xl font-bold">프로필</h2>
-              <div className="flex mt-5">
-                <div>
+              <div className="flex flex-col mt-5">
+                <div className="flex flex-row md:flex-col">
                   <div className="relative flex flex-col items-center justify-center">
-                    {updateUserValues.profileImageUrl ? (
-                      <img src={updateUserValues.profileImageUrl} alt="프로필 사진" width={182} height={182} className="border rounded-md" />
-                    ) : (
-                      <div className="bg-gray-EEEEEE w-[182px] h-[182px]"></div>
-                    )}
+                    <div className="w-[100px] md:w-[182px] h-[100px] md:h-[182px] overflow-hidden">
+                      {updateUserValues.profileImageUrl ? (
+                        <img src={updateUserValues.profileImageUrl} alt="프로필 사진" className="border rounded-md w-full h-full object-cover" />
+                      ) : (
+                        <div className="bg-gray-EEEEEE w-full h-full"></div>
+                      )}
+                    </div>
                     <div className="absolute ">
                       <label htmlFor="profileImageUrl">
                         <Image src="/images/profileimg-plus.svg" alt="이미지 업로드" width={30} height={30} className="w-[30px] h-[30px]" />
