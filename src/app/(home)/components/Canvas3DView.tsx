@@ -85,7 +85,7 @@ const MainThumb = ({ onClick }: { onClick: (revert: boolean) => void }) => {
   );
 };
 
-const Laptop = () => {
+const Laptop = ({ operateIndex }: { operateIndex: number }) => {
   const laptop = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf');
   const [isStart, setIsStart] = useState(false);
   const [isRevert, setIsRevert] = useState(false);
@@ -110,19 +110,33 @@ const Laptop = () => {
   };
 
   useEffect(() => {
+    switch (operateIndex) {
+      case 0:
+        setIframeUrl('https://ohddang.github.io/this-is-FE');
+        break;
+      case 1:
+        setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');
+        break;
+      case 2:
+        setIframeUrl('https://www.codeit.kr/');
+        break;
+    }
+  }, [operateIndex]);
+
+  useEffect(() => {
     switch (mediaQuery) {
       case MediaQueryType.MOBILE:
         setIframeSize([450, 300]);
-        setIframeUrl('https://www.codeit.kr/');
+        // setIframeUrl('https://www.codeit.kr/');
         break;
       case MediaQueryType.TABLET:
       case MediaQueryType.DESKTOP:
         setIframeSize([720, 480]);
-        setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');
+        // setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');
         break;
       case MediaQueryType.DESKTOP_2XL:
         setIframeSize([1200, 800]);
-        setIframeUrl('https://ohddang.github.io/this-is-FE');
+        // setIframeUrl('https://ohddang.github.io/this-is-FE');
         break;
     }
   }, [mediaQuery]);
@@ -240,10 +254,10 @@ const Laptop = () => {
   );
 };
 
-export default function Canvas3DView() {
+export default function Canvas3DView({ operateIndex }: { operateIndex: number }) {
   return (
     <Canvas camera={{ position: [0, 1, 5], fov: 45, near: 0.1, far: 1500 }} style={{ background: '#F1EFFD' }}>
-      <Laptop />
+      <Laptop operateIndex={operateIndex} />
     </Canvas>
   );
 }

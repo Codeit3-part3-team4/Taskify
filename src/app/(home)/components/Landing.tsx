@@ -1,23 +1,43 @@
 import Image from 'next/image';
 import Canvas3DView from './Canvas3DView';
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function Landing() {
   const Title = () => {
+    const [operateIndex, setOperateIndex] = useState<number>(0);
+    const [degree, setDegree] = useState<number>(0);
+
+    const operateRef = useRef<HTMLDivElement>(null);
+
+    const onClick = () => {
+      setOperateIndex((operateIndex + 1) % 3);
+
+      if (operateRef.current !== null) {
+        operateRef.current.style.transformOrigin = '40% 40%';
+
+        operateRef.current.style.transform = `rotate(${degree + 120}deg)`;
+        setDegree(degree + 120);
+      }
+    };
+    const loginOpacity = operateIndex === 2 ? 'opacity-100' : 'opacity-0';
+
     return (
       <div className="flex flex-col items-center vertical-middle text-center align-middle md:mb-44">
-        <div className="mb-10">
+        <div className="relative mb-10">
           <div className="w-[450px] h-[300px] rounded-lg overflow-hidden bg-white md:w-[720px] md:h-[480px] 2xl:w-[1200px] 2xl:h-[800px]">
-            <Canvas3DView />
+            <Canvas3DView operateIndex={operateIndex} />
+            <div className={`absolute top-full left-full w-9 h-9 text-begie-500 transition-all transform hover:scale-125`} onClick={onClick} ref={operateRef}>
+              <Image className="w-7 h-7" src="/images/refresh-white.svg" width="36" height="36" alt="refresh" />
+            </div>
           </div>
         </div>
-        <div className="flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6">
+        <div className={`flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6 transition-opacity duration-500 ${loginOpacity}`}>
           <strong className="text-4xl mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
           <strong className="text-5xl text-violet-5534DA mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
         </div>
-        <div className="text-xs mb-20 md:text-sm md:mb-16 2xl:text-base">서비스의 메인 설명 들어갑니다</div>
-        <div className="rounded-lg w-60 h-11 bg-violet-5534DA md:w-72">
+        <div className="text-xs mb-20 md:text-sm md:mb-16 2xl:text-base"></div>
+        <div className={`rounded-lg w-60 h-11 bg-violet-5534DA md:w-72 transition-opacity duration-500 ${loginOpacity}`}>
           <Link
             className="flex justify-center items-center w-full h-full md:text-lg"
             href={{
