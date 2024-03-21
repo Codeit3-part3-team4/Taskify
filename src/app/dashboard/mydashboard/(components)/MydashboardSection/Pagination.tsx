@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 const ITEMS_PER_PAGE = 7;
 
-interface Pagination {
+interface PaginationProps {
   count: number;
   page: number;
   setPage: (page: number) => void;
 }
 
-export default function Pagination({ count, page, setPage }: Pagination) {
+export default function Pagination({ count, page, setPage }: PaginationProps) {
   const maxPage = Math.max(1, Math.ceil(count / ITEMS_PER_PAGE));
 
   const handlePrevPageClick = () => {

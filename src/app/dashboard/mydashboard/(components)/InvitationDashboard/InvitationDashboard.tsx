@@ -1,51 +1,40 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Invitation } from '@/api/InvitationApi';
 import { getInvitationList } from '@/api/InvitationApi';
 import SearchForm from './SearchForm';
 import InvitationList from './InvitationList';
+import useIntersectionObserver from '@/components/hooks/useObserver/useIntersectionObserver';
 
 export default function InvitationDashboard() {
   const [processedInvitations, setProcessedInvitations] = useState<Invitation[]>([]);
-  const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
   const cursorIdRef = useRef<number | null>(null);
-  const isCloseFncRef = useRef(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(items => {
-      if (isCloseFncRef.current || loading) {
-        // 추가된 조건: 로딩 중이거나 이미 함수를 종료한 경우에는 실행하지 않음
+  const isClosedRef = useRef<boolean>(false);
+  const hasNotNext = processedInvitations.length !== 0 && !cursorIdRef.current;
+
+  const handleIntersection = async () => {
+    setLoading(true);
+    try {
+      if (hasNotNext || loading) {
         return;
       }
-      items.forEach(item => {
-        if (item.isIntersecting) {
-          setLoading(true); // Intersection Observer 콜백 실행 전에 로딩 상태 변경
-          const handleInvitationList = async () => {
-            const { invitations, cursorId } = await getInvitationList(8, cursorIdRef.current, inputValue);
-            cursorIdRef.current = cursorId;
-            if (!cursorIdRef.current) {
-              isCloseFncRef.current = true;
-            }
-            setProcessedInvitations(prevInvitations => [...prevInvitations, ...invitations]);
-            setLoading(false);
-          };
-          handleInvitationList();
-        }
-      });
-    });
-
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current);
-    }
-
-    return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current);
+      const { invitations, cursorId } = await getInvitationList(8, cursorIdRef.current, inputValue);
+      cursorIdRef.current = cursorId;
+      if (!cursorId) {
+        isClosedRef.current = true;
       }
-    };
-  }, [inputValue, processedInvitations, loading]);
+      setProcessedInvitations(prevInvitations => [...prevInvitations, ...invitations]);
+    } catch (error) {
+      // 에러 처리
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const { sentinelRef } = useIntersectionObserver(handleIntersection);
 
   const handleSearchSubmit = async (value: string) => {
     try {
@@ -55,7 +44,7 @@ export default function InvitationDashboard() {
       setProcessedInvitations(invitations);
       cursorIdRef.current = cursorId;
       if (!cursorIdRef.current) {
-        isCloseFncRef.current = true;
+        isClosedRef.current = true;
       }
     } catch (error) {
       console.error('Error occurred:', error);
