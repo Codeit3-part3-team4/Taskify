@@ -2,10 +2,9 @@
 
 import { DashboardContext } from '@/context/DashboardContext';
 import Image from 'next/image';
-import { useState, useEffect, useContext } from 'react';
-import { getMembers } from '../[id]/edit/(components)/MemberList';
+import React, { useState, useEffect, useContext } from 'react';
 import { usePathname } from 'next/navigation';
-import { MembersInf } from '../../../api/membersApi';
+import { getMembersApi, MembersInf } from '../../../api/membersApi';
 import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
 import { UserInfo, getUserInfo } from '@/api/userApi';
 import { getDashboardDetailsApi } from '@/api/dashboardsApi';
@@ -19,6 +18,10 @@ interface ProfileImageProps {
   options?: string;
   style?: string;
 }
+
+const getMembers = async (dashboardId: number, pageIndex: number, size: number) => {
+  return await getMembersApi(dashboardId, pageIndex, size);
+};
 
 const ProfileImage = ({ nickname, profileImageUrl, options, style }: ProfileImageProps) => {
   return (
@@ -52,16 +55,20 @@ export const FunctionalHeader = () => {
   const mediaQuery = useMediaQuery();
   const router = useRouter();
 
-  const onCloseModal = () => {
-    console.log('close');
-    setIsInviteModal(false);
-  };
+  const [myProfile, setMyProfile] = useState<UserInfo>();
+  const [ownerId, setOwnerId] = useState<number>();
 
   useEffect(() => {
     if (Number.isNaN(dashboardId)) return;
 
+    getDashboardDetailsApi(dashboardId).then(res => {
+      if (res === null) return;
+      setOwnerId(res.userId);
+    });
+
     getMembers(dashboardId, 1, 5)
       .then(res => {
+        if (res === null) return;
         setMembersInf(res);
       })
       .catch(error => {
@@ -69,8 +76,16 @@ export const FunctionalHeader = () => {
       });
   }, [dashboardId]);
 
-  if (pathname.split('/').includes('mydashboard')) return;
+  useEffect(() => {
+    getUserInfo().then(res => {
+      if (res === null) return;
+      setMyProfile(res);
+    });
+  }, []);
+
+  if (pathname.split('/').includes('mydashboard') || ownerId !== myProfile?.id) return;
   if (membersInf === undefined) return;
+  const editPage = pathname.split('/').includes('edit') ? '' : '/edit';
 
   let showMemberCount = 3;
   if (MediaQueryType.TABLET === mediaQuery) showMemberCount = 3;
@@ -78,13 +93,14 @@ export const FunctionalHeader = () => {
 
   const slicedMembers = membersInf.members.slice(0, showMemberCount);
   const displayMemberCount = showMemberCount < membersInf.totalCount ? `+${membersInf.totalCount - showMemberCount + 1}` : null;
+  const layoutMemeberCount = slicedMembers.length < showMemberCount ? slicedMembers.length : showMemberCount;
 
   return (
     <div className="flex flex-row justify-center items-center h-full mr-3 md:mr-5">
       <button
         className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2"
         onClick={() => {
-          router.push(`${pathname}/edit?memberPage=1&invitePage=1`);
+          router.push(`${pathname}/${editPage}?memberPage=1&invitePage=1`);
         }}
       >
         <Image className="hidden md:block w-5 h-5" src="/images/settings.svg" alt="Taskify" width="32" height="32" />
@@ -99,8 +115,8 @@ export const FunctionalHeader = () => {
       </button>
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
-          const moveX = (showMemberCount - index - 1) * 15;
-          const nickname = index === showMemberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
+          const moveX = (layoutMemeberCount - index - 1) * 15;
+          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
           return <ProfileImage key={index} nickname={nickname} profileImageUrl={member.profileImageUrl} style={`translateX(${moveX}%)`} />;
         })}
       </div>
@@ -119,7 +135,11 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
   const [ownerId, setOwnerId] = useState<number>();
 
   useEffect(() => {
+    if (Number.isNaN(dashboardId)) return;
+
     getDashboardDetailsApi(dashboardId).then(res => {
+      if (res === null) return;
+
       setOwnerId(res.userId);
       setTitle(res.title);
     });

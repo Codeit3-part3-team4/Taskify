@@ -19,8 +19,8 @@ class FunctionalFetch {
     }
 
     if (!isAuthField) {
-      const token = await getRequestCookies('accessToken');
-      if (token && token.value) {
+      if (typeof window !== 'undefined') {
+        const token = await getRequestCookies('accessToken');
         this.init = {
           headers: {
             Authorization: `Bearer ${token.value}`,
@@ -47,7 +47,15 @@ class FunctionalFetch {
         ...newInit?.headers,
       },
     };
-    const res = fetch(url, options);
+    this.init = options;
+
+    if (this.init?.method?.toUpperCase() === 'GET' || this.init?.method?.toUpperCase() === 'HEAD') {
+      if (this.init?.body) {
+        delete this.init.body;
+      }
+    }
+
+    const res = fetch(url, this.init);
     return res;
   }
 }

@@ -26,7 +26,7 @@ export interface CreateCardImage {
 }
 
 // 컬럼 생성
-export const createColumnApi = async (title, dashboardId) => {
+export const createColumnApi = async (title: string, dashboardId: number) => {
   const bodyData = {
     title,
     dashboardId,
@@ -74,6 +74,8 @@ export const getColumnListApi = async (dashboardId: number) => {
         return res.json();
       } else if (res.status === 404) {
         throw new Error('404  not found');
+      } else if (res.status >= 400) {
+        throw new Error(`${res.status} error`);
       }
     })
     .catch(error => {
@@ -84,7 +86,11 @@ export const getColumnListApi = async (dashboardId: number) => {
 };
 
 // 컬럼 수정
-export const editColumnApi = async (columnId: number) => {
+export const editColumnApi = async (columnId: number, title: string) => {
+  const bodyData = {
+    title,
+  };
+
   const res = await authInstance
     .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
       method: 'PUT',
@@ -93,20 +99,22 @@ export const editColumnApi = async (columnId: number) => {
         accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(bodyData),
     })
     .then(res => {
       if (res.ok) {
         return res.json();
       } else if (res.status === 400) {
-        throw new Error('error');
+        throw new Error('Bad Request: Missing or invalid title');
       } else if (res.status === 404) {
-        throw new Error('404 not found');
+        throw new Error('404 Not Found: Column does not exist');
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error('API call error:', error);
       return null;
     });
+
   return res;
 };
 

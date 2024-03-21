@@ -29,7 +29,7 @@ export const getMembersApi = async (id: number, page: number, size: number) => {
     .then(res => {
       if (res.status === 404) {
         throw new Error('404 not found');
-      }
+      } else if (res.status >= 400) throw new Error(`${res.status} error`);
       return res.json();
     })
     .catch(error => {
