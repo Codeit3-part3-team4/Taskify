@@ -71,7 +71,7 @@ export default function MyPage() {
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
         {userInfo.id ? (
-          <div className="flex flex-col bg-gray-EEEEEE">
+          <div className="flex flex-col">
             <div className="h-[37px] w-[284px] md:w-[544px] lg:w-[620px] ml-3 md:ml-5">{'< 돌아가기'}</div>
             <div className="flex flex-col w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5">
               <div>
