@@ -11,8 +11,14 @@ export interface UserInfo {
   updatedAt: string;
 }
 
+interface UpdateUserInfo {
+  email?: string;
+  nickname?: string;
+  profileImageUrl?: string;
+}
+
 // 회원 가입
-export const signupApi = async newUserValues => {
+export const signupApi = async (newUserValues: UserInfo) => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users`, {
       method: 'POST',
@@ -56,15 +62,14 @@ export const getUserInfo = async (): Promise<UserInfo> => {
 };
 
 // 내 정보 수정
-export const updateUserInfo = async updateUserValues => {
+export const updateUserInfo = async (updateUserValues: UpdateUserInfo) => {
   try {
-    const res = await fetch(`${BASE_URL}/3-4/users/me`, {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updateUserValues),
     });
