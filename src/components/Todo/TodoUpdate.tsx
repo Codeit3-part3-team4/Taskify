@@ -7,6 +7,17 @@ import { getMembersApi } from '@/api/membersApi';
 import { getColumnListApi } from '@/api/columnApi';
 import { editCardApi } from '@/api/cardApi';
 
+interface Status {
+  id: string;
+  title: string;
+}
+
+interface Member {
+  id: string;
+  userId: string;
+  nickname: string;
+}
+
 interface TodoUpdateProps {
   isOpen: boolean;
   cardId: number;
@@ -25,10 +36,10 @@ interface TodoUpdateProps {
 }
 
 const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dashboardId, columnId, cardId }) => {
-  const [statuses, setStatuses] = useState([]);
+  const [statuses, setStatuses] = useState<Status[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string>(cardDetails ? cardDetails.columnId : '');
   const [selectedAssignee, setSelectedAssignee] = useState<string>(cardDetails ? cardDetails.assigneeUserId : '');
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     assigneeUserId: cardDetails ? cardDetails.assigneeUserId : '',
     title: cardDetails ? cardDetails.title : '',
@@ -37,7 +48,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     tags: cardDetails && cardDetails.tags ? cardDetails.tags.join(', ') : '',
     selectedImage: '',
   });
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<Member[]>([]);
 
   const fetchData = async (page, size) => {
     try {
