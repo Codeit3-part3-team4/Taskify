@@ -26,7 +26,7 @@ export interface CreateCardImage {
 }
 
 // 컬럼 생성
-export const createColumnApi = async (title, dashboardId) => {
+export const createColumnApi = async (title: string, dashboardId: number) => {
   const bodyData = {
     title,
     dashboardId,
