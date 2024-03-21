@@ -11,8 +11,14 @@ export interface UserInfo {
   updatedAt: string;
 }
 
+interface UpdateUserInfo {
+  email?: string;
+  nickname?: string;
+  profileImageUrl?: string;
+}
+
 // 회원 가입
-export const signupApi = async newUserValues => {
+export const signupApi = async (newUserValues: UserInfo) => {
   try {
     const res = await fetch(`${BASE_URL}/3-4/users`, {
       method: 'POST',

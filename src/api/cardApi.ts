@@ -64,7 +64,7 @@ export interface DetailCard {
 }
 
 // 카드 생성
-export const postCardApi = async cardData => {
+export const postCardApi = async (cardData: PostCard) => {
   const res = await authInstance
     .fetch(`${BASE_URL}/3-4/cards`, {
       method: 'POST',
@@ -115,30 +115,18 @@ export const getCardListApi = async (size: number, cursorId: number, columnId: n
 };
 
 // 카드 수정
-export const editCardApi = async (cardId: number) => {
-  const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
-      method: 'PUT',
-      cache: 'no-cache',
-      headers: {
-        accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else if (res.status === 400) {
-        throw new Error('error');
-      } else if (res.status === 404) {
-        throw new Error('404 not found');
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      return null;
-    });
-  return res;
+export const editCardApi = async (cardId: number, cardData: Partial<EditCard>) => {
+  const res = await authInstance.fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
+    method: 'PUT',
+    body: JSON.stringify(cardData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to update card');
+  }
+  return await res.json();
 };
 
 // 카드 상세 조회
@@ -168,7 +156,7 @@ export const detailCardApi = async (cardId: number) => {
 // 카드 삭제
 export const deleteCardApi = async (cardId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4}/cards/${cardId}`, {
+    .fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {

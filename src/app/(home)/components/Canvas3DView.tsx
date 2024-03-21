@@ -4,6 +4,7 @@ import { Canvas, useFrame } from 'react-three-fiber';
 import { Html, useGLTF, Environment, PresentationControls, useTexture } from '@react-three/drei';
 import { BoxGeometry, MeshBasicMaterial } from 'three';
 import { useState, useEffect } from 'react';
+import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
 
 const BOX_GEOMETRY_ARGS = [1.9, 1.1, 0.01];
 
@@ -11,9 +12,9 @@ const MainThumb = ({ onClick }: { onClick: (revert: boolean) => void }) => {
   const texture = useTexture('images/mainThumb.png');
   const geometry = new BoxGeometry(...BOX_GEOMETRY_ARGS);
   const material = new MeshBasicMaterial({ map: texture });
-  const [zPosition, setZPosition] = useState(-0.5);
   const [xPosition, setXPosition] = useState(0);
   const [yPosition, setYPosition] = useState(0.7);
+  const [zPosition, setZPosition] = useState(0);
   const [isStart, setIsStart] = useState(false);
   const [isRevert, setIsRevert] = useState(false);
 
@@ -26,14 +27,13 @@ const MainThumb = ({ onClick }: { onClick: (revert: boolean) => void }) => {
     setRotation(prev => prev + 0.001 * rotationDirection);
   });
 
-  const endZ = -6;
   const endX = 3;
   const endY = 1;
-
-  const startZ = -0.5;
+  const endZ = -6;
 
   const startX = 0;
   const startY = 0.7;
+  const startZ = 0;
 
   const onClickThumb = (e: any) => {
     onClick(isRevert);
@@ -45,13 +45,9 @@ const MainThumb = ({ onClick }: { onClick: (revert: boolean) => void }) => {
 
     const interval = setTimeout(() => {
       if (!isRevert) {
-        if (zPosition >= endZ) {
-          setZPosition(prev => prev - 0.055);
-        }
-        if (xPosition <= endX) {
-          setXPosition(prev => prev + 0.03);
-        }
-        if (yPosition <= endY) setYPosition(prev => prev + 0.003);
+        if (xPosition <= endX) setXPosition(prev => Math.min(prev + 0.03, endX));
+        if (yPosition <= endY) setYPosition(prev => Math.min(prev + 0.003, endY));
+        if (zPosition >= endZ) setZPosition(prev => Math.max(prev - 0.06, endZ));
 
         if (zPosition <= endZ && xPosition >= endX && yPosition >= endY) {
           setIsStart(false);
@@ -89,7 +85,7 @@ const MainThumb = ({ onClick }: { onClick: (revert: boolean) => void }) => {
   );
 };
 
-const Laptop = () => {
+const Laptop = ({ operateIndex }: { operateIndex: number }) => {
   const laptop = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf');
   const [isStart, setIsStart] = useState(false);
   const [isRevert, setIsRevert] = useState(false);
@@ -97,17 +93,16 @@ const Laptop = () => {
   const [zPosition, setZPosition] = useState(0);
   const [degree, setDegree] = useState(0);
   const [isOnMac, setIsOnMac] = useState(false);
-
-  // html react-three/drei bug 임시조치
-  const [isOdd, setIsOdd] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [iframeSize, setIframeSize] = useState([900, 600]);
+  const [iframeUrl, setIframeUrl] = useState<string>('https://ohddang.github.io/this-is-FE');
+  const mediaQuery = useMediaQuery();
 
   const deltaX = 0;
-  const deltaY = 1.53;
-  const deltaZ = -1.4;
+  const deltaY = 1.52;
+  const deltaZ = -1.5;
 
   const endZ = 4.4;
-  const endDegree = -105;
+  const endDegree = -100;
 
   const onClickThumb = (revert: boolean) => {
     if (revert) setIsRevert(revert);
@@ -115,14 +110,33 @@ const Laptop = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1536 ? true : false);
-    };
+    switch (operateIndex) {
+      case 0:
+        setIframeUrl('https://ohddang.github.io/this-is-FE');
+        break;
+      case 1:
+        setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');
+        break;
+      case 2:
+        setIframeUrl('https://www.codeit.kr/');
+        break;
+    }
+  }, [operateIndex]);
 
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  useEffect(() => {
+    switch (mediaQuery) {
+      case MediaQueryType.MOBILE:
+        setIframeSize([450, 300]);
+        break;
+      case MediaQueryType.TABLET:
+      case MediaQueryType.DESKTOP:
+        setIframeSize([720, 480]);
+        break;
+      case MediaQueryType.DESKTOP_2XL:
+        setIframeSize([1200, 800]);
+        break;
+    }
+  }, [mediaQuery]);
 
   useEffect(() => {
     if (!isStart) return;
@@ -196,23 +210,10 @@ const Laptop = () => {
     };
   }, [isMoveMac, isRevert, isOnMac, degree]);
 
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth % 2 === 0) setIsOdd(false);
-      else setIsOdd(true);
-    });
-  }, [isOdd]);
-
-  let iframeShow = false;
-
-  // chrome에서 이렇게 동작, whale은 isOdd를 반대로해야 동작
-  if (!isOdd && !isDesktop) iframeShow = true;
-  if (isOdd && isDesktop) iframeShow = true;
-
   return (
     <>
       <Environment preset="warehouse" />
-      <PresentationControls global polar={[-0.3, 0.3]} azimuth={[-1.1, 1.1]}>
+      <PresentationControls global polar={[-0.02, 0.02]} azimuth={[-0.015, 0.015]}>
         <primitive
           object={laptop.scene}
           position-y={-1.2}
@@ -227,30 +228,22 @@ const Laptop = () => {
             }
           }}
         >
-          {iframeShow && (
-            <Html
-              wrapperClass="laptop"
-              position={[deltaX, deltaY, deltaZ]}
-              scale={[0.9, 1, 1]}
-              distanceFactor={1.0}
-              rotation-x={-0.25}
-              transform
-              style={{ opacity: isOnMac ? '1' : '0' }}
-            >
+          {
+            <Html wrapperClass="laptop" center position={[deltaX, deltaY, deltaZ]} distanceFactor={1.0} style={{ opacity: isOnMac ? '1' : '0' }}>
               <iframe
                 loading="lazy"
                 allowFullScreen
-                src="https://ohddang.github.io/this-is-FE"
+                src={iframeUrl}
                 style={{
-                  width: '1280px',
-                  height: '800px',
+                  width: `${iframeSize[0] * 2}px`,
+                  height: `${iframeSize[1] * 2}px`,
                   position: 'relative',
                   top: '0',
                   left: '0',
                 }}
               />
             </Html>
-          )}
+          }
         </primitive>
         <MainThumb onClick={onClickThumb} />
       </PresentationControls>
@@ -258,10 +251,10 @@ const Laptop = () => {
   );
 };
 
-export default function Canvas3DView() {
+export default function Canvas3DView({ operateIndex }: { operateIndex: number }) {
   return (
-    <Canvas camera={{ position: [0.6, 1.5, 5], fov: 45, near: 0.1, far: 1500 }} style={{ background: '#F1EFFD' }}>
-      <Laptop />
+    <Canvas camera={{ position: [0, 1, 5], fov: 45, near: 0.1, far: 1500 }} style={{ background: '#F1EFFD' }}>
+      <Laptop operateIndex={operateIndex} />
     </Canvas>
   );
 }

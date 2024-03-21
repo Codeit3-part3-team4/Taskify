@@ -18,6 +18,7 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
         await deleteColumnApi(columnId);
         onColumnDeleted(columnId);
         closeModal();
+        window.location.reload();
       } catch (error) {
         console.error('컬럼 삭제 실패:', error);
       }
@@ -26,10 +27,17 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    if (!columnName.trim()) {
+      alert('컬럼 이름을 입력해주세요.');
+      return;
+    }
+
     try {
-      await editColumnApi(columnId, { title: columnName });
+      await editColumnApi(columnId, columnName);
       onColumnUpdated(columnId, columnName);
       closeModal();
+      window.location.reload();
     } catch (error) {
       console.error('컬럼 수정 실패:', error);
     }

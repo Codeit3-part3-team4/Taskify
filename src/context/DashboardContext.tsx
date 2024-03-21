@@ -10,6 +10,8 @@ interface DashboardContextType {
   setIsLoading: (b: boolean) => void;
   dashboardId: number;
   setDashboardId: (id: number) => void;
+  refresh: boolean;
+  setRefresh: (b: boolean) => void;
 }
 
 export const DashboardContext = createContext<DashboardContextType>({
@@ -19,12 +21,16 @@ export const DashboardContext = createContext<DashboardContextType>({
   setIsLoading: () => {},
   dashboardId: NaN,
   setDashboardId: () => {},
+  refresh: false,
+  setRefresh: () => {},
 });
 
 export default function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [dashboardId, setDashboardId] = useState<number>(NaN);
   const [data, setData] = useState<DashboardsInf | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     const getDashboardData = async () => {
       setIsLoading(true);
@@ -38,7 +44,11 @@ export default function DashboardProvider({ children }: { children: React.ReactN
       }
     };
     getDashboardData();
-  }, []);
+  }, [refresh]);
 
-  return <DashboardContext.Provider value={{ data, setData, isLoading, setIsLoading, dashboardId, setDashboardId }}>{children}</DashboardContext.Provider>;
+  return (
+    <DashboardContext.Provider value={{ data, setData, isLoading, setIsLoading, dashboardId, setDashboardId, refresh, setRefresh }}>
+      {children}
+    </DashboardContext.Provider>
+  );
 }

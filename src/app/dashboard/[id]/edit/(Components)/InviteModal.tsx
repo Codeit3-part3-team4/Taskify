@@ -5,7 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const postDashboardInvitations = async (dashboardId: number, email: string) => {
-  return await postDashboardInvitationsApi(dashboardId, email);
+  const result = await postDashboardInvitationsApi(dashboardId, email);
+  result.status === 201 ? alert('초대에 성공했습니다.') : alert(`${result.data.message}`);
+
+  if (result.status === 400 || result.status === 409 || result.status === 404)
+    return false; // 입력 오류로 재입력 필요
+  else return true; // 초대 성공 or 500 error 창 종료
 };
 
 interface InviteModalProps {
@@ -17,9 +22,7 @@ interface InviteModalProps {
 
 export default function InviteModal({ id, pathname, query, onClose }: InviteModalProps) {
   const [inviteEmail, setInviteEmail] = useState<string>('');
-
   const router = useRouter();
-  console.log(router);
 
   const onClickCancel = () => {
     if (onClose) onClose();
@@ -28,8 +31,10 @@ export default function InviteModal({ id, pathname, query, onClose }: InviteModa
 
   const onClickInvite = () => {
     postDashboardInvitations(id, inviteEmail).then(res => {
-      if (onClose) onClose();
-      else router.push(`${pathname}?${query}&inviteModal=off`);
+      if (res === true) {
+        if (onClose) onClose();
+        else router.push(`${pathname}?${query}&inviteModal=off`);
+      }
     });
   };
 
@@ -44,10 +49,10 @@ export default function InviteModal({ id, pathname, query, onClose }: InviteModa
         onChange={e => setInviteEmail(e.currentTarget.value)}
       />
       <div className="flex flex-row gap-3">
-        <button className="w-full py-3 rounded-md border border-gray-D9D9D9 active:bg-violet-5534DA active:text-white" onClick={onClickCancel}>
+        <button className="w-full py-3 rounded-md border border-gray-D9D9D9 hover:bg-gray-D9D9D9" onClick={onClickCancel}>
           취소
         </button>
-        <button className="w-full py-3 rounded-md border border-gray-D9D9D9 active:bg-violet-5534DA active:text-white" onClick={onClickInvite}>
+        <button className="w-full py-3 rounded-md border border-gray-D9D9D9 hover:bg-gray-D9D9D9" onClick={onClickInvite}>
           초대
         </button>
       </div>
