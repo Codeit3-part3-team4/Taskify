@@ -58,9 +58,9 @@ const AddColumn: React.FC<AddColumnProps> = ({ dashboardId }) => {
 
   return (
     <div>
-      <button className="flex" onClick={openModal}>
+      <div className="flex" onClick={openModal}>
         <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="컬럼 추가하기 버튼 아이콘" />
-      </button>
+      </div>
       {isOpen && (
         <Modal isOpen={isOpen} onClose={closeModal} title="새 컬럼 생성" showCloseButton={false}>
           <form onSubmit={handleSubmit}>

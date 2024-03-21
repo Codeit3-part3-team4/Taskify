@@ -111,7 +111,7 @@ export default function TodoForm({ dashboardId, columnId }) {
       </button>
       {isOpen && (
         <Modal isOpen={isOpen} onClose={closeModal} title="할 일 생성" showCloseButton={false}>
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4 ">
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
             <div>
               <label htmlFor="assigneeUserId" className="flex font-bold text-sm mb-4">
                 담당자
@@ -139,7 +139,7 @@ export default function TodoForm({ dashboardId, columnId }) {
                 name="title"
                 type="text"
                 placeholder="제목을 입력해 주세요"
-                className="input input-bordered w-full mb-3 "
+                className="input input-bordered w-full mb-3 text-sm"
                 value={formData.title}
                 onChange={handleInputChange}
               />
@@ -153,7 +153,7 @@ export default function TodoForm({ dashboardId, columnId }) {
                 name="description"
                 type="text"
                 placeholder="설명을 입력해 주세요"
-                className="input input-bordered w-full h-24 mb-3"
+                className="input input-bordered w-full h-24 mb-3 text-sm"
                 value={formData.description}
                 onChange={handleInputChange}
               />
@@ -182,7 +182,7 @@ export default function TodoForm({ dashboardId, columnId }) {
                 name="tags"
                 type="text"
                 placeholder="태그입력 후 Enter"
-                className="flex input input-bordered mb-3 "
+                className="flex input input-bordered mb-3 text-sm"
                 onKeyDown={handleTagInputKeyDown}
               />
               <div className="tags-list">

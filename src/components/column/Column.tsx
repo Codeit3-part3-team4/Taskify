@@ -36,7 +36,7 @@ const Column = ({ columnId, columnTitle, dashboardId }) => {
             <div className="flex items-center gap-2">
               <img src="/images/purple-dot.svg" alt="보라색 점 아이콘" className="w-2" />
               <div className="text-base font-bold">{columnTitle}</div>
-              <div className="flex inline-block h-5 text-sm py-1 px-1.5 bg-gray-200 rounded text-slate-500 items-center">{cardList?.totalCount}</div>
+              <div className="flex inline-block h-5 text-sm py-1 px-1.5 bg-gray-200 rounded text-slate-500 items-center">{cardList?.totalCount || 0}</div>
             </div>
             <EditColumn columnId={columnId} initialColumnName={columnTitle} onColumnUpdated={onColumnUpdated} onColumnDeleted={onCloumnDeleted} />
           </div>
