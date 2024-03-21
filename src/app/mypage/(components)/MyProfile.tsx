@@ -14,6 +14,8 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
 
   const [updateProfileImg, setUpdateProfileImg] = useState<File | null>(null);
 
+  const BasicImage = '/images/basic-profile.svg';
+
   console.log(userInfo);
 
   const fileInput = useRef(null);
@@ -24,6 +26,14 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
         nickname: userInfo.nickname,
         profileImageUrl: userInfo.profileImageUrl,
       });
+      console.log('1 유저인포 프로필:' + updateUserValues.profileImageUrl);
+    }
+    if (userInfo?.profileImageUrl === null) {
+      setUpdateUserValues({
+        ...updateUserValues,
+        profileImageUrl: BasicImage,
+      });
+      console.log('2 기본 프로필:' + updateUserValues.profileImageUrl);
     }
   }, []);
 
@@ -55,6 +65,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
       console.log('이미지 업뎃,', updateProfileImg);
     };
     const imageUrl = await onChangeProfileImg(file);
+    console.log();
     setUpdateUserValues({
       ...updateUserValues,
       profileImageUrl: imageUrl,
@@ -74,11 +85,17 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
     onSubmit(updateUserValues);
     console.log('api로 프로필 변경 데이터 보내줌: ' + updateUserValues);
 
-    // if (updateProfileImg) {
-    //   onChangeProfileImg(updateProfileImg);
-    // }
-
     console.log('프로필업뎃:' + updateUserValues);
+  };
+
+  const handleBasicProfileImg = () => {
+    setUpdateProfileImg(null);
+    setUpdateUserValues({
+      ...updateUserValues,
+      profileImageUrl: null,
+    });
+    console.log('원래 프로필 이미지:' + updateUserValues.profileImageUrl);
+    console.log('기본 이미지로 변경한 후:' + updateUserValues.profileImageUrl);
   };
 
   return (
@@ -89,7 +106,13 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
             <div>
               <h2>프로필</h2>
               <div>
-                <img src={updateProfileImg ? URL.createObjectURL(updateProfileImg) : userInfo.profileImageUrl} alt="프로필 사진 " width={182} height={182} />
+                <img
+                  src={updateProfileImg ? URL.createObjectURL(updateProfileImg) : updateUserValues.profileImageUrl}
+                  alt="프로필 사진 "
+                  width={182}
+                  height={182}
+                />
+
                 {/* {userInfo.profileImageUrl === null ? (
                   <Image src="/images/basic-profile.svg" width={182} height={182} priority={true} alt="프로필 사진" />
                 ) : (
@@ -100,6 +123,9 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
                 </a>
                 <label htmlFor="profileImageUrl">이미지 선택</label>
                 <input type="file" id="profileImageUrl" ref={fileInput} onChange={handleProfileImageChange} accept="image/*" />
+                <div>
+                  <button onClick={handleBasicProfileImg}>기본 이미지</button>
+                </div>
 
                 <div>
                   <div>이메일</div>
