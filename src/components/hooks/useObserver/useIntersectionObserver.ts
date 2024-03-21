@@ -12,7 +12,6 @@ export default function useIntersectionObserver(callback: () => void) {
         }
       });
     });
-
     if (sentinelRef.current) {
       observer.observe(sentinelRef.current);
     }
