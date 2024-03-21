@@ -48,21 +48,22 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
       // 이미지 파일이 아니라 데이터 URL
       const value = reader.result;
       setUpdateProfileImg({
-        profileImageUrl: value,
+        profileImageUrl: file,
       });
       console.log('userinfo', updateUserValues);
 
       console.log('이미지 업뎃,', file);
       console.log('이미지 업뎃,', updateProfileImg);
     };
+    onChangeProfileImg(file);
   };
 
   const onSubmitForm = e => {
     e.preventDefault();
     onSubmit(updateUserValues);
-    if (updateProfileImg) {
-      onChangeProfileImg(updateProfileImg);
-    }
+    // if (updateProfileImg) {
+    //   onChangeProfileImg(updateProfileImg);
+    // }
 
     console.log('프로필업뎃:' + updateUserValues);
   };
