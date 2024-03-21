@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Canvas3DView from './Canvas3DView';
 import Link from 'next/link';
+import React, { useEffect, useRef } from 'react';
 
 export default function Landing() {
   const Title = () => {
@@ -43,11 +44,39 @@ export default function Landing() {
     options?: string;
     children: React.ReactNode;
   }) => {
+    const titleRef = useRef<HTMLDivElement>(null);
+    const panelRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const translateObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).style.transform = `translateX(${0}%)`;
+          } else {
+            (entry.target as HTMLElement).style.transform = `translateX(${100}%)`;
+          }
+        });
+      });
+      translateObserver.observe(titleRef.current as Element);
+
+      const opacityObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).style.opacity = `1`;
+          } else {
+            (entry.target as HTMLElement).style.opacity = `0`;
+          }
+        });
+      });
+      opacityObserver.observe(panelRef.current as Element);
+    }, []);
+
     return (
       <div
-        className={`flex flex-col 2xl:flex-row justify-between w-343 h-686 rounded-lg overflow-hidden bg-gray-300/10 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 ${options}`}
+        className={`flex flex-col 2xl:flex-row justify-between w-343 h-686 rounded-lg overflow-hidden bg-gray-300/10 md:w-664 md:h-972 2xl:w-1200 2xl:h-600 transition-all duration-1000 ${options}`}
+        ref={panelRef}
       >
-        <div className="flex flex-col w-full items-center md:items-start md:p-14 mt-16 md:mt-0 2xl:pt-32">
+        <div className="flex flex-col w-full items-center md:items-start md:p-14 mt-16 md:mt-0 2xl:pt-32 transition-all duration-1000" ref={titleRef}>
           <span className="text-lg text-gray_9FA6B2 mb-20">{title}</span>
           <strong className="text-3xl text-center md:text-start">
             {desc}
