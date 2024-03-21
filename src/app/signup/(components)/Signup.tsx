@@ -20,7 +20,6 @@ export default function SignUp({ onSubmit }) {
   const [isValueLook, setIsValueLook] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
 
-
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
     const value = e.target.value;
