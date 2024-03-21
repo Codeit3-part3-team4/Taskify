@@ -10,7 +10,7 @@ export default function SideDashboardSkeleton() {
         </div>
       </div>
       <div className="mb-2">
-        <AddDashboardButton isModalOpen={e => {}}>
+        <AddDashboardButton isModalOpen={() => {}}>
           <Image src="/images/add_box.svg" alt="대시보드 추가하기" width={32} height={32} />
         </AddDashboardButton>
       </div>
