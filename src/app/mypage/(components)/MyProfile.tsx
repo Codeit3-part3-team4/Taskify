@@ -14,7 +14,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
 
   const [updateProfileImg, setUpdateProfileImg] = useState<File | null>(null);
 
-  const BasicImage = '/images/basic-profile.svg';
+  // const BasicImage = '/images/basic-profile.svg';
 
   console.log(userInfo);
 
@@ -27,13 +27,6 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
         profileImageUrl: userInfo.profileImageUrl,
       });
       console.log('1 유저인포 프로필:' + updateUserValues.profileImageUrl);
-    }
-    if (userInfo?.profileImageUrl === null) {
-      setUpdateUserValues({
-        ...updateUserValues,
-        profileImageUrl: BasicImage,
-      });
-      console.log('2 기본 프로필:' + updateUserValues.profileImageUrl);
     }
   }, []);
 
@@ -83,11 +76,11 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
 
   const handleBasicProfileImg = () => {
     setUpdateProfileImg(null);
+    console.log('원래 프로필 이미지:' + updateUserValues.profileImageUrl);
     setUpdateUserValues({
       ...updateUserValues,
       profileImageUrl: null,
     });
-    console.log('원래 프로필 이미지:' + updateUserValues.profileImageUrl);
     console.log('기본 이미지로 변경한 후:' + updateUserValues.profileImageUrl);
   };
 
@@ -101,13 +94,11 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
               <div className="flex mt-5">
                 <div>
                   <div className="relative flex flex-col items-center justify-center">
-                    <img
-                      src={updateProfileImg ? URL.createObjectURL(updateProfileImg) : updateUserValues.profileImageUrl}
-                      alt="프로필 사진"
-                      width={182}
-                      height={182}
-                      className="border rounded-md"
-                    />
+                    {updateUserValues.profileImageUrl ? (
+                      <img src={updateUserValues.profileImageUrl} alt="프로필 사진" width={182} height={182} className="border rounded-md" />
+                    ) : (
+                      <div className="bg-gray-EEEEEE w-[182px] h-[182px]"></div>
+                    )}
                     <div className="absolute ">
                       <label htmlFor="profileImageUrl">
                         <Image src="/images/profileimg-plus.svg" alt="이미지 업로드" width={30} height={30} className="w-[30px] h-[30px]" />
