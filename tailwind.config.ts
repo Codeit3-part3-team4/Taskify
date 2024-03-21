@@ -73,6 +73,11 @@ const config: Config = {
         'blue-76A6EA': '#76A6EA',
         'pink-E876EA': '#E876EA',
       },
+      duration: {
+        '1500': '1500ms',
+        '2000': '2000ms',
+        '3000': '3000ms',
+      },
     },
   },
   daisyui: {

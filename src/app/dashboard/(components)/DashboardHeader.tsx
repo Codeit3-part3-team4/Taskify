@@ -85,6 +85,7 @@ export const FunctionalHeader = () => {
 
   if (pathname.split('/').includes('mydashboard') || ownerId !== myProfile?.id) return;
   if (membersInf === undefined) return;
+  const editPage = pathname.split('/').includes('edit') ? '' : '/edit';
 
   let showMemberCount = 3;
   if (MediaQueryType.TABLET === mediaQuery) showMemberCount = 3;
@@ -99,7 +100,7 @@ export const FunctionalHeader = () => {
       <button
         className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2"
         onClick={() => {
-          router.push(`${pathname}/edit?memberPage=1&invitePage=1`);
+          router.push(`${pathname}/${editPage}?memberPage=1&invitePage=1`);
         }}
       >
         <Image className="hidden md:block w-5 h-5" src="/images/settings.svg" alt="Taskify" width="32" height="32" />
