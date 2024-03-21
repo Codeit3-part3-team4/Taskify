@@ -61,8 +61,8 @@ export const getUserInfo = async (): Promise<UserInfo> => {
   }
 };
 
-// 내 정보 수정
-export const updateUserInfo = async (updateUserValues: UpdateUserInfo) => {
+// 유저 정보 수정
+export const updateUserInfoApi = async updateUserValues => {
   try {
     const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',
@@ -73,8 +73,39 @@ export const updateUserInfo = async (updateUserValues: UpdateUserInfo) => {
       },
       body: JSON.stringify(updateUserValues),
     });
+    if (res.ok) {
+      console.log('유저 정보 수정 도착');
+    }
+    console.log('유저 정보 수정??');
     console.log(res);
   } catch (error) {
     console.error('계정 api 페이지 수정 에러:', error);
+  }
+};
+
+// 프로필 이미지 업로드
+export const updateUserProfileImgApi = async (imageFile: File) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  console.log('데이터확인 : ' + JSON.stringify(imageFile));
+  try {
+    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me/image`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error(`프로필 이미지 업로드 실패', ${res.status}`);
+    }
+
+    console.log('프로필 이미지 업로드 api 실행', imageFile);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error('프로필 api 에러:', error);
+    throw new Error('프로필 api 에러:', error);
   }
 };

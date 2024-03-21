@@ -4,7 +4,7 @@ import { loginApi, postRequestCookies } from '@/api/AuthApi';
 import MainLogo from '@/components/login/MainLogo';
 import { useRouter } from 'next/navigation';
 import { authInstance } from '@/utils/functionalFetch';
-import Login from './components/Login';
+import Login from './(components)/Login';
 
 export default function LoginPage() {
   const router = useRouter();

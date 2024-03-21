@@ -1,6 +1,6 @@
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function SignUp({ onSubmit }) {
   const [newUserValues, setNewUserValues] = useState({

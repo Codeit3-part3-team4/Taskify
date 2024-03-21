@@ -13,7 +13,7 @@ export interface Dashboard {
 }
 
 export interface DashboardsInf {
-  dashboards: Dashboard[] | [];
+  dashboards: Dashboard[];
   totalCount: number;
   cursorId: null | number;
 }
