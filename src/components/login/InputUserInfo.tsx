@@ -18,7 +18,7 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
   const [isFocused, setIsFocused] = useState(false);
   const handleOnBlur = () => {
     setIsFocused(false);
-    onBlur;
+    onBlur();
   };
 
   return (
@@ -27,7 +27,7 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
         {label}
       </label>
       <div
-        className={`flex border border-gray-300 border-solid border-[1px] rounded-lg focus:outline-violet-5534DA mt-1 h-[50px] ${isFocused && 'border-violet-5534DA'} ${error ? 'border-red-500' : 'border'}`}
+        className={`flex border border-gray-300 border-solid border-[1px] rounded-lg focus:outline-violet-5534DA mt-1 h-[50px] ${isFocused && !error ? 'border-violet-5534DA' : 'border'} ${error ? 'border-red-500' : 'border'}`}
       >
         <input
           type={type}
