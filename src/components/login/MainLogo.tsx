@@ -5,9 +5,9 @@ export default function MainLogo({ title }) {
   return (
     <div className="flex flex-col justify-center items-center mt-[223px]">
       <Link href={'/'}>
-        <Image src="/images/taskify-logo-main.svg" alt="메인 로고" width={200} height={279} className="w-120 h-167.4" />
+        <Image src="/images/taskify-logo-main.svg" alt="메인 로고" width={120} height={167.4} className=" md:w-[200px] md:h-[279px]" />
       </Link>
-      <div className="font-semibold">{title}</div>
+      <div className="font-semibold leading-[23.87px] mt-[8px]">{title}</div>
     </div>
   );
 }

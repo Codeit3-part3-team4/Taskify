@@ -37,7 +37,7 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
           onChange={onChange}
           onBlur={handleOnBlur}
           onFocus={() => setIsFocused(true)}
-          className="w-full  outline-none pl-4"
+          className="w-full outline-none pl-4 bg-transparent"
         />
         {password === true ? (
           <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} className="mr-3" />
