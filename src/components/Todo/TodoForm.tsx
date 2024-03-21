@@ -15,7 +15,7 @@ export default function TodoForm({ dashboardId, columnId }) {
     title: '',
     description: '',
     deadline: new Date(),
-    tags: '',
+    tags: [],
     selectedImage: '',
   });
   const [members, setMembers] = useState<Member[]>([]);
@@ -45,6 +45,29 @@ export default function TodoForm({ dashboardId, columnId }) {
     return Object.values(requiredFields).every(value => value);
   };
 
+  const handleTagInputKeyDown = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // 폼 제출 방지
+      const newTag = e.target.value.trim();
+      if (newTag) {
+        // 태그 배열에 새 태그 추가
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          tags: [...prevFormData.tags, newTag],
+        }));
+        // 입력 필드 초기화
+        e.target.value = '';
+      }
+    }
+  };
+
+  const removeTag = tagToRemove => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
+    }));
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     if (!isFormValid()) {
@@ -61,7 +84,7 @@ export default function TodoForm({ dashboardId, columnId }) {
       title,
       description,
       dueDate: deadline.toISOString().slice(0, 16).replace('T', ' '),
-      tags: tags.split(',').map(tag => tag.trim()),
+      tags: formData.tags.map(tag => tag.trim()),
       ...(selectedImage && { imageUrl: selectedImage }),
     };
 
@@ -158,11 +181,17 @@ export default function TodoForm({ dashboardId, columnId }) {
                 id="tags"
                 name="tags"
                 type="text"
-                placeholder="입력 후 Enter"
+                placeholder="태그입력 후 Enter"
                 className="flex input input-bordered mb-3 "
-                value={formData.tags}
-                onChange={handleInputChange}
+                onKeyDown={handleTagInputKeyDown}
               />
+              <div className="tags-list">
+                {formData.tags.map((tag, index) => (
+                  <div key={index} className="tag">
+                    {tag} <button onClick={() => removeTag(tag)}>x</button>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="flex flex-col">
               <label htmlFor="file" className="flex font-bold text-sm mb-4">
