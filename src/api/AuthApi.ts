@@ -40,7 +40,7 @@ export const loginApi = async (userValues: UserValues) => {
 };
 
 // 비밀번호 변경
-export const changePasswordApi = async newPasswordValue => {
+export const changePasswordApi = async (newPasswordValue: string) => {
   const res = await authInstance
     .fetch(`${BASE_URL}/3-4/auth/password`, {
       method: 'PUT',
