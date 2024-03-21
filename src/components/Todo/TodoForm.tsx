@@ -10,6 +10,7 @@ import { postCardApi } from '@/api/cardApi';
 
 export default function TodoForm({ dashboardId, columnId }) {
   const { isOpen, openModal, closeModal } = useModal();
+
   const [formData, setFormData] = useState({
     assigneeUserId: '',
     title: '',
@@ -41,23 +42,22 @@ export default function TodoForm({ dashboardId, columnId }) {
   };
 
   const isFormValid = () => {
-    const { selectedImage, ...requiredFields } = formData;
-    return Object.values(requiredFields).every(value => value);
+    const { assigneeUserId, title, description, deadline, tags } = formData;
+
+    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
   };
 
   const handleTagInputKeyDown = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault(); // 폼 제출 방지
+    if (e.key === 'Enter' && e.target.value.trim() !== '') {
+      e.preventDefault();
       const newTag = e.target.value.trim();
-      if (newTag) {
-        // 태그 배열에 새 태그 추가
+      if (!formData.tags.includes(newTag)) {
         setFormData(prevFormData => ({
           ...prevFormData,
           tags: [...prevFormData.tags, newTag],
         }));
-        // 입력 필드 초기화
-        e.target.value = '';
       }
+      e.target.value = '';
     }
   };
 
@@ -187,8 +187,11 @@ export default function TodoForm({ dashboardId, columnId }) {
               />
               <div className="tags-list">
                 {formData.tags.map((tag, index) => (
-                  <div key={index} className="tag">
-                    {tag} <button onClick={() => removeTag(tag)}>x</button>
+                  <div key={`${tag}-${index}`} className="tag">
+                    {tag}{' '}
+                    <button type="button" onClick={() => removeTag(tag)}>
+                      x
+                    </button>
                   </div>
                 ))}
               </div>
