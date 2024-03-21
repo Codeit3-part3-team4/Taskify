@@ -75,13 +75,6 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
 
   const onSubmitForm = e => {
     e.preventDefault();
-    // if (updateProfileImg !== null) {
-    //   const imageUrl = updateProfileImg;
-    //   setUpdateUserValues({
-    //     ...updateUserValues,
-    //     profileImageUrl: imageUrl,
-    //   });
-    // }
     onSubmit(updateUserValues);
     console.log('api로 프로필 변경 데이터 보내줌: ' + updateUserValues);
 
@@ -99,36 +92,36 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
   };
 
   return (
-    <div>
+    <div className="bg-white-FFFFFF m-10">
       <div>
         {userInfo && (
           <div>
-            <div>
-              <h2>프로필</h2>
-              <div>
-                <img
-                  src={updateProfileImg ? URL.createObjectURL(updateProfileImg) : updateUserValues.profileImageUrl}
-                  alt="프로필 사진 "
-                  width={182}
-                  height={182}
-                />
-
-                {/* {userInfo.profileImageUrl === null ? (
-                  <Image src="/images/basic-profile.svg" width={182} height={182} priority={true} alt="프로필 사진" />
-                ) : (
-                  <img src={URL.createObjectURL(updateUserValues.profileImageUrl)} alt="프로필 사진" />
-                )} */}
-                <a href="#" onClick={() => fileInput.current.click()}>
-                  <img src={'/images/profileimg-plus'} alt="이미지 업로드" width={15} height={15} />
-                </a>
-                <label htmlFor="profileImageUrl">이미지 선택</label>
-                <input type="file" id="profileImageUrl" ref={fileInput} onChange={handleProfileImageChange} accept="image/*" />
+            <div className="">
+              <h2 className="text-2xl font-bold">프로필</h2>
+              <div className="flex mt-5">
                 <div>
-                  <button onClick={handleBasicProfileImg}>기본 이미지</button>
+                  <div className="relative flex flex-col items-center justify-center">
+                    <img
+                      src={updateProfileImg ? URL.createObjectURL(updateProfileImg) : updateUserValues.profileImageUrl}
+                      alt="프로필 사진"
+                      width={182}
+                      height={182}
+                      className="border rounded-md"
+                    />
+                    <div className="absolute ">
+                      <label htmlFor="profileImageUrl">
+                        <Image src="/images/profileimg-plus.svg" alt="이미지 업로드" width={30} height={30} className="w-[30px] h-[30px]" />
+                      </label>
+                      <input type="file" id="profileImageUrl" ref={fileInput} onChange={handleProfileImageChange} accept="image/*" className="hidden" />
+                    </div>
+                  </div>
+                  <div>
+                    <button onClick={handleBasicProfileImg}>기본 이미지</button>
+                  </div>
                 </div>
 
-                <div>
-                  <div>이메일</div>
+                <div className="flex flex-col">
+                  <div className="">이메일</div>
                   <input value={userInfo.email} />
                   <form onSubmit={onSubmitForm}>
                     <label htmlFor="nickname">닉네임</label>

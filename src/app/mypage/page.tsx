@@ -71,8 +71,10 @@ export default function MyPage() {
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
         {userInfo ? (
-          <div>
-            <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
+          <div className="w-full h-full bg-gray-EEEEEE">
+            <div className="m-10 border rounded-lg bg-white-FFFFFF">
+              <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
+            </div>
 
             <MyPassword onSubmit={handleChangePassword} />
           </div>
