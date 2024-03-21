@@ -76,7 +76,10 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
         <input className="w-full h-full focus:outline-none" name="title" type="text" />
       </div>
       <div className="flex flex-row justify-end">
-        <button className="flex flex-row justify-center items-center w-20 h-8 bg-violet-5534DA text-white text-xs rounded-md" type="submit">
+        <button
+          className="flex flex-row justify-center items-center w-20 h-8 bg-violet-5534DA text-white text-xs rounded-md transition-all hover:scale-105"
+          type="submit"
+        >
           변경
         </button>
       </div>

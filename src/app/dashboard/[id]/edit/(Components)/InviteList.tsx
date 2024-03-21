@@ -64,7 +64,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
           query: { memberPage: `${memberPage}`, invitePage: `${page}`, inviteModal: 'on' },
         }}
       >
-        <div className="flex flex-row items-center px-3 py-2 gap-2 rounded bg-violet-5534DA">
+        <div className="flex flex-row items-center px-3 py-2 gap-2 rounded bg-violet-5534DA transition-all hover:scale-105">
           <Image src="/images/add-white.svg" width="20" height="20" alt="plus" />
           <span className="text-white text-xs">초대하기</span>
         </div>

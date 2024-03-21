@@ -15,9 +15,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const url = '/images/cracker.png';
+
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-yellow-300/15`}>
+        <div className="absolute w-full h-full bg-repeat opacity-30 -z-10" style={{ backgroundImage: `url(${url})`, opacity: '0.3' }} />
+        {children}
+      </body>
     </html>
   );
 }
