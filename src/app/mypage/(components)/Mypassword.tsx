@@ -86,7 +86,52 @@ const MyPassword: React.FC = ({ onSubmit }) => {
             <div className="flex flex-col">
               <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
               <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">
-                <form onSubmit={onSubmitForm}>
+                <div className="">
+                  <form onSubmit={onSubmitForm}>
+                    <label htmlFor="password" className="font-semibold">
+                      현재 비밀번호
+                    </label>
+                    <div>
+                      <input
+                        type="password"
+                        id="password"
+                        value={changePassword.password}
+                        placeholder={'현재 비밀번호 입력'}
+                        onChange={onChangePasswordValues}
+                        className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                      />
+                    </div>
+                    <label htmlFor="newPassword" className="font-semibold">
+                      새 비밀번호
+                    </label>
+                    <div>
+                      <input
+                        type="password"
+                        id="newPassword"
+                        value={changePassword.newPassword}
+                        placeholder={'새 비밀번호 입력'}
+                        onChange={onChangePasswordValues}
+                        className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                      />
+                    </div>
+                    <label htmlFor="newPwCheck" className="font-semibold">
+                      새 비밀번호 확인
+                    </label>
+                    <div>
+                      <input
+                        type="password"
+                        id="newPwCheck"
+                        value={newPwcheck}
+                        placeholder={'새 비밀번호 입력'}
+                        onChange={onChangePasswordckValues}
+                        error={errors.newPwcheck}
+                        onBlur={onBlur}
+                        className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                      />
+                    </div>
+                  </form>
+                </div>
+                {/* <form onSubmit={onSubmitForm}>
                   <div className="">
                     <InputUserInfo
                       label={'현재 비밀번호'}
@@ -95,6 +140,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                       value={changePassword.password}
                       placeholder={'현재 비밀번호 입력'}
                       onChange={onChangePasswordValues}
+                     
                     />
                   </div>
                   <div>
@@ -119,7 +165,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                       onBlur={onBlur}
                     />
                   </div>
-                </form>
+                </form> */}
                 <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
                   변경
                 </button>
