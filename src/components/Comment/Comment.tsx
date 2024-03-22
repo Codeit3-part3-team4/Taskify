@@ -71,21 +71,21 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
       <div className="flex flex-col items-end relative">
         <input
           type="text"
-          className="input input-bordered w-full h-24"
+          className="input input-bordered w-full h-24 text-sm"
           value={newCommentContent}
           onChange={e => setNewCommentContent(e.target.value)}
           placeholder="댓글 작성하기"
         />
-        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary" onClick={handleAddComment}>
+        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary text-sm" onClick={handleAddComment}>
           입력
         </button>
       </div>
       <ul className="mt-4 space-y-2">
         {comments.map(comment => (
           <li key={comment.id} className="flex items-start space-x-3">
-            <img src={comment.author.profileImageUrl || '/images/crown-icon.svg'} alt="Author" className="w-10 h-10 rounded-full" />
+            <img src={comment.author.profileImageUrl || '/images/crown-icon.svg'} alt="Author" className="w-8 h-8 rounded-full" />
             <div>
-              <h4 className="font-semibold">{comment.author.nickname}</h4>
+              <h4 className="text-sm font-semibold">{comment.author.nickname}</h4>
               {editCommentId === comment.id ? (
                 <input
                   type="text"
@@ -96,7 +96,9 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
                   autoFocus
                 />
               ) : (
-                <p onClick={() => startEdit(comment)}>{comment.content}</p> // 클릭하여 수정 모드 진입
+                <p onClick={() => startEdit(comment)} className="text-sm">
+                  {comment.content}
+                </p> // 클릭하여 수정 모드 진입
               )}
               <div className="flex space-x-2 mt-2">
                 {editCommentId !== comment.id && (

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import TodoCard from '../Todo/TodoCard';
 import Modal from '../Modal/Modal';
 import Image from 'next/image';
+import React from 'react';
 
 const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,13 +17,13 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
     setIsOpen(false);
   };
 
-  console.log(card);
+  console.log(card.tags);
 
   return (
     <>
       <div className="flex flex-col" key={card.id}>
         <div
-          className=" md:flex-row m-auto w-72 md:w-537 lg:w-80 h-full bg-white pt-3 mb-3 rounded-lg border-2 border-slate-200 hover:border-purple-760DDE transition duration-500 cursor-pointer"
+          className="w-72 md:w-537 lg:w-80 h-full m-auto bg-white mb-3 rounded-lg border-2 border-slate-200 hover:border-purple-760DDE transform transition duration-500 cursor-pointer"
           onClick={clickOpenModal}
         >
           <Modal
@@ -34,23 +35,31 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
           >
             <TodoCard cardId={card.id} isOpen={isOpen} dashboardId={dashboardId} columnId={columnId} card={card} columnTitle={columnTitle} />
           </Modal>
-          <div className="md:flex lg:flex-col w-full items-center">
+          <div className="md:flex lg:flex-col items-center">
             {card.imageUrl !== 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/asdasd.png' && card.imageUrl !== null && (
-              <div className="w-260 md:w-28 lg:w-284 h-40 md:h-16 lg:h-32 m-auto md:pl-4 lg:pl-0" style={{ overflow: 'hidden', position: 'relative' }}>
+              <div
+                className="w-260 md:w-28 lg:w-284 h-40 md:h-16 lg:h-32 md:ml-3 lg:ml-0 lg:pl-0 mt-3 ml-3 md:mt-0 lg:mt-4 transform transition duration-500 hover:scale-105"
+                style={{ overflow: 'hidden', position: 'relative' }}
+              >
                 <Image src={card.imageUrl} alt="Card Image" layout="fill" objectFit="cover" style={{ position: 'absolute' }} />
               </div>
             )}
-            <div className="w-full pt-3 p-4 flex-col">
+            <div className="w-full pt-3 p-4">
               <div>
                 <div className="w-full text-sm font-medium leading-4 pb-1.5 inline-block truncate text-ellipsis">{card.title}</div>
               </div>
-              <div className="md:flex lg:flex-col">
-                <div className="lg:flex lg:justify-start">
-                  <div className="bg-lime-100 text-lime-400 inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">
-                    {card.tags}
-                  </div>
+              <div className="lg:flex-col">
+                <div className="flex gap-3 md:gap-0 lg:justify-start">
+                  {card.tags.map((item, index) => (
+                    <div
+                      key={index}
+                      className=" bg-lime-100 text-lime-400 inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5"
+                    >
+                      {item}
+                    </div>
+                  ))}
                 </div>
-                <div className="flex w-64 md:w-full justify-between md:items-center">
+                <div className="w-full flex justify-between md:items-center">
                   <div className="flex w-full gap-1 items-center pt-1.5 md:pt-0">
                     <img src="/images/calendar-icon.svg" alt="캘린더 아이콘" />
                     <div className="text-xs text-slate-400">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
