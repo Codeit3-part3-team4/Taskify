@@ -2,7 +2,7 @@ import MyDashboardSection from './(components)/MydashboardSection/MyDashboardSec
 
 export default function MyDashboard() {
   return (
-    <div className="w-full bg-gray-FAFAFA">
+    <div className="w-full">
       <MyDashboardSection />
     </div>
   );

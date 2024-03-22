@@ -118,7 +118,7 @@ export const FunctionalHeader = () => {
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
           const moveX = (layoutMemeberCount - index - 1) * 15;
-          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
+          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1).toUpperCase();
           return <ProfileImage key={index} nickname={nickname} profileImageUrl={member.profileImageUrl} style={`translateX(${moveX}%)`} />;
         })}
       </div>
@@ -165,8 +165,8 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
       </div>
       <div className="flex flex-row items-center h-full">
         {children}
-        <div className="flex flex-row justify-end items-center cursor-pointer" onClick={() => router.push('/dashboard/mydashboard')}>
-          <ProfileImage nickname={myProfile.nickname.slice(0, 1)} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
+        <div className="flex flex-row justify-end items-center">
+          <ProfileImage nickname={myProfile.nickname.slice(0, 1).toUpperCase()} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
           <div className="hidden md:flex md:mr-5">{myProfile.nickname}</div>
         </div>
       </div>

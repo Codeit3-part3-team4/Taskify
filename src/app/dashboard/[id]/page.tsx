@@ -11,7 +11,7 @@ import React from 'react';
 
 export default function Page({ params: { id } }: { params: { id: number } }) {
   const [columnList, setColumnList] = useState<ColumnList | null>(null);
-  const { setDashboardId } = useContext(DashboardContext);
+  const { setDashboardId, data, isLoading } = useContext(DashboardContext);
   const { openModal } = useModal();
   const router = useRouter();
 
@@ -31,6 +31,14 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
     }
     fetchColumnData();
   }, []);
+
+  if (!data) {
+    return (
+      <button className="flex justify-center h-44 items-center">
+        <svg className="animate-spin h-10 w-10 border-4 rounded-full border-t-indigo-500" viewBox="0 0 24 24" />
+      </button>
+    );
+  }
 
   return (
     <div className="flex flex-col lg:flex-row h-full">
