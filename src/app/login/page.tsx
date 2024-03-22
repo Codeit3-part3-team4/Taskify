@@ -4,7 +4,7 @@ import { loginApi, postRequestCookies } from '@/api/AuthApi';
 import MainLogo from '@/components/login/MainLogo';
 import { useRouter } from 'next/navigation';
 import { authInstance } from '@/utils/functionalFetch';
-import Login from './components/Login';
+import Login from './(components)/Login';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center h-screen w-screen bg-white">
       <MainLogo title={'오늘도 만나서 반가워요!'} />
       <Login onSubmit={handleLoginSubmit} />
     </div>

@@ -15,9 +15,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const url = '/images/mokoko-bg.png';
+
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className}`}>
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-repeat opacity-30 -z-10"
+          style={{ backgroundImage: `url(${url})`, opacity: '0.3', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

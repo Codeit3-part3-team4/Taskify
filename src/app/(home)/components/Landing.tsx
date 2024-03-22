@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Canvas3DView from './Canvas3DView';
 import Link from 'next/link';

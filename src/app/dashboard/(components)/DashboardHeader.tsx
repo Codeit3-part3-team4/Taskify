@@ -83,9 +83,11 @@ export const FunctionalHeader = () => {
     });
   }, []);
 
-  if (pathname.split('/').includes('mydashboard') || ownerId !== myProfile?.id) return;
+  if (pathname.split('/').includes('mydashboard') && ownerId !== myProfile?.id) return;
+
   if (membersInf === undefined) return;
   const editPage = pathname.split('/').includes('edit') ? '' : '/edit';
+  const disalbedButton = ownerId !== myProfile?.id ? 'pointer-events-none opacity-50' : '';
 
   let showMemberCount = 3;
   if (MediaQueryType.TABLET === mediaQuery) showMemberCount = 3;
@@ -98,7 +100,7 @@ export const FunctionalHeader = () => {
   return (
     <div className="flex flex-row justify-center items-center h-full mr-3 md:mr-5">
       <button
-        className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2"
+        className={`flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2 hover:bg-gray-D9D9D9 ${disalbedButton}`}
         onClick={() => {
           router.push(`${pathname}/${editPage}?memberPage=1&invitePage=1`);
         }}
@@ -107,7 +109,7 @@ export const FunctionalHeader = () => {
         <span>관리</span>
       </button>
       <button
-        className="flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-3 md:mr-8 md:gap-2"
+        className={`flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-3 md:mr-8 md:gap-2 hover:bg-gray-D9D9D9 ${disalbedButton}`}
         onClick={() => setIsInviteModal(true)}
       >
         <Image className="hidden md:block w-5 h-5" src="/images/add_box.svg" alt="Taskify" width="15" height="15" />
@@ -116,7 +118,7 @@ export const FunctionalHeader = () => {
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
           const moveX = (layoutMemeberCount - index - 1) * 15;
-          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
+          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1).toUpperCase();
           return <ProfileImage key={index} nickname={nickname} profileImageUrl={member.profileImageUrl} style={`translateX(${moveX}%)`} />;
         })}
       </div>
@@ -133,6 +135,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
   const { dashboardId } = useContext(DashboardContext);
   const [title, setTitle] = useState<string>();
   const [ownerId, setOwnerId] = useState<number>();
+  const router = useRouter();
 
   useEffect(() => {
     if (Number.isNaN(dashboardId)) return;
@@ -163,7 +166,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
       <div className="flex flex-row items-center h-full">
         {children}
         <div className="flex flex-row justify-end items-center">
-          <ProfileImage nickname={myProfile.nickname.slice(0, 1)} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
+          <ProfileImage nickname={myProfile.nickname.slice(0, 1).toUpperCase()} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
           <div className="hidden md:flex md:mr-5">{myProfile.nickname}</div>
         </div>
       </div>

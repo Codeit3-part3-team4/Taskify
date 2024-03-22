@@ -21,14 +21,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showClo
   const modal = (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
       <dialog className="modal" open>
-        <div className="modal-box relative">
+        <div className="modal-box relative overflow-hidden overflow-y-auto">
           {showCloseButton && (
             <button className="absolute btn btn-sm btn-circle btn-ghost right-2 top-6" onClick={closeModal} aria-label="Close modal">
               <img src="/images/cancel.svg" alt="Close modal" />
             </button>
           )}
 
-          <h3 className="text-lg font-bold">{title}</h3>
+          <h3 className="text-lg font-bold truncate w-3/4">{title}</h3>
           <div className="py-4">{children}</div>
         </div>
       </dialog>
