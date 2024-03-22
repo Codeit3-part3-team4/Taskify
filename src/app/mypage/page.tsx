@@ -81,17 +81,9 @@ export default function MyPage() {
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
         {userInfo.id ? (
           <Layout>
-            <div className="flex flex-col">
-              {/* <div className="flex flex-row items-center">
-                <Link href={'/'}>
-                  <div className="flex flex-row">
-                    <Image src="/images/arrow-forward-left.svg" width="18" height="18" alt="arrow-left" />
-                    <strong className="text-sm">돌아가기</strong>
-                  </div>
-                </Link>
-              </div> */}
+            <div className="flex flex-col mt-24">
               <button onClick={handleGoBack} className="h-[37px] w-[284px] md:w-[544px] lg:w-[620px] ml-3 md:ml-5">
-                <div className="flex flex-row">
+                <div className="flex flex-row items-center hover:scale-105 transition-all">
                   <img src="/images/arrow-forward-left.svg" width="18" height="18" alt="arrow-left" />
                   <strong className="text-sm">돌아가기</strong>
                 </div>
