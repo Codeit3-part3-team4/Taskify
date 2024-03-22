@@ -28,8 +28,11 @@ export default function LoginPage() {
     }
   };
 
+  const url = '/images/mokoko-bg.png';
+
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen">
+      <div style={{ backgroundImage: `url(${url})`, opacity: '0.3', backgroundSize: 'cover', backgroundRepeat: 'repeat', backgroundPosition: 'center' }} />
       <MainLogo title={'오늘도 만나서 반가워요!'} />
       <Login onSubmit={handleLoginSubmit} />
     </div>

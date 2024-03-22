@@ -72,7 +72,6 @@ const config: Config = {
         'blue-76A6EA': '#76A6EA',
         'blue-AFDDFA': '#AFDDFA',
         'blue-87CEFA': '#87CEFA',
-        'pink-FFC0CB': '#FFC0CB',
       },
       transitionDuration: {
         '1500': '1500ms',

@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../hooks/useModal/useModal';
 import { editColumnApi, deleteColumnApi } from '@/api/columnApi';
 
-const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDeleted }) => {
+const EditColumn = ({ columnId, initialColumnName }) => {
   const { isOpen, openModal, closeModal } = useModal();
   const [columnName, setColumnName] = useState(initialColumnName);
 
@@ -16,7 +16,6 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
     if (isConfirmed) {
       try {
         await deleteColumnApi(columnId);
-        onColumnDeleted(columnId);
         closeModal();
         window.location.reload();
       } catch (error) {
@@ -35,7 +34,6 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
 
     try {
       await editColumnApi(columnId, columnName);
-      onColumnUpdated(columnId, columnName);
       closeModal();
       window.location.reload();
     } catch (error) {
@@ -71,7 +69,7 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
               <button type="button" className="btn w-32" onClick={closeModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 btn-primary">
+              <button type="submit" className="btn w-32  bg-primary-BASIC text-white hover:bg-primary-BASIC hover:scale-105">
                 변경
               </button>
             </div>

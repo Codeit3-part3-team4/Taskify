@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
 import { useModal } from '../hooks/useModal/useModal';
-import { deleteCardApi, detailCardApi } from '@/api/cardApi';
+import { Card, deleteCardApi, detailCardApi } from '@/api/cardApi';
 
 interface CardDetails {
   description: string;
@@ -11,7 +11,15 @@ interface CardDetails {
   dueDate: string;
 }
 
-export default function TodoCard({ cardId, dashboardId, columnId, card, columnTitle }) {
+interface TodoCardProps {
+  cardId: number;
+  dashboardId: number;
+  columnId: number;
+  card: Card;
+  columnTitle: string;
+}
+
+const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card, columnTitle }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen: isUpdateModalOpen, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModal();
   const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
@@ -27,8 +35,6 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
     };
     loadCardDetails();
   }, [cardId]);
-
-  console.log(cardDetails);
 
   const handleEditClick = async () => {
     try {
@@ -109,8 +115,12 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
               <div className="flex flex-col border rounded-md p-2 gap-2 w-2/5 h-1/2">
                 <div className="text-sm font-bold">담당자</div>
                 <div className="flex items-center">
-                  <div className="flex justify-center items-center font-bold w-8 h-8 rounded-full bg-green-A3C4A2 text-white">
-                    {card.assignee.profileImageUrl ? card.assignee.profileImageUrl : card.assignee.nickname[0].toUpperCase()}
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-green-A3C4A2 flex justify-center items-center text-white font-bold">
+                    {card.assignee.profileImageUrl ? (
+                      <Image src={card.assignee.profileImageUrl} alt="프로필 이미지" width={32} height={32} className="object-cover" />
+                    ) : (
+                      <span>{card.assignee.nickname[0]}</span>
+                    )}
                   </div>
                   <div className="ml-3 text-sm">{card.assignee.nickname}</div>
                 </div>
@@ -125,4 +135,6 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
       </div>
     </div>
   );
-}
+};
+
+export default TodoCard;
