@@ -60,7 +60,7 @@ const AddColumn: React.FC<AddColumnProps> = ({ dashboardId }) => {
     <div>
       <button
         onClick={openModal}
-        className="flex w-72 md:w-537 lg:w-80 lg:h-16 items-center m-auto bg-white border-2 border-slate-200 hover:border-pink-FFC0CB transition duration-500
+        className="flex w-72 md:w-537 lg:w-80 lg:h-16 items-center m-auto bg-white border-2 border-slate-200 hover:border-primary-BASIC transition duration-500
           justify-center pt-3 lg:mt-10 pb-3 mb-3 rounded-lg cursor-pointer"
       >
         <div>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
 import { useModal } from '../hooks/useModal/useModal';
-import { deleteCardApi, detailCardApi } from '@/api/cardApi';
+import { Card, deleteCardApi, detailCardApi } from '@/api/cardApi';
 
 interface CardDetails {
   description: string;
@@ -36,8 +36,6 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
     };
     loadCardDetails();
   }, [cardId]);
-
-  console.log(cardDetails);
 
   const handleEditClick = async () => {
     try {

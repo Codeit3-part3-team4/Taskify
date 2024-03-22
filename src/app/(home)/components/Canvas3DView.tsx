@@ -112,10 +112,10 @@ const Laptop = ({ operateIndex }: { operateIndex: number }) => {
   useEffect(() => {
     switch (operateIndex) {
       case 0:
-        setIframeUrl('https://ohddang.github.io/this-is-FE/');
+        setIframeUrl('https://react.dev/');
         break;
       case 1:
-        setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');
+        setIframeUrl('https://tailwindcss.com/docs/installation');
         break;
       case 2:
         setIframeUrl('https://www.codeit.kr/');

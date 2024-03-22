@@ -3,8 +3,9 @@
 import { getDashboardDetailsApi, putDashboardDetailsApi } from '@/api/dashboardsApi';
 import ColorPicker from '@/app/dashboard/mydashboard/(components)/DashboarderMaker/ColorPicker';
 import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
+import { DashboardContext } from '@/context/DashboardContext';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 const colorList: string[] = ['#7AC555', '#760DDE', '#76A5EA', '#E876EA', '#FFA500'];
 
@@ -17,6 +18,7 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
   const [title, setTitle] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const mediaQuery = useMediaQuery();
+  const { refresh, setRefresh } = useContext(DashboardContext);
 
   const onClickColor = (color: string) => {
     setColor(color);
@@ -30,6 +32,7 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
 
     setColor(result.color);
     setTitle(result.title);
+    setRefresh(!refresh);
   };
 
   useEffect(() => {
@@ -62,6 +65,7 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
             colorList.map(item => {
               return (
                 <button
+                  type="button"
                   className="flex justify-center items-center w-7 h-7 rounded-full"
                   style={{ backgroundColor: item }}
                   onClick={() => onClickColor(item)}

@@ -29,8 +29,9 @@ export default function DashboardList() {
   const endIndex = data ? Math.min(startIndex + PAGE_SIZE, data.dashboards.length) : 0;
   const displayedDashboards = data ? data.dashboards.slice(startIndex, endIndex) : null;
   return (
-    <div className="md:flex md:flex-col md:items-center md:mt-10">
-      <div className="flex flex-col gap-y-2 md:justify-center md:flex-row md:flex-wrap md:gap-4 mb-4 ">
+    <div className="bg-gray-300/50 md:flex md:flex-col">
+      <h2 className="flex items-start text-xl mb-5">대시보드</h2>
+      <div className="flex flex-col gap-y-2 md:justify-center md:flex-row md:flex-wrap md:gap-4 my-4 ">
         <div className="flex items-center border border-gray_D9D9D9 rounded-lg h-14 md:w-72 md:h-20 bg-white hover:bg-gray-D9D9D9 shadow-lg">
           <AddDashboardButton isModalOpen={setIsModalOpen}>
             <Image src="/images/plus-icon.svg" alt="대시보드 추가하기" width={16} height={16} />

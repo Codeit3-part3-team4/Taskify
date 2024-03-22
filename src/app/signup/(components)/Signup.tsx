@@ -19,6 +19,7 @@ export default function SignUp({ onSubmit }) {
 
   const [isValueLook, setIsValueLook] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
+  const [isButton, setIsButton] = useState(false);
 
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
@@ -63,6 +64,7 @@ export default function SignUp({ onSubmit }) {
     }
 
     setErrors(newErrors);
+    setIsButton(isValid);
     return isValid && isAgreed;
   };
 
@@ -161,7 +163,8 @@ export default function SignUp({ onSubmit }) {
         <button
           type="submit"
           onClick={onSubmitForm}
-          className="rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white bg-gray-400 top-[764px] mt-5 mb-6"
+          disabled={!isButton || !isAgreed}
+          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton && isAgreed ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
         >
           가입하기
         </button>
