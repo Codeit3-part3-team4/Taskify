@@ -16,7 +16,6 @@ const EditColumn = ({ columnId, initialColumnName }) => {
     if (isConfirmed) {
       try {
         await deleteColumnApi(columnId);
-
         closeModal();
         window.location.reload();
       } catch (error) {

@@ -100,7 +100,7 @@ const Comments = ({ cardId, columnId, dashboardId }: Props) => {
           onKeyDown={handleKeyPress}
           placeholder="댓글 작성하기"
         />
-        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary" onClick={handleAddComment}>
+        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline bg-primary-BASIC text-white" onClick={handleAddComment}>
           입력
         </button>
       </div>
@@ -119,7 +119,7 @@ const Comments = ({ cardId, columnId, dashboardId }: Props) => {
                 }}
               />
             ) : (
-              <div className="w-10 h-10 rounded-full  bg-green-A3C4A2 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-full  bg-blue-300 flex items-center justify-center text-white">
                 {comment.author.nickname.charAt(0).toUpperCase()}
               </div>
             )}
