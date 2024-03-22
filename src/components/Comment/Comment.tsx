@@ -14,7 +14,13 @@ interface Comment {
   author: Author;
 }
 
-const Comments = ({ cardId, columnId, dashboardId }) => {
+interface Props {
+  cardId: number;
+  columnId: number;
+  dashboardId: number;
+}
+
+const Comments = ({ cardId, columnId, dashboardId }: Props) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newCommentContent, setNewCommentContent] = useState('');
   const [editCommentId, setEditCommentId] = useState<number | null>(null);
@@ -53,7 +59,7 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
     setNewCommentContent('');
   };
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleAddComment();
@@ -106,9 +112,10 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
                 src={comment.author.profileImageUrl}
                 alt="Author"
                 className="w-10 h-10 rounded-full"
-                onError={e => {
-                  e.target.onerror = null;
-                  e.target.style.display = 'none';
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.style.display = 'none';
                 }}
               />
             ) : (

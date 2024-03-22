@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../hooks/useModal/useModal';
 import { editColumnApi, deleteColumnApi } from '@/api/columnApi';
 
-const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDeleted }) => {
+const EditColumn = ({ columnId, initialColumnName }) => {
   const { isOpen, openModal, closeModal } = useModal();
   const [columnName, setColumnName] = useState(initialColumnName);
 
@@ -16,7 +16,7 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
     if (isConfirmed) {
       try {
         await deleteColumnApi(columnId);
-        onColumnDeleted(columnId);
+
         closeModal();
         window.location.reload();
       } catch (error) {
@@ -35,7 +35,7 @@ const EditColumn = ({ columnId, initialColumnName, onColumnUpdated, onColumnDele
 
     try {
       await editColumnApi(columnId, columnName);
-      onColumnUpdated(columnId, columnName);
+
       closeModal();
       window.location.reload();
     } catch (error) {

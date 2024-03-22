@@ -8,7 +8,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { getMembersApi, Member } from '@/api/membersApi';
 import { postCardApi } from '@/api/cardApi';
 
-export default function TodoForm({ dashboardId, columnId }) {
+interface TodoFormProps {
+  dashboardId: number;
+  columnId: number;
+}
+
+interface FormData {
+  assigneeUserId: string;
+  title: string;
+  description: string;
+  deadline: Date;
+  tags: string[];
+  selectedImage?: string;
+}
+
+const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [formData, setFormData] = useState({
@@ -32,7 +46,7 @@ export default function TodoForm({ dashboardId, columnId }) {
     fetchMembers().catch(error => console.error('멤버 조회 오류:', error));
   }, [dashboardId]);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -61,14 +75,14 @@ export default function TodoForm({ dashboardId, columnId }) {
     }
   };
 
-  const removeTag = tagToRemove => {
+  const removeTag = (tagToRemove: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
     }));
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isFormValid()) {
       console.error('Form is not valid.');
@@ -217,4 +231,6 @@ export default function TodoForm({ dashboardId, columnId }) {
       )}
     </div>
   );
-}
+};
+
+export default TodoForm;

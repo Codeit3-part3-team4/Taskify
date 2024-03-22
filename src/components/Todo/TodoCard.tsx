@@ -9,9 +9,18 @@ interface CardDetails {
   description: string;
   assignee: { nickname: string } | null;
   dueDate: string;
+  imageUrl?: string | null;
 }
 
-export default function TodoCard({ cardId, dashboardId, columnId, card, columnTitle }) {
+interface TodoCardProps {
+  cardId: number;
+  dashboardId: number;
+  columnId: number;
+  card: any;
+  columnTitle: string;
+}
+
+const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card, columnTitle }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen: isUpdateModalOpen, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModal();
   const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
@@ -43,7 +52,7 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const handleDeleteClick = async () => {
+  const handleDeleteClick = async (e: React.MouseEvent<HTMLLIElement>) => {
     if (window.confirm('이 카드를 삭제하시겠습니까?')) {
       try {
         await deleteCardApi(cardId);
@@ -89,10 +98,7 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
 
               <div className="text-gray-300">|</div>
               {card.tags.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-lime-100 text-lime-400 inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5"
-                >
+                <div key={index} className="bg-blue-300 text-white inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5">
                   {item}
                 </div>
               ))}
@@ -129,4 +135,6 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
       </div>
     </div>
   );
-}
+};
+
+export default TodoCard;
