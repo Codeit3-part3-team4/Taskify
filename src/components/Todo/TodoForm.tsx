@@ -13,7 +13,6 @@ interface TodoFormProps {
   columnId: number;
 }
 
-
 interface FormData {
   assigneeUserId: string;
   title: string;
@@ -81,6 +80,22 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
       ...prevFormData,
       tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
     }));
+  };
+
+  const resetFormData = () => {
+    setFormData({
+      assigneeUserId: '',
+      title: '',
+      description: '',
+      deadline: new Date(),
+      tags: [],
+      selectedImage: '',
+    });
+  };
+
+  const handleCloseModal = () => {
+    resetFormData();
+    closeModal();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -220,7 +235,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
               </div>
             </div>
             <div className="flex justify-end space-x-2">
-              <button type="button" className="btn w-32 text-gray-500" onClick={closeModal}>
+              <button type="button" className="btn w-32 text-gray-500" onClick={handleCloseModal}>
                 취소
               </button>
               <button type="submit" className="btn w-32 bg-primary-BASIC text-white" disabled={!isFormValid()}>
