@@ -8,11 +8,15 @@ import MyProfile from './(components)/MyProfile';
 import { changePasswordApi } from '@/api/AuthApi';
 import MyPassword from './(components)/Mypassword';
 import Layout from '../dashboard/layout';
-import DashboardBack from '../dashboard/[id]/edit/(components)/DashboardBack';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-// import DashboardBack from './(components)/DashboardBack';
 
+interface UpdateUserInfo {
+  email?: string;
+  nickname?: string;
+  profileImageUrl?: string;
+}
+
+interface ChangePw {}
 export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -22,7 +26,7 @@ export default function MyPage() {
     router.back();
   };
 
-  const handleUpdateUserSubmit = async updateUserValues => {
+  const handleUpdateUserSubmit = async (updateUserValues: UpdateUserInfo) => {
     try {
       await updateUserInfoApi(updateUserValues);
       console.log('계정관리페이지 닉넴,프로필 변경', updateUserValues);
@@ -31,7 +35,7 @@ export default function MyPage() {
     }
   };
 
-  const handleChangeProfileImg = async updateProfileImg => {
+  const handleChangeProfileImg = async (updateProfileImg: File) => {
     try {
       const imageUrl = await updateUserProfileImgApi(updateProfileImg);
       console.log('계정관리 페이지 프로필 이미지 변경', updateProfileImg);
@@ -43,7 +47,7 @@ export default function MyPage() {
     }
   };
 
-  const handleChangePassword = async changePassword => {
+  const handleChangePassword = async (changePassword: any) => {
     try {
       const res = await changePasswordApi(changePassword);
       console.log('지금 추가', JSON.stringify(changePassword));
