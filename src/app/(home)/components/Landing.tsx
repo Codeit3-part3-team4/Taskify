@@ -30,16 +30,16 @@ export default function Landing() {
           <div className="w-[450px] h-[300px] rounded-lg overflow-hidden bg-white md:w-[720px] md:h-[480px] 2xl:w-[1200px] 2xl:h-[800px]">
             <Canvas3DView operateIndex={operateIndex} />
             <div className={`absolute top-full left-full w-9 h-9 text-begie-500 transition-all transform hover:scale-125`} onClick={onClick} ref={operateRef}>
-              <Image className="w-7 h-7" src="/images/refresh-white.svg" width="36" height="36" alt="refresh" />
+              <Image className="w-7 h-7" src="/images/refresh.svg" width="36" height="36" alt="refresh" />
             </div>
           </div>
         </div>
         <div className={`flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6 transition-opacity duration-500 ${loginOpacity}`}>
-          <strong className="text-4xl mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
-          <strong className="text-5xl text-primary-BASIC mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
+          <strong className="text-4xl text-white drop-shadow-lg mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
+          <strong className="text-5xl text-primary-BASIC drop-shadow-lg mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
         </div>
         <div className="text-xs mb-20 md:text-sm md:mb-16 2xl:text-base"></div>
-        <div className={`rounded-lg w-60 h-11 bg-primary-BASIC md:w-72 transition-opacity duration-500 ${loginOpacity}`}>
+        <div className={`rounded-lg w-60 h-11 bg-primary-BASIC md:w-72 transition-opacity duration-500 animate-bounce ${loginOpacity}`}>
           <Link
             className="flex justify-center items-center w-full h-full md:text-lg"
             href={{
@@ -126,29 +126,35 @@ export default function Landing() {
   const url = '/images/mokoko-bg.png';
 
   return (
-    <div
-      className="min-h-screen text-white"
-      style={{ backgroundImage: `url(${url})`, backgroundSize: 'cover', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}
-    >
-      <div className="flex flex-col justify-start items-center w-full h-full bg-gradient-to-b from-gray-500/50 via-transparent to-white/50">
-        <section className="mt-10 mb-20">
+    <div className="w-full h-[100dvh] text-white overflow-scroll">
+      <div
+        className="absolute w-full h-[100dvh]"
+        style={{
+          backgroundImage: `url(${url})`,
+          // opacity: 0.7, // 투명도 적용
+          filter: 'blur(7px)', // 흐림 효과 적용
+          zIndex: 0,
+        }}
+      />
+      <div className="flex flex-col justify-start items-center w-full h-full ">
+        <section className="z-10 mt-10 mb-20">
           <Title />
         </section>
-        <section className="mb-16 bg-gray-300/50 text-black">
+        <section className="z-10 mb-16 bg-gray-300/50 text-black">
           <MainThumb title="Point 1" desc="일의 우선순위를" desc2="관리하세요">
             <div className="flex flex-row justify-end items-end w-full">
               <div className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} />
             </div>
           </MainThumb>
         </section>
-        <section className="mb-24 bg-gray-300/50 text-black">
+        <section className="z-10 mb-24 bg-gray-300/50 text-black">
           <MainThumb title="Point 2" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
             <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
               <div className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`} />
             </div>
           </MainThumb>
         </section>
-        <section className="mb-32 text-black">
+        <section className="z-10 mb-32 text-black">
           <div className="mb-10 text-center 2xl:text-left">
             <span className="text-xl md:text-2xl">생산성을 높이는 다양한 설정 ⚡ </span>
           </div>

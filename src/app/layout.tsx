@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Gamja_Flower } from 'next/font/google';
 import './globals.css';
 import React from 'react';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Gamja_Flower({ weight: '400', subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Taskify',
