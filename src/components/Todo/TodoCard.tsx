@@ -9,13 +9,14 @@ interface CardDetails {
   description: string;
   assignee: { nickname: string } | null;
   dueDate: string;
+  imageUrl?: string | null;
 }
 
 interface TodoCardProps {
   cardId: number;
   dashboardId: number;
   columnId: number;
-  card: Card;
+  card: any;
   columnTitle: string;
 }
 
@@ -49,7 +50,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const handleDeleteClick = async () => {
+  const handleDeleteClick = async (e: React.MouseEvent<HTMLLIElement>) => {
     if (window.confirm('이 카드를 삭제하시겠습니까?')) {
       try {
         await deleteCardApi(cardId);
@@ -115,7 +116,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
               <div className="flex flex-col border rounded-md p-2 gap-2 w-2/5 h-1/2">
                 <div className="text-sm font-bold">담당자</div>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-green-A3C4A2 flex justify-center items-center text-white font-bold">
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-green-A3C4A2 flex justify-center items-center bg-primary-BASIC text-white font-bold">
                     {card.assignee.profileImageUrl ? (
                       <Image src={card.assignee.profileImageUrl} alt="프로필 이미지" width={32} height={32} className="object-cover" />
                     ) : (

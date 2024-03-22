@@ -290,10 +290,10 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
               <ImageUpload columnId={columnId} onImageUpload={handleImageUpload} />
             </div>
             <div className="flex justify-end space-x-2">
-              <button type="button" className="btn w-32" onClick={closeModal}>
+              <button type="button" className="btn w-32 text-gray-500" onClick={closeModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 btn-primary" disabled={!isFormValid()}>
+              <button type="submit" className="btn w-32 bg-primary-BASIC text-white" disabled={!isFormValid()}>
                 수정
               </button>
             </div>

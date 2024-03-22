@@ -13,6 +13,15 @@ interface TodoFormProps {
   columnId: number;
 }
 
+interface FormData {
+  assigneeUserId: string;
+  title: string;
+  description: string;
+  deadline: Date;
+  tags: string[];
+  selectedImage?: string;
+}
+
 const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -37,7 +46,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     fetchMembers().catch(error => console.error('멤버 조회 오류:', error));
   }, [dashboardId]);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -66,14 +75,30 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     }
   };
 
-  const removeTag = tagToRemove => {
+  const removeTag = (tagToRemove: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
     }));
   };
 
-  const handleSubmit = async e => {
+  const resetFormData = () => {
+    setFormData({
+      assigneeUserId: '',
+      title: '',
+      description: '',
+      deadline: new Date(),
+      tags: [],
+      selectedImage: '',
+    });
+  };
+
+  const handleCloseModal = () => {
+    resetFormData();
+    closeModal();
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isFormValid()) {
       console.error('Form is not valid.');
@@ -213,10 +238,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
               </div>
             </div>
             <div className="flex justify-end space-x-2">
-              <button type="button" className="btn w-32" onClick={closeModal}>
+              <button type="button" className="btn w-32 text-gray-500" onClick={handleCloseModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 btn-primary" disabled={!isFormValid()}>
+              <button type="submit" className="btn w-32 bg-primary-BASIC text-white" disabled={!isFormValid()}>
                 생성
               </button>
             </div>

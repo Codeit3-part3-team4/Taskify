@@ -14,7 +14,13 @@ interface Comment {
   author: Author;
 }
 
-const Comments = ({ cardId, columnId, dashboardId }) => {
+interface Props {
+  cardId: number;
+  columnId: number;
+  dashboardId: number;
+}
+
+const Comments = ({ cardId, columnId, dashboardId }: Props) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newCommentContent, setNewCommentContent] = useState('');
   const [editCommentId, setEditCommentId] = useState<number | null>(null);
@@ -53,7 +59,7 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
     setNewCommentContent('');
   };
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleAddComment();
@@ -94,7 +100,7 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
           onKeyDown={handleKeyPress}
           placeholder="댓글 작성하기"
         />
-        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary" onClick={handleAddComment}>
+        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline bg-primary-BASIC text-white" onClick={handleAddComment}>
           입력
         </button>
       </div>
@@ -106,13 +112,14 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
                 src={comment.author.profileImageUrl}
                 alt="Author"
                 className="w-10 h-10 rounded-full"
-                onError={e => {
-                  e.target.onerror = null;
-                  e.target.style.display = 'none';
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.style.display = 'none';
                 }}
               />
             ) : (
-              <div className="w-10 h-10 rounded-full  bg-green-A3C4A2 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-full  bg-blue-300 flex items-center justify-center text-white">
                 {comment.author.nickname.charAt(0).toUpperCase()}
               </div>
             )}

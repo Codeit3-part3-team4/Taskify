@@ -1,21 +1,32 @@
+import { UserValues } from '@/api/AuthApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
 import { useState } from 'react';
 
-export default function Login({ onSubmit }) {
-  const [userValues, setUserValues] = useState({
+export interface Login {
+  email: string;
+  password: string;
+}
+
+interface Props {
+  onSubmit: (UserValues: Login) => void;
+}
+
+export default function Login({ onSubmit }: Props) {
+  const [userValues, setUserValues] = useState<Login>({
     email: '',
     password: '',
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Login>({
     email: '',
     password: '',
   });
 
-  const [isValueLook, setIsValueLook] = useState(false);
+  const [isValueLook, setIsValueLook] = useState<boolean>(false);
+  const [isButton, setIsButton] = useState<boolean>(false);
 
-  const onChangeLoginSubmit = e => {
+  const onChangeLoginSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
     console.log(value);
@@ -24,9 +35,10 @@ export default function Login({ onSubmit }) {
       [id]: value,
     });
     console.log(userValues);
+    validateForm(id);
   };
 
-  const validateForm = () => {
+  const validateForm = (id: string): boolean => {
     let isValid = true;
     const newErrors = {
       email: '',
@@ -44,25 +56,37 @@ export default function Login({ onSubmit }) {
       isValid = false;
     }
 
-    setErrors(newErrors);
+    if (id === 'email') {
+      setErrors({
+        ...errors,
+        email: newErrors.email,
+      });
+    } else if (id === 'password') {
+      setErrors({
+        ...errors,
+        password: newErrors.password,
+      });
+    }
+
+    setIsButton(isValid);
     return isValid;
   };
 
-  const onSubmitForm = e => {
+  const onSubmitForm = (e: React.FormEvent): void => {
     e.preventDefault();
     console.log('로그인 시도:', userValues);
     onSubmit(userValues);
   };
 
-  const onBlur = () => {
-    validateForm();
+  const onBlur = (id: string): void => {
+    validateForm(id);
   };
 
-  const handlePasswordLook = () => {
+  const handlePasswordLook = (): void => {
     setIsValueLook(!isValueLook);
   };
 
-  const typeValue = () => {
+  const typeValue = (): string => {
     if (!isValueLook) {
       return 'password';
     } else {
@@ -81,7 +105,7 @@ export default function Login({ onSubmit }) {
             value={userValues.email}
             placeholder={'이메일을 입력해 주세요'}
             onChange={onChangeLoginSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('email')}
             error={errors.email}
           />
         </div>
@@ -94,7 +118,7 @@ export default function Login({ onSubmit }) {
             password={true}
             placeholder={'비밀번호를 입력해 주세요'}
             onChange={onChangeLoginSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('password')}
             handlePasswordLook={handlePasswordLook}
             error={errors.password}
           />
@@ -102,7 +126,8 @@ export default function Login({ onSubmit }) {
         <button
           type="submit"
           onClick={onSubmitForm}
-          className="rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white bg-gray-400 top-[764px] mt-5 mb-6"
+          disabled={!isButton}
+          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
         >
           로그인
         </button>

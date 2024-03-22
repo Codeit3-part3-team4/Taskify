@@ -89,10 +89,10 @@ const AddColumn: React.FC<AddColumnProps> = ({ dashboardId }) => {
               {error && <p className="text-red-500">{error}</p>}
             </div>
             <div className="flex justify-end space-x-2 mt-3">
-              <button type="button" className="btn w-32" onClick={closeModal}>
+              <button type="button" className="btn w-32 text-gray-400" onClick={closeModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 btn-primary" disabled={isSubmitDisabled}>
+              <button type="submit" className="btn w-32 bg-primary-BASIC text-white" disabled={isSubmitDisabled}>
                 생성
               </button>
             </div>
