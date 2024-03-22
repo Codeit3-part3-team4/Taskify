@@ -42,15 +42,21 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
 
   const handleAddComment = async () => {
     if (!newCommentContent.trim()) return;
-    const createdComment = await createComment({ content: newCommentContent, cardId, columnId, dashboardId });
+
+    const createdComment = await createComment({
+      content: newCommentContent,
+      cardId,
+      columnId,
+      dashboardId,
+    });
     setComments(prev => [...prev, createdComment]);
     setNewCommentContent('');
   };
 
-  const handleKeyPress = async e => {
+  const handleKeyPress = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      await handleAddComment();
+      handleAddComment();
     }
   };
 
@@ -85,7 +91,7 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
           className="input input-bordered w-full h-24"
           value={newCommentContent}
           onChange={e => setNewCommentContent(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
           placeholder="댓글 작성하기"
         />
         <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary" onClick={handleAddComment}>
@@ -106,7 +112,7 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
                 }}
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-full  bg-green-A3C4A2 flex items-center justify-center text-white">
                 {comment.author.nickname.charAt(0).toUpperCase()}
               </div>
             )}

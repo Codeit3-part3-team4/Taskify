@@ -277,7 +277,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
                   <div key={`${tag}-${index}`} className="tag">
                     {tag}
                     <button type="button" onClick={() => removeTag(tag)}>
-                      [x]
+                      <img className="flex w-3 h-3" src="/images/cancel.svg" />
                     </button>
                   </div>
                 ))}

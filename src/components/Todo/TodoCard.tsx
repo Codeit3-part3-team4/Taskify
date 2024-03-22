@@ -109,8 +109,12 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
               <div className="flex flex-col border rounded-md p-2 gap-2 w-2/5 h-1/2">
                 <div className="text-sm font-bold">담당자</div>
                 <div className="flex items-center">
-                  <div className="flex justify-center items-center font-bold w-8 h-8 rounded-full bg-green-A3C4A2 text-white">
-                    {card.assignee.profileImageUrl ? card.assignee.profileImageUrl : card.assignee.nickname[0].toUpperCase()}
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-green-A3C4A2 flex justify-center items-center text-white font-bold">
+                    {card.assignee.profileImageUrl ? (
+                      <Image src={card.assignee.profileImageUrl} alt="프로필 이미지" width={32} height={32} className="object-cover" />
+                    ) : (
+                      <span>{card.assignee.nickname[0]}</span>
+                    )}
                   </div>
                   <div className="ml-3 text-sm">{card.assignee.nickname}</div>
                 </div>
