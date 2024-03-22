@@ -116,7 +116,7 @@ export default function Login({ onSubmit }) {
           type="submit"
           onClick={onSubmitForm}
           disabled={!isButton}
-          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton ? 'bg-violet-5534DA' : 'bg-gray-400'}`}
+          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
         >
           로그인
         </button>
