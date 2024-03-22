@@ -58,9 +58,19 @@ const AddColumn: React.FC<AddColumnProps> = ({ dashboardId }) => {
 
   return (
     <div>
-      <div className="flex" onClick={openModal}>
-        <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="컬럼 추가하기 버튼 아이콘" />
-      </div>
+      <button
+        onClick={openModal}
+        className="flex w-72 md:w-537 lg:w-80 lg:h-16 items-center m-auto bg-white border-2 border-slate-200 hover:border-pink-FFC0CB transition duration-500
+          justify-center pt-3 lg:mt-10 pb-3 mb-3 rounded-lg cursor-pointer"
+      >
+        <div>
+          <div className="flex w-full h-full gap-2">
+            <div className="flex text-base font-bold">새로운 컬럼 추가하기</div>
+
+            <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="컬럼 추가하기 버튼 아이콘" />
+          </div>
+        </div>
+      </button>
       {isOpen && (
         <Modal isOpen={isOpen} onClose={closeModal} title="새 컬럼 생성" showCloseButton={false}>
           <form onSubmit={handleSubmit}>
