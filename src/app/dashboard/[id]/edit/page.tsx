@@ -29,7 +29,7 @@ export default async function Page({ params: { id }, searchParams }: { params: {
   if (searchParams.cancelInvite) await deleteDashboardInvitationsCancel(Number(id), Number(searchParams.cancelInvite));
 
   return (
-    <article className="flex flex-col w-full h-screen pt-4 px-3 pb-6 mt-24 max-w-[660px] bg-gray-300/50">
+    <article className="flex flex-col w-full h-[calc(100dvh-6rem)] overflow-scroll pt-4 px-3 pb-6 mt-24 max-w-[660px] ">
       <section className="mb-5">
         <DashboardBack />
       </section>

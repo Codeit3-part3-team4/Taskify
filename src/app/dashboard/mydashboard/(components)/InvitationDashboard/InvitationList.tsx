@@ -45,7 +45,7 @@ export default function InvitationList({ processedInvitations, setProcessedInvit
               수락
             </button>
             <button
-              className="w-24 h-7 border border-gray-D9D9D9 rounded-lg text-purple-760DDE hover:bg-gray-D9D9D9"
+              className="w-24 h-7 border border-gray-D9D9D9 rounded-lg text-purple-760DDE bg-white hover:bg-gray-D9D9D9"
               onClick={() => handlePutInvitation(invitation.id, false)}
             >
               거절

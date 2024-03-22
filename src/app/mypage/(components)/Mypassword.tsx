@@ -82,7 +82,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     <div>
       <div>
         {userInfo && (
-          <div className="flex justify-center md:justify-start items-center h-[385px] md:h-[454px] rounded-lg bg-white-FFFFFF mt-3">
+          <div className="flex justify-center md:justify-start items-center h-[385px] md:h-[454px] rounded-lg bg-white-FFFFFF pr-5">
             <div className="flex flex-col  md:ml-8">
               <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
               <div className="flex flex-col mt-6 md:mt-8">
@@ -137,10 +137,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                 </div>
 
                 <div className="flex justify-end">
-                  <button
-                    onClick={onSubmitForm}
-                    className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 hover:bg-purple-500 hover:scale-105"
-                  >
+                  <button onClick={onSubmitForm} className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 hover:scale-105">
                     변경
                   </button>
                 </div>

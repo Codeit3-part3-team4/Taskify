@@ -92,13 +92,10 @@ export default function MyPage() {
                   <strong className="text-sm">돌아가기</strong>
                 </div>
               </button>
-              <div className="flex flex-col w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5">
-                <div>
-                  <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
-                </div>
-                <div>
-                  <MyPassword onSubmit={handleChangePassword} />
-                </div>
+              {/* <DashboardBack /> */}
+              <div className="flex flex-row items-start w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5 gap-5">
+                <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
+                <MyPassword onSubmit={handleChangePassword} />
               </div>
             </div>
           </Layout>

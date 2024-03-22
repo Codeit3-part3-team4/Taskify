@@ -13,7 +13,7 @@ export default function DashboardBack() {
     <>
       <div className="flex flex-row items-center">
         <Link href={{ pathname: newPath }}>
-          <div className="flex flex-row hover:scale-105 transition-all">
+          <div className="flex flex-row items-center ml-3 transition-all hover:scale-105 hover:-translate-x-3">
             <Image src="/images/arrow-forward-left.svg" width="18" height="18" alt="arrow-left" />
             <strong className="text-sm">돌아가기</strong>
           </div>

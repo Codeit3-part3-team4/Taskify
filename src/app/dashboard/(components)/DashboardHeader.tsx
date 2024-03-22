@@ -6,7 +6,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { usePathname } from 'next/navigation';
 import { getMembersApi, MembersInf } from '../../../api/membersApi';
 import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery';
-import { UserSignUp, getUserInfo } from '@/api/userApi';
+import { UserInfo, UserSignUp, getUserInfo } from '@/api/userApi';
 import { getDashboardDetailsApi } from '@/api/dashboardsApi';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/Modal/Modal';
@@ -55,7 +55,7 @@ export const FunctionalHeader = () => {
   const mediaQuery = useMediaQuery();
   const router = useRouter();
 
-  const [myProfile, setMyProfile] = useState<UserSignUp>();
+  const [myProfile, setMyProfile] = useState<UserInfo>();
   const [ownerId, setOwnerId] = useState<number>();
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const FunctionalHeader = () => {
 
   useEffect(() => {
     getUserInfo().then(res => {
-      if (res === null) return;
+      if (res === undefined) return;
       setMyProfile(res);
     });
   }, []);
@@ -131,7 +131,7 @@ export const FunctionalHeader = () => {
 };
 
 export default function DashboardHeader({ children }: { children: React.ReactNode }) {
-  const [myProfile, setMyProfile] = useState<UserSignUp>();
+  const [myProfile, setMyProfile] = useState<UserInfo>();
   const { dashboardId } = useContext(DashboardContext);
   const [title, setTitle] = useState<string>();
   const [ownerId, setOwnerId] = useState<number>();

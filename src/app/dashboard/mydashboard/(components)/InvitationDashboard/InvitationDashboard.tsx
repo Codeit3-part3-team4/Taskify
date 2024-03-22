@@ -54,9 +54,9 @@ export default function InvitationDashboard() {
   };
 
   return (
-    <div className="flex flex-col bg-gray-300/50 my-5">
+    <div className="flex flex-col bg-white/50 my-5 p-5">
       <h2 className="text-xl mb-5">초대받은 대시보드</h2>
-      <div className="mb-5">
+      <div className="mb-5 border border-gray-D9D9D9 rounded-md overflow-hidden">
         <SearchForm onSubmit={handleSearchSubmit} />
       </div>
       <InvitationList processedInvitations={processedInvitations} setProcessedInvitations={setProcessedInvitations} />
