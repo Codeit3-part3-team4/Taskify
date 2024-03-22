@@ -9,13 +9,12 @@ interface Props {
   password?: boolean;
   placeholder: string;
   error?: string;
-  onFocus: boolean;
   onChange: ChangeEventHandler;
   onBlur: ChangeEventHandler;
   handlePasswordLook?: ChangeEventHandler;
 }
 
-export default function InputUserInfo({ label, id, type, value, password, placeholder, error, onFocus, onChange, onBlur, handlePasswordLook }: Props) {
+export default function InputUserInfo({ label, id, type, value, password, placeholder, error, onChange, onBlur, handlePasswordLook }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocuse = () => {
@@ -39,7 +38,6 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
           value={value}
           placeholder={placeholder}
           onChange={onChange}
-          // onBlur={() => onBlur({ id })}
           onBlur={handleOnBlur}
           onFocus={handleFocuse}
           className="w-full outline-none pl-4 bg-transparent"

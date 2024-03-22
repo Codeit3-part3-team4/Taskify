@@ -25,7 +25,6 @@ export default function Login({ onSubmit }: Props) {
 
   const [isValueLook, setIsValueLook] = useState<boolean>(false);
   const [isButton, setIsButton] = useState<boolean>(false);
-  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const onChangeLoginSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
@@ -70,8 +69,6 @@ export default function Login({ onSubmit }: Props) {
     }
 
     setIsButton(isValid);
-    console.log('유효성검사중 isbutton:', isButton);
-    console.log('유효성검사중 error:', errors);
     return isValid;
   };
 
@@ -83,12 +80,6 @@ export default function Login({ onSubmit }: Props) {
 
   const onBlur = (id: string): void => {
     validateForm(id);
-
-    setIsFocused(false);
-
-    console.log('포커스값', isFocused);
-
-    console.log('onBlur', id);
   };
 
   const handlePasswordLook = (): void => {
@@ -115,7 +106,6 @@ export default function Login({ onSubmit }: Props) {
             placeholder={'이메일을 입력해 주세요'}
             onChange={onChangeLoginSubmit}
             onBlur={() => onBlur('email')}
-            onFocus={isFocused}
             error={errors.email}
           />
         </div>
@@ -129,7 +119,6 @@ export default function Login({ onSubmit }: Props) {
             placeholder={'비밀번호를 입력해 주세요'}
             onChange={onChangeLoginSubmit}
             onBlur={() => onBlur('password')}
-            // onFocus={isFocused}
             handlePasswordLook={handlePasswordLook}
             error={errors.password}
           />

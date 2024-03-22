@@ -34,9 +34,10 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       [id]: value,
     });
     console.log(newUserValues);
+    validateForm(id);
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = (id: string): boolean => {
     let isValid = true;
     const newErrors: UserSignUp = {
       email: '',
@@ -68,25 +69,46 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       isValid = false;
     }
 
-    setErrors(newErrors);
-    setIsButton(isValid);
-    return isValid && isAgreed;
+    if (id === 'email') {
+      setErrors({
+        ...errors,
+        email: newErrors.email,
+      });
+    } else if (id === 'password' || id === 'pwCheck') {
+      setErrors({
+        ...errors,
+        password: newErrors.password,
+        pwCheck: newErrors.pwCheck,
+      });
+    } else if (id === 'nickname') {
+      setErrors({
+        ...errors,
+        nickname: newErrors.nickname,
+      });
+      // } else if (id === 'pwCheck') {
+      //   setErrors({
+      //     ...errors,
+      //     pwCheck: newErrors.pwCheck,
+      //   });
+
+      setIsButton(isValid);
+      return isValid && isAgreed;
+    }
   };
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(validateForm());
     if (validateForm()) {
       console.log('회원가입 시도:', newUserValues);
       onSubmit(newUserValues);
     }
   };
 
-  const onBlur = () => {
-    validateForm();
+  const onBlur = (id: string): void => {
+    validateForm(id);
   };
 
-  const handlePasswordLook = () => {
+  const handlePasswordLook = (): void => {
     setIsValueLook(!isValueLook);
   };
 
@@ -100,7 +122,6 @@ export default function SignUp({ onSubmit }: SignUpProps) {
 
   const handleAgreedChange = () => {
     setIsAgreed(!isAgreed);
-    console.log(isAgreed);
   };
 
   return (
@@ -114,7 +135,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
             value={newUserValues.email}
             placeholder={'이메일을 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('email')}
             error={errors.email}
           />
         </div>
@@ -126,7 +147,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
             value={newUserValues.nickname}
             placeholder={'닉네임을 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('nickname')}
             error={errors.nickname}
           />
         </div>
@@ -139,7 +160,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
             password={true}
             placeholder={'8자 이상 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('password')}
             handlePasswordLook={handlePasswordLook}
             error={errors.password}
           />
@@ -153,7 +174,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
             password={true}
             placeholder={'비밀번호를 한번 더 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('pwCheck')}
             handlePasswordLook={handlePasswordLook}
             error={errors.pwCheck}
           />
