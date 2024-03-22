@@ -136,7 +136,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
 
   return (
     <div className="flex">
-      <button onClick={openModal}>
+      <button
+        onClick={openModal}
+        className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-200 hover:border-primary-BASIC transition duration-500"
+      >
         <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="카드 추가하기 버튼 아이콘" />
       </button>
       {isOpen && (

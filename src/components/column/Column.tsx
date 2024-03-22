@@ -58,12 +58,7 @@ const Column: React.FC<ColumnProps> = ({ columnId, columnTitle, dashboardId }) =
             <EditColumn columnId={columnId} initialColumnName={columnTitle} />
           </div>
           <div className="flex md: justify-center">
-            <button
-              className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-200 hover:border-primary-BASIC transition duration-500"
-              onClick={openModal}
-            >
-              <TodoForm dashboardId={dashboardId} columnId={columnId} />
-            </button>
+            <TodoForm dashboardId={dashboardId} columnId={columnId} />
           </div>
           <div className="h-[calc(100%-10rem)] overflow-y-scroll">
             {cardList.length > 0 &&
