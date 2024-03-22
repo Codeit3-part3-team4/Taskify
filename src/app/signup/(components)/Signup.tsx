@@ -1,39 +1,45 @@
+import { UserSignUp } from '@/api/userApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
 import { useState } from 'react';
 
-export default function SignUp({ onSubmit }) {
-  const [newUserValues, setNewUserValues] = useState({
+interface SignUpProps {
+  onSubmit: (newUserValues: UserSignUp) => Promise<void>;
+}
+
+export default function SignUp({ onSubmit }: SignUpProps) {
+  const [newUserValues, setNewUserValues] = useState<UserSignUp>({
     email: '',
     password: '',
     nickname: '',
     pwCheck: '',
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<UserSignUp>({
     email: '',
     password: '',
     nickname: '',
     pwCheck: '',
   });
 
-  const [isValueLook, setIsValueLook] = useState(false);
-  const [isAgreed, setIsAgreed] = useState(false);
-  const [isButton, setIsButton] = useState(false);
+  const [isValueLook, setIsValueLook] = useState<boolean>(false);
+  const [isAgreed, setIsAgreed] = useState<boolean>(false);
+  const [isButton, setIsButton] = useState<boolean>(false);
 
-  const onChangeSignupSubmit = e => {
-    const id = e.target.id;
+  const onChangeSignupSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const id = e.target.id as keyof UserSignUp;
     const value = e.target.value;
     setNewUserValues({
       ...newUserValues,
       [id]: value,
     });
     console.log(newUserValues);
+    validateForm(id);
   };
 
-  const validateForm = () => {
+  const validateForm = (id: string): boolean => {
     let isValid = true;
-    const newErrors = {
+    const newErrors: UserSignUp = {
       email: '',
       password: '',
       nickname: '',
@@ -63,29 +69,32 @@ export default function SignUp({ onSubmit }) {
       isValid = false;
     }
 
-    setErrors(newErrors);
+    if (id) {
+      setErrors({
+        ...errors,
+        [id]: newErrors[id],
+      });
+    }
+
     setIsButton(isValid);
     return isValid && isAgreed;
   };
 
-  const onSubmitForm = async e => {
+  const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(validateForm());
-    if (validateForm()) {
-      console.log('회원가입 시도:', newUserValues);
-      onSubmit(newUserValues);
-    }
+    console.log('회원가입 시도:', newUserValues);
+    onSubmit(newUserValues);
   };
 
-  const onBlur = () => {
-    validateForm();
+  const onBlur = (id: string): void => {
+    validateForm(id);
   };
 
-  const handlePasswordLook = () => {
+  const handlePasswordLook = (): void => {
     setIsValueLook(!isValueLook);
   };
 
-  const typeValue = () => {
+  const typeValue = (): string => {
     if (!isValueLook) {
       return 'password';
     } else {
@@ -95,7 +104,6 @@ export default function SignUp({ onSubmit }) {
 
   const handleAgreedChange = () => {
     setIsAgreed(!isAgreed);
-    console.log(isAgreed);
   };
 
   return (
@@ -109,7 +117,7 @@ export default function SignUp({ onSubmit }) {
             value={newUserValues.email}
             placeholder={'이메일을 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('email')}
             error={errors.email}
           />
         </div>
@@ -121,7 +129,7 @@ export default function SignUp({ onSubmit }) {
             value={newUserValues.nickname}
             placeholder={'닉네임을 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('nickname')}
             error={errors.nickname}
           />
         </div>
@@ -134,7 +142,7 @@ export default function SignUp({ onSubmit }) {
             password={true}
             placeholder={'8자 이상 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('password')}
             handlePasswordLook={handlePasswordLook}
             error={errors.password}
           />
@@ -148,7 +156,7 @@ export default function SignUp({ onSubmit }) {
             password={true}
             placeholder={'비밀번호를 한번 더 입력해 주세요'}
             onChange={onChangeSignupSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('pwCheck')}
             handlePasswordLook={handlePasswordLook}
             error={errors.pwCheck}
           />
