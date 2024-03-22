@@ -4,11 +4,16 @@ import { loginApi, postRequestCookies } from '@/api/AuthApi';
 import MainLogo from '@/components/login/MainLogo';
 import { useRouter } from 'next/navigation';
 import { authInstance } from '@/utils/functionalFetch';
-import Login from './(components)/Login';
+import Login, { Login as LoginProps } from './(components)/Login';
+
+interface UserValues {
+  email: string;
+  password: string;
+}
 
 export default function LoginPage() {
   const router = useRouter();
-  const handleLoginSubmit = async userValues => {
+  const handleLoginSubmit = async (userValues: UserValues): Promise<void> => {
     const res = await loginApi(userValues);
     console.log('로그인페이지 시도:' + res);
 

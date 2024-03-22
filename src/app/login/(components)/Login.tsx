@@ -1,22 +1,32 @@
+import { UserValues } from '@/api/AuthApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
 import { useState } from 'react';
 
-export default function Login({ onSubmit }) {
-  const [userValues, setUserValues] = useState({
+export interface Login {
+  email: string;
+  password: string;
+}
+
+interface Props {
+  onSubmit: (UserValues: Login) => void;
+}
+
+export default function Login({ onSubmit }: Props) {
+  const [userValues, setUserValues] = useState<Login>({
     email: '',
     password: '',
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Login>({
     email: '',
     password: '',
   });
 
-  const [isValueLook, setIsValueLook] = useState(false);
-  const [isButton, setIsButton] = useState(false);
+  const [isValueLook, setIsValueLook] = useState<boolean>(false);
+  const [isButton, setIsButton] = useState<boolean>(false);
 
-  const onChangeLoginSubmit = e => {
+  const onChangeLoginSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
     console.log(value);
@@ -27,7 +37,7 @@ export default function Login({ onSubmit }) {
     console.log(userValues);
   };
 
-  const validateForm = () => {
+  const validateForm = (): boolean => {
     let isValid = true;
     const newErrors = {
       email: '',
@@ -51,13 +61,13 @@ export default function Login({ onSubmit }) {
     return isValid;
   };
 
-  const onSubmitForm = e => {
+  const onSubmitForm = (e: React.FormEvent): void => {
     e.preventDefault();
     console.log('로그인 시도:', userValues);
     onSubmit(userValues);
   };
 
-  const onBlur = id => {
+  const onBlur = (id: string): void => {
     validateForm();
     if (id === 'email' || id === 'password') {
       setErrors({
@@ -67,11 +77,11 @@ export default function Login({ onSubmit }) {
     }
   };
 
-  const handlePasswordLook = () => {
+  const handlePasswordLook = (): void => {
     setIsValueLook(!isValueLook);
   };
 
-  const typeValue = () => {
+  const typeValue = (): string => {
     if (!isValueLook) {
       return 'password';
     } else {
@@ -113,7 +123,7 @@ export default function Login({ onSubmit }) {
             password={true}
             placeholder={'비밀번호를 입력해 주세요'}
             onChange={onChangeLoginSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('password')}
             handlePasswordLook={handlePasswordLook}
             error={errors.password}
           />

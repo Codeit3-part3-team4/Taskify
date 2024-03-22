@@ -1,6 +1,6 @@
 'use client';
 
-import { UserInfo, getUserInfo, updateUserInfoApi, updateUserProfileImgApi } from '@/api/userApi';
+import { UserSignUp, getUserInfo, updateUserInfoApi, updateUserProfileImgApi } from '@/api/userApi';
 import { UserContext } from '@/context/UserContext';
 import { useEffect, useState } from 'react';
 import LoginPage from '../login/page';
@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 // import DashboardBack from './(components)/DashboardBack';
 
 export default function MyPage() {
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<UserSignUp | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 

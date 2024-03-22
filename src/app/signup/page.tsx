@@ -1,17 +1,17 @@
 'use client';
 
-import { signupApi } from '@/api/userApi';
 import SignUp from './(components)/Signup';
 import { useRouter } from 'next/navigation';
 import MainLogo from '@/components/login/MainLogo';
 import { useState } from 'react';
 import Modal from '@/components/Modal/Modal';
+import { UserSignUp } from '@/api/userApi';
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const handleSignUpSubmit = async newUserValues => {
+  const handleSignUpSubmit = async (newUserValues: UserSignUp): Promise<void> => {
     try {
       const res = await signupApi(newUserValues);
       if (res.ok) {
