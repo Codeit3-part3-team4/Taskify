@@ -54,7 +54,7 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
   }
 
   return (
-    <form className="flex flex-col rounded-md p-5 bg-white" onSubmit={onSubmit}>
+    <form className="flex flex-col rounded-md p-5 bg-white/50" onSubmit={onSubmit}>
       <div className="flex flex-row justify-between items-center mb-6">
         <div className="flex flex-row gap-2">
           <button className="flex justify-center items-center w-7 h-7 rounded-full" style={{ backgroundColor: color }} />
@@ -76,7 +76,7 @@ export default function DashboardName({ dashboardId }: { dashboardId: string }) 
         </div>
       </div>
       <strong className="mb-3">대시보드 이름</strong>
-      <div className="w-full h-12 px-4 rounded-md bg-white outline outline-1 outline-gray-300/50 mb-4">
+      <div className="w-full h-12 px-4 rounded-md bg-white/50 outline outline-1 outline-gray-300/50 mb-4">
         <input className="w-full h-full focus:outline-none" name="title" type="text" />
       </div>
       <div className="flex flex-row justify-end">

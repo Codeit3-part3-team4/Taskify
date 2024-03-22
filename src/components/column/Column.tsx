@@ -47,7 +47,7 @@ const Column: React.FC<ColumnProps> = ({ columnId, columnTitle, dashboardId }) =
 
   return (
     <>
-      <div className="w-80 md:w-594 lg:w-96 h-full bg-gray-300/50 border border-slate-300" key={columnId}>
+      <div className="w-80 md:w-594 lg:w-96 h-full bg-white/50 border border-slate-300" key={columnId}>
         <div className="mx-3 h-full">
           <div className="flex justify-between py-4">
             <div className="flex items-center gap-2">

@@ -49,12 +49,15 @@ export default function InviteModal({ id, pathname, query, onClose }: InviteModa
         onChange={e => setInviteEmail(e.currentTarget.value)}
       />
       <div className="flex flex-row gap-3">
-        <button className="w-full py-3 rounded-md border border-gray-D9D9D9 hover:bg-gray-D9D9D9" onClick={onClickCancel}>
-          취소
-        </button>
-        <button className="w-full py-3 rounded-md border border-gray-D9D9D9 hover:bg-gray-D9D9D9" onClick={onClickInvite}>
-          초대
-        </button>
+        <div className="w-full"></div>
+        <div className="w-full flex flex-row gap-2">
+          <button className="w-full py-3 rounded-md border border-gray-D9D9D9 hover:bg-gray-D9D9D9" onClick={onClickCancel}>
+            취소
+          </button>
+          <button className="w-full py-3 rounded-md border bg-primary-BASIC text-white border-gray-D9D9D9 hover:scale-105" onClick={onClickInvite}>
+            초대
+          </button>
+        </div>
       </div>
     </div>
   );

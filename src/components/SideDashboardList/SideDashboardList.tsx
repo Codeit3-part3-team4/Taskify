@@ -39,8 +39,8 @@ export default function SideDashboardList() {
       <div className="w-20 fixed z-10 flex flex-col h-screen overflow-y-auto items-center bg-gray-300/50">
         <Link href="/dashboard/mydashboard">
           <div className="flex justify-center mt-5 mb-2">
-            <div className="">
-              <Image src="/images/taskify-logo-light.svg" alt="로고" width={32} height={32} />
+            <div>
+              <Image src="/images/taskify-logo-light.svg" alt="로고" width={72} height={72} />
             </div>
           </div>
         </Link>

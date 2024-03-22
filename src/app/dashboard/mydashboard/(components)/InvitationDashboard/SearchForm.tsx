@@ -18,7 +18,7 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
   };
 
   return (
-    <form className="flex border border-gray-D9D9D9 rounded-md" onSubmit={handleSubmit}>
+    <form className="flex" onSubmit={handleSubmit}>
       <img className="ml-1 w-5" src="/images/search-icon.svg" alt="찾기 아이콘" />
       <input className="focus:outline-none h-9 w-full" type="text" value={inputValue} onChange={handleInputChange} placeholder="대시보드 이름 검색" />
     </form>

@@ -89,7 +89,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
     <div>
       {/* <DashboardBack /> */}
       {userInfo && (
-        <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF">
+        <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF pr-5">
           <div className="flex flex-col">
             <h2 className="text-xl md:text-2xl font-bold">프로필</h2>
             <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">
@@ -112,7 +112,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
                 <div className="flex flex-col ml-2 md:ml-0 md:mt-3 lg:mt-4">
                   <button
                     onClick={handleBasicProfileImg}
-                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px]  hover:bg-purple-500"
+                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px]  hover:bg-primary-BASIC"
                   >
                     기본 프로필
                   </button>
