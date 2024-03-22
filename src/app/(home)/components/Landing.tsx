@@ -114,7 +114,7 @@ export default function Landing() {
   const MiniThumb = ({ title, desc, children }: { title: string; desc: string; children: React.ReactNode }) => {
     return (
       <div className="w-343 h-350 rounded-lg overflow-hidden md:w-378 md:h-384">
-        <div className="flex justify-center items-center w-full h-2/3 bg-gray-300/10">{children}</div>
+        <div className="flex justify-center items-center w-full h-2/3 bg-gray-500/10">{children}</div>
         <div className="flex flex-col justify-center w-full h-1/3 bg-gray-500/40 px-5 gap-4">
           <strong className="text-base">{title}</strong>
           <span className="text-sm">{desc}</span>
@@ -123,47 +123,54 @@ export default function Landing() {
     );
   };
 
+  const url = '/images/mokoko-bg.png';
+
   return (
-    <div className="flex flex-col justify-start items-center min-h-screen text-white">
-      <section className="mb-20">
-        <Title />
-      </section>
-      <section className="mb-16">
-        <MainThumb title="Point 1" desc="일의 우선순위를" desc2="관리하세요">
-          <div className="flex flex-row justify-end items-end w-full">
-            <div className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} />
+    <div
+      className="min-h-screen text-white"
+      style={{ backgroundImage: `url(${url})`, backgroundSize: 'cover', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}
+    >
+      <div className="flex flex-col justify-start items-center w-full h-full bg-gradient-to-b from-gray-500/50 via-transparent to-white/50">
+        <section className="mt-10 mb-20">
+          <Title />
+        </section>
+        <section className="mb-16 bg-gray-300/50 text-black">
+          <MainThumb title="Point 1" desc="일의 우선순위를" desc2="관리하세요">
+            <div className="flex flex-row justify-end items-end w-full">
+              <div className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} />
+            </div>
+          </MainThumb>
+        </section>
+        <section className="mb-24 bg-gray-300/50 text-black">
+          <MainThumb title="Point 2" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
+            <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
+              <div className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`} />
+            </div>
+          </MainThumb>
+        </section>
+        <section className="mb-32 text-black">
+          <div className="mb-10 text-center 2xl:text-left">
+            <span className="text-xl md:text-2xl">생산성을 높이는 다양한 설정 ⚡ </span>
           </div>
-        </MainThumb>
-      </section>
-      <section className="mb-24">
-        <MainThumb title="Point 2" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
-          <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
-            <div className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`} />
+          <div className="2xl:flex 2xl:flex-row 2xl:justify-between 2xl:w-1200">
+            <div className="mb-10">
+              <MiniThumb title="대시보드" desc="대시보드 사진과 이름을 변경할 수 있어요.">
+                <div className="w-64 h-24 rounded overflow-hidden bg-white md:w-72 md:h-32"></div>
+              </MiniThumb>
+            </div>
+            <div className="mb-10">
+              <MiniThumb title="초대" desc="새로운 팀원을 초대할 수 있어요.">
+                <div className="w-64 h-48 rounded overflow-hidden bg-white md:w-72 md:h-56"></div>
+              </MiniThumb>
+            </div>
+            <div>
+              <MiniThumb title="구성원" desc="구성원을 초대하고 내보낼 수 있어요.">
+                <div className="w-64 h-40 rounded overflow-hidden bg-white md:w-72 md:h-48"></div>
+              </MiniThumb>
+            </div>
           </div>
-        </MainThumb>
-      </section>
-      <section className="mb-32">
-        <div className="mb-10 text-center 2xl:text-left">
-          <span className="text-xl md:text-2xl">생산성을 높이는 다양한 설정 ⚡ </span>
-        </div>
-        <div className="2xl:flex 2xl:flex-row 2xl:justify-between 2xl:w-1200">
-          <div className="mb-10">
-            <MiniThumb title="대시보드" desc="대시보드 사진과 이름을 변경할 수 있어요.">
-              <div className="w-64 h-24 rounded overflow-hidden bg-white md:w-72 md:h-32"></div>
-            </MiniThumb>
-          </div>
-          <div className="mb-10">
-            <MiniThumb title="초대" desc="새로운 팀원을 초대할 수 있어요.">
-              <div className="w-64 h-48 rounded overflow-hidden bg-white md:w-72 md:h-56"></div>
-            </MiniThumb>
-          </div>
-          <div>
-            <MiniThumb title="구성원" desc="구성원을 초대하고 내보낼 수 있어요.">
-              <div className="w-64 h-40 rounded overflow-hidden bg-white md:w-72 md:h-48"></div>
-            </MiniThumb>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

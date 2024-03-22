@@ -100,20 +100,20 @@ export const FunctionalHeader = () => {
   return (
     <div className="flex flex-row justify-center items-center h-full mr-3 md:mr-5">
       <button
-        className={`flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-2 md:mr-3 md:gap-2 hover:bg-gray-D9D9D9 ${disalbedButton}`}
+        className={`flex justify-center items-center text-sm px-3 py-2 mr-2 md:mr-3 md:gap-2 hover:scale-105 transition-all ${disalbedButton}`}
         onClick={() => {
           router.push(`${pathname}/${editPage}?memberPage=1&invitePage=1`);
         }}
       >
         <Image className="hidden md:block w-5 h-5" src="/images/settings.svg" alt="Taskify" width="32" height="32" />
-        <span>관리</span>
+        <strong>관리</strong>
       </button>
       <button
-        className={`flex justify-center items-center text-xs rounded border border-gray-D9D9D9 px-3 py-2 mr-3 md:mr-8 md:gap-2 hover:bg-gray-D9D9D9 ${disalbedButton}`}
+        className={`flex justify-center items-center text-sm rounded px-3 py-2 mr-3 md:mr-8 md:gap-2 hover:scale-105 transition-all ${disalbedButton}`}
         onClick={() => setIsInviteModal(true)}
       >
         <Image className="hidden md:block w-5 h-5" src="/images/add_box.svg" alt="Taskify" width="15" height="15" />
-        <span>초대하기</span>
+        <strong>초대하기</strong>
       </button>
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
@@ -160,7 +160,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
   if (myProfile === undefined) return null;
 
   return (
-    <nav className={`fixed flex flex-row justify-end lg:justify-between w-screen items-center h-24 z-10 `}>
+    <nav className={`fixed flex flex-row justify-end lg:justify-between w-screen items-center h-24 z-10 bg-gray-300/50 `}>
       <div className="hidden relative lg:flex flex-row justify-center items-center gap-2">
         {!isMydashboard && <strong>{title}</strong>}
         {ownerId === myProfile.id && !isMydashboard && <Image src="/images/crown-icon.svg" alt="Taskify" width="35" height="35" />}
