@@ -182,7 +182,9 @@ export default function TodoForm({ dashboardId, columnId }) {
                 name="tags"
                 type="text"
                 placeholder="태그입력 후 Enter"
+
                 className="flex input input-bordered mb-3 text-sm"
+
                 onKeyDown={handleTagInputKeyDown}
               />
               <div className="tags-list">
