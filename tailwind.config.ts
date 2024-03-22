@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 import daisyui from 'daisyui';
 
 const config: Config = {
-  mode:'jit',
+  mode: 'jit',
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,12 +15,12 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       width: {
         '217': '217px',
         '260': '260px',
+        '284': '284px',
         '287': '287px',
         '296': '296px',
         '343': '343px',
@@ -58,20 +58,26 @@ const config: Config = {
         'black-171717': '#171717',
         'black-333236': '#333236',
         'black-4B4B4B': '#4B4B4B',
-        'gray-787486' : '#787486',
-        'gray-9FA6B2' : '#9FA6B2',
-        'gray-D9D9D9' : '#D9D9D9',
-        'gray-EEEEEE' : '#EEEEEE',
-        'gray-FAFAFA' : '#FAFAFA',
+        'gray-787486': '#787486',
+        'gray-9FA6B2': '#9FA6B2',
+        'gray-D9D9D9': '#D9D9D9',
+        'gray-EEEEEE': '#EEEEEE',
+        'gray-FAFAFA': '#FAFAFA',
         'white-FFFFFF': '#FFFFFF',
-        'violet-5534DA': '#5534DA',
+        'primary-BASIC': '#5588F5',
         'violet-8%': '#F1EFFD',
         'red-D6173A': '#D6173A',
         'green-7AC555': '#7AC555',
-        'purple-760DDE': '#760DDE',
         'orange-FFA500': '#FFA500',
         'blue-76A6EA': '#76A6EA',
-        'pink-E876EA': '#E876EA',
+        'blue-AFDDFA': '#AFDDFA',
+        'blue-87CEFA': '#87CEFA',
+        'pink-FFC0CB': '#FFC0CB',
+      },
+      transitionDuration: {
+        '1500': '1500ms',
+        '2000': '2000ms',
+        '3000': '3000ms',
       },
     },
   },
