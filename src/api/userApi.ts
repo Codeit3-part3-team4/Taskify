@@ -18,7 +18,7 @@ export interface UserSignUp {
   pwCheck: string;
 }
 
-interface UpdateUserInfo {
+export interface UpdateUserInfo {
   email?: string;
   nickname?: string;
   profileImageUrl?: string;
@@ -34,6 +34,8 @@ export const signupApi = async (newUserValues: UserSignUp) => {
       },
       body: JSON.stringify(newUserValues),
     });
+
+    console.log('res:', res);
 
     if (res.ok) {
       const data = await res.json();
@@ -71,7 +73,7 @@ export const getUserInfo = async (): Promise<UserInfo> => {
 };
 
 // 유저 정보 수정
-export const updateUserInfoApi = async (updateUserValues: string) => {
+export const updateUserInfoApi = async (updateUserValues: UpdateUserInfo) => {
   try {
     const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',

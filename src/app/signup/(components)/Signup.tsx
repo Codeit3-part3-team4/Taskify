@@ -69,39 +69,21 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       isValid = false;
     }
 
-    if (id === 'email') {
+    if (id) {
       setErrors({
         ...errors,
-        email: newErrors.email,
+        [id]: newErrors[id],
       });
-    } else if (id === 'password' || id === 'pwCheck') {
-      setErrors({
-        ...errors,
-        password: newErrors.password,
-        pwCheck: newErrors.pwCheck,
-      });
-    } else if (id === 'nickname') {
-      setErrors({
-        ...errors,
-        nickname: newErrors.nickname,
-      });
-      // } else if (id === 'pwCheck') {
-      //   setErrors({
-      //     ...errors,
-      //     pwCheck: newErrors.pwCheck,
-      //   });
-
-      setIsButton(isValid);
-      return isValid && isAgreed;
     }
+
+    setIsButton(isValid);
+    return isValid && isAgreed;
   };
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('회원가입 시도:', newUserValues);
-      onSubmit(newUserValues);
-    }
+    console.log('회원가입 시도:', newUserValues);
+    onSubmit(newUserValues);
   };
 
   const onBlur = (id: string): void => {
