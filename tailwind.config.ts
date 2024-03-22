@@ -64,7 +64,7 @@ const config: Config = {
         'gray-EEEEEE': '#EEEEEE',
         'gray-FAFAFA': '#FAFAFA',
         'white-FFFFFF': '#FFFFFF',
-        'violet-5534DA': '#5534DA',
+        'primary-BASIC': '#5588F5',
         'violet-8%': '#F1EFFD',
         'red-D6173A': '#D6173A',
         'green-7AC555': '#7AC555',

@@ -41,7 +41,7 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
   }
 
   return (
-    <button className="flex flex-col lg:flex-row h-full">
+    <div className="flex flex-col lg:flex-row h-full mt-24">
       {columnList?.map((column: { id: any; title: any }) => (
         <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} />
       ))}
