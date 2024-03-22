@@ -42,14 +42,32 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
 
   const handleAddComment = async () => {
     if (!newCommentContent.trim()) return;
-    const createdComment = await createComment({ content: newCommentContent, cardId, columnId, dashboardId });
+
+    const createdComment = await createComment({
+      content: newCommentContent,
+      cardId,
+      columnId,
+      dashboardId,
+    });
     setComments(prev => [...prev, createdComment]);
     setNewCommentContent('');
+  };
+
+  const handleKeyPress = e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleAddComment();
+    }
   };
 
   const startEdit = (comment: Comment) => {
     setEditCommentId(comment.id);
     setEditContent(comment.content);
+  };
+
+  const cancelEdit = () => {
+    setEditCommentId(null);
+    setEditContent('');
   };
 
   const handleEditComment = async (commentId: number, content: string) => {
@@ -69,47 +87,62 @@ const Comments = ({ cardId, columnId, dashboardId }) => {
     <div className="flex flex-col gap-3">
       <h3 className="mb-2 font-semibold">댓글</h3>
       <div className="flex flex-col items-end relative">
-        <input
-          type="text"
-          className="input input-bordered w-full h-24 text-sm"
+        <textarea
+          className="input input-bordered w-full h-24"
           value={newCommentContent}
           onChange={e => setNewCommentContent(e.target.value)}
+          onKeyDown={handleKeyPress}
           placeholder="댓글 작성하기"
         />
-        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary text-sm" onClick={handleAddComment}>
+        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline border-gray-300 text-primary" onClick={handleAddComment}>
           입력
         </button>
       </div>
       <ul className="mt-4 space-y-2">
         {comments.map(comment => (
           <li key={comment.id} className="flex items-start space-x-3">
-            <img src={comment.author.profileImageUrl || '/images/crown-icon.svg'} alt="Author" className="w-8 h-8 rounded-full" />
-            <div>
-              <h4 className="text-sm font-semibold">{comment.author.nickname}</h4>
-              {editCommentId === comment.id ? (
-                <input
-                  type="text"
-                  value={editContent}
-                  onChange={e => setEditContent(e.target.value)}
-                  onBlur={() => handleEditComment(comment.id, editContent)} // onBlur를 사용하여 수정 완료 처리
-                  className="input input-bordered"
-                  autoFocus
-                />
-              ) : (
-                <p onClick={() => startEdit(comment)} className="text-sm">
-                  {comment.content}
-                </p> // 클릭하여 수정 모드 진입
-              )}
-              <div className="flex space-x-2 mt-2">
-                {editCommentId !== comment.id && (
-                  <button className="btn btn-xs btn-outline btn-accent" onClick={() => startEdit(comment)}>
-                    수정
-                  </button>
-                )}
-                <button className="btn btn-xs btn-outline btn-error" onClick={() => handleDeleteComment(comment.id)}>
-                  삭제
-                </button>
+            {comment.author.profileImageUrl ? (
+              <img
+                src={comment.author.profileImageUrl}
+                alt="Author"
+                className="w-10 h-10 rounded-full"
+                onError={e => {
+                  e.target.onerror = null;
+                  e.target.style.display = 'none';
+                }}
+              />
+            ) : (
+              <div className="w-10 h-10 rounded-full  bg-green-A3C4A2 flex items-center justify-center text-white">
+                {comment.author.nickname.charAt(0).toUpperCase()}
               </div>
+            )}
+            <div>
+              <h4 className="font-semibold">{comment.author.nickname}</h4>
+              {editCommentId === comment.id ? (
+                <div>
+                  <input type="text" value={editContent} onChange={e => setEditContent(e.target.value)} className="input input-bordered" autoFocus />
+                  <div className="flex space-x-2 mt-2">
+                    <button className="btn btn-xs btn-primary" onClick={() => handleEditComment(comment.id, editContent)}>
+                      저장
+                    </button>
+                    <button className="btn btn-xs btn-accent" onClick={cancelEdit}>
+                      취소
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p onClick={() => startEdit(comment)}>{comment.content}</p>
+                  <div className="flex space-x-2 mt-2">
+                    <button className="btn btn-xs btn-outline btn-accent" onClick={() => startEdit(comment)}>
+                      수정
+                    </button>
+                    <button className="btn btn-xs btn-outline btn-error" onClick={() => handleDeleteComment(comment.id)}>
+                      삭제
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </li>
         ))}

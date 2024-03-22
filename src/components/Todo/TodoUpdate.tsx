@@ -41,16 +41,29 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
   const [selectedAssignee, setSelectedAssignee] = useState<string>(cardDetails ? cardDetails.assigneeUserId : '');
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [formData, setFormData] = useState({
-    assigneeUserId: cardDetails ? cardDetails.assigneeUserId : '',
-    title: cardDetails ? cardDetails.title : '',
-    description: cardDetails ? cardDetails.description : '',
-    deadline: cardDetails && cardDetails.deadline ? new Date(cardDetails.deadline) : new Date(),
-    tags: cardDetails && cardDetails.tags ? cardDetails.tags.join(', ') : '',
+    assigneeUserId: '',
+    title: '',
+    description: '',
+    deadline: new Date(),
+    tags: [],
     selectedImage: '',
   });
   const [members, setMembers] = useState<Member[]>([]);
 
-  const fetchData = async (page, size) => {
+  useEffect(() => {
+    if (cardDetails) {
+      setFormData({
+        assigneeUserId: cardDetails.assigneeUserId || '',
+        title: cardDetails.title || '',
+        description: cardDetails.description || '',
+        deadline: cardDetails.deadline ? new Date(cardDetails.deadline) : new Date(),
+        tags: cardDetails.tags || [],
+        selectedImage: cardDetails.selectedImage || '',
+      });
+    }
+  }, [cardDetails]);
+
+  const fetchData = async (page: number, size: number): Promise<void> => {
     try {
       const membersData = await getMembersApi(dashboardId, page, size);
       setMembers(membersData.members);
@@ -66,33 +79,55 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     fetchData(1, 10);
   }, [dashboardId]);
 
-  const handleInputChange = e => {
+  const handleTagInputKeyDown = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newTag = e.currentTarget.value.trim();
+      if (newTag && !formData.tags.includes(newTag)) {
+        setFormData({
+          ...formData,
+          tags: [...formData.tags, newTag],
+        });
+        e.currentTarget.value = '';
+      }
+    }
+  };
+
+  const removeTag = tagToRemove => {
+    setFormData({
+      ...formData,
+      tags: formData.tags.filter(tag => tag !== tagToRemove),
+    });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSelectStatus = statusId => {
+  const handleSelectStatus = (statusId: string): void => {
     setSelectedStatus(statusId);
     setFormData({ ...formData, columnId: statusId });
   };
 
-  const handleSelectAssignee = userId => {
+  const handleSelectAssignee = (userId: string): void => {
     setSelectedAssignee(userId);
     setFormData({ ...formData, assigneeUserId: userId });
   };
 
-  const handleImageUpload = imageUrl => {
+  const handleImageUpload = (imageUrl: string): void => {
     setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
   };
 
   const isFormValid = () => {
-    return formData.title && formData.description && formData.deadline;
+    const { assigneeUserId, title, description, deadline, tags } = formData;
+
+    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Form data:', formData);
-    console.log('Is form valid:', isFormValid());
+
     if (!isFormValid()) {
       console.error('Form is not valid');
       return;
@@ -102,7 +137,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
 
     const formattedDeadline = formData.deadline.toISOString().slice(0, 16).replace('T', ' ');
 
-    const formattedTags = formData.tags.split(',').map(tag => tag.trim());
+    const formattedTags = formData.tags.map(tag => tag.trim());
 
     const cardData = {
       columnId: parseInt(selectedStatus),
@@ -235,9 +270,18 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
                 type="text"
                 placeholder="입력 후 Enter"
                 className="input input-bordered w-full mb-3 "
-                value={formData.tags}
-                onChange={handleInputChange}
+                onKeyDown={handleTagInputKeyDown}
               />
+              <div>
+                {formData.tags.map((tag, index) => (
+                  <div key={`${tag}-${index}`} className="tag">
+                    {tag}
+                    <button type="button" onClick={() => removeTag(tag)}>
+                      <img className="flex w-3 h-3" src="/images/cancel.svg" />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
             <div>
               <label htmlFor="file" className="block font-bold text-sm mb-1">
