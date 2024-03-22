@@ -1,5 +1,4 @@
 import { authInstance } from '@/utils/functionalFetch';
-
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface CreateColumn {
