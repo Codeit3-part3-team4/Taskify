@@ -82,10 +82,10 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     <div>
       <div>
         {userInfo && (
-          <div id="비밀번호 컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF mt-3">
+          <div className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF mt-3">
             <div className="flex flex-col md:justify-start items-start">
               <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
-              <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">
+              <div className="flex flex-col md:flex-row mt-6 md:mt-8">
                 <div className="">
                   <form onSubmit={onSubmitForm}>
                     <label htmlFor="password" className="font-semibold">

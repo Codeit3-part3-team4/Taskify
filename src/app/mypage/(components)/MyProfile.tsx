@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import InputUserInfo from '@/components/login/InputUserInfo';
+import DashboardBack from '@/app/dashboard/[id]/edit/(components)/DashboardBack';
 
 const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
   const { data: userInfo } = useContext(UserContext);
@@ -86,6 +87,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
 
   return (
     <div>
+      {/* <DashboardBack /> */}
       {userInfo && (
         <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF">
           <div className="flex flex-col">
