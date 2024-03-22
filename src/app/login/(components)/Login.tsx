@@ -99,7 +99,11 @@ export default function Login({ onSubmit }) {
             error={errors.password}
           />
         </div>
-        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] mt-5 mb-6">
+        <button
+          type="submit"
+          onClick={onSubmitForm}
+          className="rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white bg-gray-400 top-[764px] mt-5 mb-6"
+        >
           로그인
         </button>
       </form>

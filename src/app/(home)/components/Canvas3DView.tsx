@@ -9,7 +9,7 @@ import { MediaQueryType, useMediaQuery } from '@/components/hooks/useMediaQuery'
 const BOX_GEOMETRY_ARGS = [1.9, 1.1, 0.01];
 
 const MainThumb = ({ onClick }: { onClick: (revert: boolean) => void }) => {
-  const texture = useTexture('images/mainThumb.png');
+  const texture = useTexture('images/mokoko-bg.png');
   const geometry = new BoxGeometry(...BOX_GEOMETRY_ARGS);
   const material = new MeshBasicMaterial({ map: texture });
   const [xPosition, setXPosition] = useState(0);
@@ -112,7 +112,7 @@ const Laptop = ({ operateIndex }: { operateIndex: number }) => {
   useEffect(() => {
     switch (operateIndex) {
       case 0:
-        setIframeUrl('https://ohddang.github.io/this-is-FE');
+        setIframeUrl('https://ohddang.github.io/this-is-FE/');
         break;
       case 1:
         setIframeUrl('https://ohddang.github.io/react-tetris/tetris/');

@@ -64,7 +64,7 @@ export const getUserInfo = async (): Promise<UserInfo> => {
 };
 
 // 유저 정보 수정
-export const updateUserInfoApi = async updateUserValues => {
+export const updateUserInfoApi = async (updateUserValues: string) => {
   try {
     const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
       method: 'PUT',
@@ -108,6 +108,5 @@ export const updateUserProfileImgApi = async (imageFile: File) => {
     return data;
   } catch (error) {
     console.error('프로필 api 에러:', error);
-    throw new Error('프로필 api 에러:', error);
   }
 };
