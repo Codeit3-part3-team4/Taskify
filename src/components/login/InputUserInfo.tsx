@@ -9,25 +9,29 @@ interface Props {
   password?: boolean;
   placeholder: string;
   error?: string;
+  onFocus: boolean;
   onChange: ChangeEventHandler;
   onBlur: ChangeEventHandler;
   handlePasswordLook?: ChangeEventHandler;
 }
 
-export default function InputUserInfo({ label, id, type, value, password, placeholder, error, onChange, onBlur, handlePasswordLook }: Props) {
+export default function InputUserInfo({ label, id, type, value, password, placeholder, error, onFocus, onChange, onBlur, handlePasswordLook }: Props) {
   const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocuse = () => {
+    setIsFocused(true);
+  };
   const handleOnBlur = () => {
     setIsFocused(false);
-    onBlur();
+    onBlur({ id });
   };
-
   return (
     <div className="w-[351px] h-[77px] md:w-[520px] md:h-[77px]">
       <label htmlFor={id} className="font-medium">
         {label}
       </label>
       <div
-        className={`flex border border-gray-300 border-solid border-[1px] rounded-lg focus:outline-primary-BASIC mt-1 h-[50px] bg-white ${isFocused && 'border-primary-BASIC'} ${isFocused && onBlur && error ? 'border-red-500' : 'border'}`}
+        className={`flex border border-gray-300 border-solid border-[1px] rounded-lg focus:outline-gray-300 mt-1 h-[50px] bg-white ${isFocused ? 'border-primary-BASIC' : 'border-gray-300'} ${error ? 'border-red-500' : 'border'}`}
       >
         <input
           type={type}
@@ -35,8 +39,9 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
           value={value}
           placeholder={placeholder}
           onChange={onChange}
+          // onBlur={() => onBlur({ id })}
           onBlur={handleOnBlur}
-          onFocus={() => setIsFocused(true)}
+          onFocus={handleFocuse}
           className="w-full outline-none pl-4 bg-transparent"
         />
         {password === true ? (

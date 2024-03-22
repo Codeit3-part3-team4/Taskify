@@ -25,6 +25,7 @@ export default function Login({ onSubmit }: Props) {
 
   const [isValueLook, setIsValueLook] = useState<boolean>(false);
   const [isButton, setIsButton] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const onChangeLoginSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
@@ -35,9 +36,10 @@ export default function Login({ onSubmit }: Props) {
       [id]: value,
     });
     console.log(userValues);
+    validateForm(id);
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = (id: string): boolean => {
     let isValid = true;
     const newErrors = {
       email: '',
@@ -55,9 +57,21 @@ export default function Login({ onSubmit }: Props) {
       isValid = false;
     }
 
-    setErrors(newErrors);
+    if (id === 'email') {
+      setErrors({
+        ...errors,
+        email: newErrors.email,
+      });
+    } else if (id === 'password') {
+      setErrors({
+        ...errors,
+        password: newErrors.password,
+      });
+    }
+
     setIsButton(isValid);
     console.log('유효성검사중 isbutton:', isButton);
+    console.log('유효성검사중 error:', errors);
     return isValid;
   };
 
@@ -68,13 +82,13 @@ export default function Login({ onSubmit }: Props) {
   };
 
   const onBlur = (id: string): void => {
-    validateForm();
-    if (id === 'email' || id === 'password') {
-      setErrors({
-        ...errors,
-        [id]: errors[id],
-      });
-    }
+    validateForm(id);
+
+    setIsFocused(false);
+
+    console.log('포커스값', isFocused);
+
+    console.log('onBlur', id);
   };
 
   const handlePasswordLook = (): void => {
@@ -89,16 +103,6 @@ export default function Login({ onSubmit }: Props) {
     }
   };
 
-  // const handleButton = () => {
-  //   console.log('유효성 검사 후 이즈버튼값', isButton);
-  //   if (isButton) {
-  //     onSubmitForm();
-  //     console.log('유효성 검사 성공. 버튼 활성화');
-  //   } else {
-  //     console.log('유효성 검사 실패. 버튼 비활성화');
-  //   }
-  // };
-
   return (
     <div className="flex flex-col items-center ">
       <form onSubmit={onSubmitForm}>
@@ -111,6 +115,7 @@ export default function Login({ onSubmit }: Props) {
             placeholder={'이메일을 입력해 주세요'}
             onChange={onChangeLoginSubmit}
             onBlur={() => onBlur('email')}
+            onFocus={isFocused}
             error={errors.email}
           />
         </div>
@@ -124,6 +129,7 @@ export default function Login({ onSubmit }: Props) {
             placeholder={'비밀번호를 입력해 주세요'}
             onChange={onChangeLoginSubmit}
             onBlur={() => onBlur('password')}
+            // onFocus={isFocused}
             handlePasswordLook={handlePasswordLook}
             error={errors.password}
           />
