@@ -112,7 +112,7 @@ const Laptop = ({ operateIndex }: { operateIndex: number }) => {
   useEffect(() => {
     switch (operateIndex) {
       case 0:
-        setIframeUrl('https://tailwindcss.com/');
+        setIframeUrl('https://react.dev/');
         break;
       case 1:
         setIframeUrl('https://tailwindcss.com/docs/installation');
