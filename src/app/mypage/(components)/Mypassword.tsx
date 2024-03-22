@@ -14,6 +14,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
   });
 
   const [newPwcheck, setPwCheck] = useState('');
+  const [isButton, setIsButton] = useState<boolean>(false);
 
   const [errors, setErrors] = useState({
     password: '',
@@ -40,13 +41,17 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     validateForm();
   };
 
-  const validateForm = () => {
+  const validateForm = (id: string): boolean => {
     let isValid = true;
     const newErrors = {
       password: '',
       newPassword: '',
       newPwcheck: '',
     };
+
+    if (changePassword.password.length < 8) {
+      isValid = false;
+    }
 
     if (changePassword.newPassword.length < 8) {
       newErrors.newPassword = '8자 이상 입력해 주세요.';
@@ -58,7 +63,15 @@ const MyPassword: React.FC = ({ onSubmit }) => {
       isValid = false;
     }
 
-    setErrors(newErrors);
+    if (id) {
+      setErrors({
+        ...errors,
+        [id]: newErrors[id],
+      });
+    }
+
+    setIsButton(isValid);
+    // setErrors(newErrors);
     return isValid;
   };
 
@@ -74,8 +87,8 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     }
   };
 
-  const onBlur = () => {
-    validateForm();
+  const onBlur = (id: string) => {
+    validateForm(id);
   };
 
   return (
@@ -112,6 +125,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                           value={changePassword.newPassword}
                           placeholder={'새 비밀번호 입력'}
                           onChange={onChangePasswordValues}
+                          onBlur={onBlur}
                           className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
                         />
                       </div>
@@ -138,8 +152,10 @@ const MyPassword: React.FC = ({ onSubmit }) => {
 
                 <div className="flex justify-end">
                   <button
+                    type="submit"
                     onClick={onSubmitForm}
-                    className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 hover:bg-purple-500 hover:scale-105"
+                    disabled={!isButton}
+                    className={`text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 hover:scale-105 ${isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
                   >
                     변경
                   </button>
