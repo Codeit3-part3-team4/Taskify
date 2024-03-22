@@ -120,7 +120,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                     />
                   </div>
                 </form>
-                <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
+                <button onClick={onSubmitForm} className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
                   변경
                 </button>
               </div>

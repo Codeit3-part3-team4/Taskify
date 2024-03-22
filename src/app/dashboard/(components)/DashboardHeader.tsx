@@ -28,7 +28,7 @@ const ProfileImage = ({ nickname, profileImageUrl, options, style }: ProfileImag
     <div>
       {null === profileImageUrl ? (
         <div
-          className={`flex justify-center items-center w-8 h-8 text-sm rounded-full bg-violet-5534DA outline outline-white text-white ${options}`}
+          className={`flex justify-center items-center w-8 h-8 text-sm rounded-full bg-primary-BASIC outline outline-white text-white ${options}`}
           style={{ transform: style }}
         >
           <strong>{nickname}</strong>

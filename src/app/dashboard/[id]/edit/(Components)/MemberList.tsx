@@ -30,7 +30,7 @@ export default async function MemeberList({ dashboardId, searchParams }: { dashb
           {profileUrl ? (
             <Image src={profileUrl} width="32" height="32" alt="profile" />
           ) : (
-            <div className="flex justify-center items-center w-8 h-8 bg-violet-5534DA rounded-full text-sm text-white">
+            <div className="flex justify-center items-center w-8 h-8 bg-primary-BASIC rounded-full text-sm text-white">
               <strong>{member.nickname.slice(0, 1)}</strong>
             </div>
           )}

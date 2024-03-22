@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${inter.className}`}>
         <div
-          className="absolute top-0 left-0 w-full h-screen opacity-30 -z-10"
+          className="absolute top-0 left-0 w-screen h-screen opacity-30 -z-10"
           style={{ backgroundImage: `url(${url})`, opacity: '0.3', backgroundSize: 'cover', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}
         />
         {children}
