@@ -146,7 +146,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
               </div>
             </div>
             <div className="flex justify-end">
-              <button onClick={onSubmitForm} className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4  hover:bg-purple-500">
+              <button onClick={onSubmitForm} className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 hover:scale-105">
                 저장
               </button>
             </div>
