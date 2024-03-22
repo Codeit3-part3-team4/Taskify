@@ -83,7 +83,7 @@ export const FunctionalHeader = () => {
     });
   }, []);
 
-  if (pathname.split('/').includes('mydashboard') && ownerId !== myProfile?.id) return;
+  if (pathname.split('/').includes('mydashboard') || ownerId !== myProfile?.id) return;
 
   if (membersInf === undefined) return;
   const editPage = pathname.split('/').includes('edit') ? '' : '/edit';
@@ -118,7 +118,7 @@ export const FunctionalHeader = () => {
       <div className="relative flex flex-row justify-start mr-3 md:mr-5">
         {slicedMembers.map((member, index) => {
           const moveX = (layoutMemeberCount - index - 1) * 15;
-          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1).toUpperCase();
+          const nickname = index === layoutMemeberCount - 1 && displayMemberCount !== null ? displayMemberCount : member.nickname.slice(0, 1);
           return <ProfileImage key={index} nickname={nickname} profileImageUrl={member.profileImageUrl} style={`translateX(${moveX}%)`} />;
         })}
       </div>
@@ -136,6 +136,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
   const [title, setTitle] = useState<string>();
   const [ownerId, setOwnerId] = useState<number>();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (Number.isNaN(dashboardId)) return;
@@ -155,18 +156,19 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
     });
   }, []);
 
+  const isMydashboard = pathname.split('/').includes('mydashboard');
   if (myProfile === undefined) return null;
 
   return (
-    <nav className={`flex flex-row justify-end lg:justify-between items-center w-full h-24`}>
+    <nav className={`fixed flex flex-row justify-end lg:justify-between w-screen items-center h-24 z-10 `}>
       <div className="hidden relative lg:flex flex-row justify-center items-center gap-2">
-        <strong>{title}</strong>
-        {ownerId === myProfile.id && <Image src="/images/crown-icon.svg" alt="Taskify" width="35" height="35" />}
+        {!isMydashboard && <strong>{title}</strong>}
+        {ownerId === myProfile.id && !isMydashboard && <Image src="/images/crown-icon.svg" alt="Taskify" width="35" height="35" />}
       </div>
       <div className="flex flex-row items-center h-full">
         {children}
-        <div className="flex flex-row justify-end items-center">
-          <ProfileImage nickname={myProfile.nickname.slice(0, 1).toUpperCase()} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
+        <div className="flex flex-row justify-end items-center cursor-pointer" onClick={() => router.push('/dashboard/mydashboard')}>
+          <ProfileImage nickname={myProfile.nickname.slice(0, 1)} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
           <div className="hidden md:flex md:mr-5">{myProfile.nickname}</div>
         </div>
       </div>
