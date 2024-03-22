@@ -52,6 +52,6 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
           </div>
         </div>
       </div>
-    </button>
+    </div>
   );
 }
