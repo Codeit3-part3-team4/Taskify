@@ -8,7 +8,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { getMembersApi, Member } from '@/api/membersApi';
 import { postCardApi } from '@/api/cardApi';
 
-export default function TodoForm({ dashboardId, columnId }) {
+interface TodoFormProps {
+  dashboardId: number;
+  columnId: number;
+}
+
+const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [formData, setFormData] = useState({
@@ -217,4 +222,6 @@ export default function TodoForm({ dashboardId, columnId }) {
       )}
     </div>
   );
-}
+};
+
+export default TodoForm;

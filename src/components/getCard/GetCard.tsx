@@ -6,7 +6,14 @@ import Image from 'next/image';
 import React from 'react';
 import { Card } from '../../api/cardApi';
 
-const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) => {
+interface CardProps {
+  card: Card;
+  dashboardId: number;
+  columnId: number;
+  columnTitle: string;
+}
+
+const GetCard: React.FC<CardProps> = ({ card, dashboardId, columnId, columnTitle }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const clickOpenModal = () => {
@@ -31,7 +38,7 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
             }}
             title={card.title}
           >
-            <TodoCard cardId={card.id} isOpen={isOpen} dashboardId={dashboardId} columnId={columnId} card={card} columnTitle={columnTitle} />
+            <TodoCard cardId={card.id} dashboardId={dashboardId} columnId={columnId} card={card} columnTitle={columnTitle} />
           </Modal>
           <div className="md:flex lg:flex-col items-center">
             {card.imageUrl !== 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/asdasd.png' && card.imageUrl !== null && (

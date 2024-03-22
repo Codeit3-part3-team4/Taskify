@@ -1,5 +1,4 @@
 'use client';
-
 import { ColumnList, getColumnListApi } from '@/api/columnApi';
 import AddColumn from '@/components/column/AddColumn';
 import Column from '@/components/column/Column';
@@ -10,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function Page({ params: { id } }: { params: { id: number } }) {
-  const [columnList, setColumnList] = useState<ColumnList | null>(null);
+  const [columnList, setColumnList] = useState<ColumnList[] | null>(null);
   const { setDashboardId, data, isLoading } = useContext(DashboardContext);
   const { openModal } = useModal();
   const router = useRouter();
@@ -43,7 +42,7 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
   return (
     <div className="flex flex-col lg:flex-row w-dvw h-screen mt-24 ">
       <div className="lg:flex lg:w-full overflow-x-scroll lg:overflow-x-scroll">
-        {columnList?.map((column: { id: any; title: any }) => (
+        {columnList?.map((column: { id: number; title: string }) => (
           <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} />
         ))}
 
