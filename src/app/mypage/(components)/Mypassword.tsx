@@ -83,7 +83,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
       <div>
         {userInfo && (
           <div id="비밀번호 컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF mt-3">
-            <div className="flex flex-col">
+            <div className="flex flex-col md:justify-start items-start">
               <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
               <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">
                 <div className="">
@@ -101,33 +101,37 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                         className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
                       />
                     </div>
-                    <label htmlFor="newPassword" className="font-semibold">
-                      새 비밀번호
-                    </label>
-                    <div>
-                      <input
-                        type="password"
-                        id="newPassword"
-                        value={changePassword.newPassword}
-                        placeholder={'새 비밀번호 입력'}
-                        onChange={onChangePasswordValues}
-                        className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
-                      />
+                    <div className="mt-4 md:mt-5">
+                      <label htmlFor="newPassword" className="font-semibold">
+                        새 비밀번호
+                      </label>
+                      <div>
+                        <input
+                          type="password"
+                          id="newPassword"
+                          value={changePassword.newPassword}
+                          placeholder={'새 비밀번호 입력'}
+                          onChange={onChangePasswordValues}
+                          className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                        />
+                      </div>
                     </div>
-                    <label htmlFor="newPwCheck" className="font-semibold">
-                      새 비밀번호 확인
-                    </label>
-                    <div>
-                      <input
-                        type="password"
-                        id="newPwCheck"
-                        value={newPwcheck}
-                        placeholder={'새 비밀번호 입력'}
-                        onChange={onChangePasswordckValues}
-                        error={errors.newPwcheck}
-                        onBlur={onBlur}
-                        className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
-                      />
+                    <div className="mt-4 md:mt-5">
+                      <label htmlFor="newPwCheck" className="font-semibold">
+                        새 비밀번호 확인
+                      </label>
+                      <div>
+                        <input
+                          type="password"
+                          id="newPwCheck"
+                          value={newPwcheck}
+                          placeholder={'새 비밀번호 입력'}
+                          onChange={onChangePasswordckValues}
+                          error={errors.newPwcheck}
+                          onBlur={onBlur}
+                          className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                        />
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -166,9 +170,11 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                     />
                   </div>
                 </form> */}
-                <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
-                  변경
-                </button>
+                <div className="flex justify-end">
+                  <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
+                    변경
+                  </button>
+                </div>
               </div>
             </div>
           </div>
