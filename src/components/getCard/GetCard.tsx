@@ -21,7 +21,7 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
     <>
       <div className="flex flex-col" key={card.id}>
         <div
-          className="w-72 md:w-537 lg:w-80 h-full m-auto bg-white mb-3 rounded-lg border-2 border-slate-200 hover:border-pink-FFC0CB transform transition duration-500 cursor-pointer"
+          className="w-72 md:w-537 lg:w-80 h-full m-auto bg-white mb-3 rounded-lg border-2 border-slate-200 hover:border-primary-BASIC transform transition duration-500 cursor-pointer"
           onClick={clickOpenModal}
         >
           <Modal
