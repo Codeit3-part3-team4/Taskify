@@ -50,7 +50,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
   });
   const [members, setMembers] = useState<Member[]>([]);
 
-  const fetchData = async (page, size) => {
+  const fetchData = async (page: number, size: number): Promise<void> => {
     try {
       const membersData = await getMembersApi(dashboardId, page, size);
       setMembers(membersData.members);
@@ -66,7 +66,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     fetchData(1, 10);
   }, [dashboardId]);
 
-  const handleTagInputKeyDown = e => {
+  const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       const newTag = e.target.value.trim();
@@ -80,29 +80,29 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     }
   };
 
-  const removeTag = tagToRemove => {
+  const removeTag = (tagToRemove: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
     }));
   };
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSelectStatus = statusId => {
+  const handleSelectStatus = (statusId: string): void => {
     setSelectedStatus(statusId);
     setFormData({ ...formData, columnId: statusId });
   };
 
-  const handleSelectAssignee = userId => {
+  const handleSelectAssignee = (userId: string): void => {
     setSelectedAssignee(userId);
     setFormData({ ...formData, assigneeUserId: userId });
   };
 
-  const handleImageUpload = imageUrl => {
+  const handleImageUpload = (imageUrl: string): void => {
     setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
   };
 
@@ -125,7 +125,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
 
     const formattedDeadline = formData.deadline.toISOString().slice(0, 16).replace('T', ' ');
 
-    const formattedTags = formData.tags.split(',').map(tag => tag.trim());
+    const formattedTags = formData.tags.map(tag => tag.trim());
 
     const cardData = {
       columnId: parseInt(selectedStatus),

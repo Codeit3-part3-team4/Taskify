@@ -37,7 +37,7 @@ export default function TodoForm({ dashboardId, columnId }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = imageUrl => {
+  const handleImageUpload = (imageUrl: string): void => {
     setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
   };
 
