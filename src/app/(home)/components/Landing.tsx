@@ -138,7 +138,9 @@ export default function Landing() {
         <section className="mb-24 bg-gray-300/50 text-black">
           <MainThumb title="두번째!!" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
             <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
-              <div className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`} />
+              <div className={`w-217 h-250 rounded-lg overflow-hiddenmd:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`}>
+                <Image src={'/images/todoimage.png'} alt="할 일 이미지" width={500} height={500} className="object-cover" />
+              </div>
             </div>
           </MainThumb>
         </section>
