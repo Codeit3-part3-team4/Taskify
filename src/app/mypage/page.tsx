@@ -6,12 +6,21 @@ import { useEffect, useState } from 'react';
 import LoginPage from '../login/page';
 import MyProfile from './(components)/MyProfile';
 import { changePasswordApi } from '@/api/AuthApi';
-import MyPassword from './(components)/MyPassword';
-import SideDashboardList from '@/components/SideDashboardList/SideDashboardList';
+import MyPassword from './(components)/Mypassword';
+import Layout from '../dashboard/layout';
+import DashboardBack from '../dashboard/[id]/edit/(components)/DashboardBack';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+// import DashboardBack from './(components)/DashboardBack';
 
 export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    router.back();
+  };
 
   const handleUpdateUserSubmit = async updateUserValues => {
     try {
@@ -71,17 +80,33 @@ export default function MyPage() {
     <div>
       <UserContext.Provider value={{ data: userInfo, setData: setUserInfo }}>
         {userInfo.id ? (
-          <div className="flex flex-col">
-            <div className="h-[37px] w-[284px] md:w-[544px] lg:w-[620px] ml-3 md:ml-5">{'< 돌아가기'}</div>
-            <div className="flex flex-col w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5">
-              <div>
-                <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
-              </div>
-              <div>
-                <MyPassword onSubmit={handleChangePassword} />
+          <Layout>
+            <div className="flex flex-col">
+              {/* <div className="flex flex-row items-center">
+                <Link href={'/'}>
+                  <div className="flex flex-row">
+                    <Image src="/images/arrow-forward-left.svg" width="18" height="18" alt="arrow-left" />
+                    <strong className="text-sm">돌아가기</strong>
+                  </div>
+                </Link>
+              </div> */}
+              <button onClick={handleGoBack} className="h-[37px] w-[284px] md:w-[544px] lg:w-[620px] ml-3 md:ml-5">
+                <div className="flex flex-row">
+                  <img src="/images/arrow-forward-left.svg" width="18" height="18" alt="arrow-left" />
+                  <strong className="text-sm">돌아가기</strong>
+                </div>
+              </button>
+              {/* <DashboardBack /> */}
+              <div className="flex flex-col w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5">
+                <div>
+                  <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
+                </div>
+                <div>
+                  <MyPassword onSubmit={handleChangePassword} />
+                </div>
               </div>
             </div>
-          </div>
+          </Layout>
         ) : (
           <div>
             <LoginPage />

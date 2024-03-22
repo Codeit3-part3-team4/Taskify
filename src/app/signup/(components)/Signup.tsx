@@ -158,7 +158,11 @@ export default function SignUp({ onSubmit }) {
           </label>
         </div>
 
-        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] mt-5 mb-6">
+        <button
+          type="submit"
+          onClick={onSubmitForm}
+          className="rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white bg-gray-400 top-[764px] mt-5 mb-6"
+        >
           가입하기
         </button>
       </form>
