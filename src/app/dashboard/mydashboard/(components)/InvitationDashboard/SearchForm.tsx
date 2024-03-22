@@ -15,7 +15,6 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
     event.preventDefault();
     const trimmedValue = inputValue.trim();
     onSubmit(trimmedValue);
-    console.log(trimmedValue);
   };
 
   return (

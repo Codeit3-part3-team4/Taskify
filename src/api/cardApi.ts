@@ -92,9 +92,9 @@ export const postCardApi = async (cardData: PostCard) => {
 };
 
 // 카드 목록 조회
-export const getCardListApi = async (size: number, cursorId: number, columnId: number) => {
+export const getCardListApi = async (size: number, cursorId: number | null, columnId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/cards?size=${size}&cursorId=${cursorId}&columnId=${columnId}`, {
+    .fetch(`${BASE_URL}/3-4/cards?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}&columnId=${columnId}`, {
       method: 'GET',
       headers: {
         accept: 'application/json',
