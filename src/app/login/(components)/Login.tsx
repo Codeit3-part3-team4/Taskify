@@ -71,9 +71,9 @@ export default function Login({ onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col items-center t-[574px] ">
+    <div className="flex flex-col items-center ">
       <form onSubmit={onSubmitForm}>
-        <div>
+        <div className="mt-[40px] md:mt-[60px] lg:mt-[38px]">
           <InputUserInfo
             label={'이메일'}
             id={'email'}
@@ -85,7 +85,7 @@ export default function Login({ onSubmit }) {
             error={errors.email}
           />
         </div>
-        <div>
+        <div className="mt-4">
           <InputUserInfo
             label={'비밀번호'}
             id={'password'}
@@ -99,7 +99,7 @@ export default function Login({ onSubmit }) {
             error={errors.password}
           />
         </div>
-        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] ">
+        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] mt-5 mb-6">
           로그인
         </button>
       </form>

@@ -20,7 +20,6 @@ export default function SignUp({ onSubmit }) {
   const [isValueLook, setIsValueLook] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
 
-
   const onChangeSignupSubmit = e => {
     const id = e.target.id;
     const value = e.target.value;
@@ -99,9 +98,8 @@ export default function SignUp({ onSubmit }) {
 
   return (
     <div className="flex flex-col items-center t-[574px] ">
-      <h2>회원가입</h2>
       <form onSubmit={onSubmitForm}>
-        <div>
+        <div className="mt-[50px] md:mt-[38px]">
           <InputUserInfo
             label={'이메일'}
             id={'email'}
@@ -113,7 +111,7 @@ export default function SignUp({ onSubmit }) {
             error={errors.email}
           />
         </div>
-        <div>
+        <div className="mt-4">
           <InputUserInfo
             label={'닉네임'}
             id={'nickname'}
@@ -125,7 +123,7 @@ export default function SignUp({ onSubmit }) {
             error={errors.nickname}
           />
         </div>
-        <div>
+        <div className="mt-4">
           <InputUserInfo
             label={'비밀번호'}
             id={'password'}
@@ -139,7 +137,7 @@ export default function SignUp({ onSubmit }) {
             error={errors.password}
           />
         </div>
-        <div>
+        <div className="mt-4">
           <InputUserInfo
             label={'비밀번호 확인'}
             id={'pwCheck'}
@@ -153,14 +151,14 @@ export default function SignUp({ onSubmit }) {
             error={errors.pwCheck}
           />
         </div>
-        <div>
+        <div className="mt-6">
           <label>
-            <input type="checkbox" onChange={handleAgreedChange} checked={isAgreed} />
-            약관에 동의합니다.
+            <input type="checkbox" onChange={handleAgreedChange} checked={isAgreed} className="w-5" />
+            <span className="text-base font-normal leading-[19px]">이용약관에 동의합니다.</span>
           </label>
         </div>
 
-        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] ">
+        <button type="submit" onClick={onSubmitForm} className="rounded-[8px] w-full py-3 overflow-hidden border text-white bg-gray-400 top-[764px] mt-5 mb-6">
           가입하기
         </button>
       </form>

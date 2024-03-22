@@ -62,16 +62,6 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     return isValid;
   };
 
-  // const validateCurrentPassword = async () => {
-  //   try {
-  //     const res = await checkCurrentPassword(changePassword.password);
-  //     return res.isValid;
-  //   } catch (error) {
-  //     console.error('비밀번호 유효성 검사 실패', error);
-  //     return false;
-  //   }
-  // };
-
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
@@ -84,20 +74,6 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     }
   };
 
-  // const checkCurrentPassword = async password => {
-  //   const res = await fetch(`${BASE_URL}/3-4/auth/password`, {
-  //     method: 'POST',
-  //     body: JSON.stringify({ password }),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-  //   if (!res.ok) {
-  //     throw new Error('비밀번호 유효성 검사 실패');
-  //   }
-  //   return res.json();
-  // };
-
   const onBlur = () => {
     validateForm();
   };
@@ -106,43 +82,49 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     <div>
       <div>
         {userInfo && (
-          <div>
-            <h2>비밀번호 변경</h2>
-            <form onSubmit={onSubmitForm}>
-              <div>
-                <InputUserInfo
-                  label={'현재 비밀번호'}
-                  id={'password'}
-                  type={'password'}
-                  value={changePassword.password}
-                  placeholder={'현재 비밀번호 입력'}
-                  onChange={onChangePasswordValues}
-                />
+          <div id="비밀번호 컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF mt-3">
+            <div className="flex flex-col">
+              <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
+              <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">
+                <form onSubmit={onSubmitForm}>
+                  <div className="">
+                    <InputUserInfo
+                      label={'현재 비밀번호'}
+                      id={'password'}
+                      type={'password'}
+                      value={changePassword.password}
+                      placeholder={'현재 비밀번호 입력'}
+                      onChange={onChangePasswordValues}
+                    />
+                  </div>
+                  <div>
+                    <InputUserInfo
+                      label={'새 비밀번호'}
+                      id={'newPassword'}
+                      type={'password'}
+                      value={changePassword.newPassword}
+                      placeholder={'새 비밀번호 입력'}
+                      onChange={onChangePasswordValues}
+                    />
+                  </div>
+                  <div>
+                    <InputUserInfo
+                      label={'새 비밀번호 확인'}
+                      id={'newPwcheck'}
+                      type={'password'}
+                      value={newPwcheck}
+                      placeholder={'새 비밀번호 입력'}
+                      onChange={onChangePasswordckValues}
+                      error={errors.newPwcheck}
+                      onBlur={onBlur}
+                    />
+                  </div>
+                </form>
+                <button onClick={onSubmitForm} className="bg-violet-5534DA text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
+                  변경
+                </button>
               </div>
-              <div>
-                <InputUserInfo
-                  label={'새 비밀번호'}
-                  id={'newPassword'}
-                  type={'password'}
-                  value={changePassword.newPassword}
-                  placeholder={'새 비밀번호 입력'}
-                  onChange={onChangePasswordValues}
-                />
-              </div>
-              <div>
-                <InputUserInfo
-                  label={'새 비밀번호 확인'}
-                  id={'newPwcheck'}
-                  type={'password'}
-                  value={newPwcheck}
-                  placeholder={'새 비밀번호 입력'}
-                  onChange={onChangePasswordckValues}
-                  error={errors.newPwcheck}
-                  onBlur={onBlur}
-                />
-              </div>
-            </form>
-            <button onClick={onSubmitForm}>변경</button>
+            </div>
           </div>
         )}
       </div>

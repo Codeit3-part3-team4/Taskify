@@ -30,14 +30,13 @@ export default function SignUpPage() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center h-screen w-screen bg-white">
       <MainLogo title={'첫 방문을 환영합니다!'} />
       <SignUp onSubmit={handleSignUpSubmit} />
-      {isModalOpen && <Modal isOpen={isModalOpen} onClose={closeModal} title="이메일 중복" children="이미 사용중인 이메일입니다"
-      />}
+      {isModalOpen && <Modal isOpen={isModalOpen} onClose={closeModal} title="이메일 중복" children="이미 사용중인 이메일입니다" />}
     </div>
   );
 }
