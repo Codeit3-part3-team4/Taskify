@@ -14,6 +14,7 @@ export default function Login({ onSubmit }) {
   });
 
   const [isValueLook, setIsValueLook] = useState(false);
+  const [isButton, setIsButton] = useState(false);
 
   const onChangeLoginSubmit = e => {
     const id = e.target.id;
@@ -45,6 +46,8 @@ export default function Login({ onSubmit }) {
     }
 
     setErrors(newErrors);
+    setIsButton(isValid);
+    console.log('유효성검사중 isbutton:', isButton);
     return isValid;
   };
 
@@ -69,6 +72,16 @@ export default function Login({ onSubmit }) {
       return 'text';
     }
   };
+
+  // const handleButton = () => {
+  //   console.log('유효성 검사 후 이즈버튼값', isButton);
+  //   if (isButton) {
+  //     onSubmitForm();
+  //     console.log('유효성 검사 성공. 버튼 활성화');
+  //   } else {
+  //     console.log('유효성 검사 실패. 버튼 비활성화');
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center ">
@@ -102,7 +115,8 @@ export default function Login({ onSubmit }) {
         <button
           type="submit"
           onClick={onSubmitForm}
-          className="rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white bg-gray-400 top-[764px] mt-5 mb-6"
+          disabled={!isButton}
+          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
         >
           로그인
         </button>

@@ -112,7 +112,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
                 <div className="flex flex-col ml-2 md:ml-0 md:mt-3 lg:mt-4">
                   <button
                     onClick={handleBasicProfileImg}
-                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px] hover:bg-primary-BASIC"
+                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px]  hover:bg-purple-500"
                   >
                     기본 프로필
                   </button>
@@ -146,7 +146,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
               </div>
             </div>
             <div className="flex justify-end">
-              <button onClick={onSubmitForm} className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4">
+              <button onClick={onSubmitForm} className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 hover:scale-105">
                 저장
               </button>
             </div>

@@ -16,7 +16,6 @@ const EditColumn = ({ columnId, initialColumnName }) => {
     if (isConfirmed) {
       try {
         await deleteColumnApi(columnId);
-
         closeModal();
         window.location.reload();
       } catch (error) {
@@ -35,7 +34,6 @@ const EditColumn = ({ columnId, initialColumnName }) => {
 
     try {
       await editColumnApi(columnId, columnName);
-
       closeModal();
       window.location.reload();
     } catch (error) {
@@ -71,7 +69,7 @@ const EditColumn = ({ columnId, initialColumnName }) => {
               <button type="button" className="btn w-32" onClick={closeModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 btn-primary">
+              <button type="submit" className="btn w-32  bg-primary-BASIC text-white hover:bg-primary-BASIC hover:scale-105">
                 변경
               </button>
             </div>
