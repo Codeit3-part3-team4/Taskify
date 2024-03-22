@@ -1,10 +1,10 @@
 'use client';
-
 import { useState } from 'react';
 import TodoCard from '../Todo/TodoCard';
 import Modal from '../Modal/Modal';
 import Image from 'next/image';
 import React from 'react';
+import { Card } from '../../api/cardApi';
 
 const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +17,11 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
     setIsOpen(false);
   };
 
-  console.log(card.tags);
-
   return (
     <>
       <div className="flex flex-col" key={card.id}>
         <div
-          className="w-72 md:w-537 lg:w-80 h-full m-auto bg-white mb-3 rounded-lg border-2 border-slate-200 hover:border-purple-760DDE transform transition duration-500 cursor-pointer"
+          className="w-72 md:w-537 lg:w-80 h-full m-auto bg-white mb-3 rounded-lg border-2 border-slate-200 hover:border-pink-FFC0CB transform transition duration-500 cursor-pointer"
           onClick={clickOpenModal}
         >
           <Modal
@@ -45,15 +43,15 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
               </div>
             )}
             <div className="w-full pt-3 p-4">
-              <div>
-                <div className="w-full text-sm font-medium leading-4 pb-1.5 inline-block truncate text-ellipsis">{card.title}</div>
+              <div className="flex w-full pb-1.5 ">
+                <span className="text-sm font-medium leading-4 inline-block truncate text-ellipsis">{card.title}</span>
               </div>
               <div className="lg:flex-col">
                 <div className="flex gap-3 md:gap-0 lg:justify-start">
                   {card.tags.map((item, index) => (
                     <div
                       key={index}
-                      className=" bg-lime-100 text-lime-400 inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5"
+                      className=" bg-blue-AFDDFA text-white inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5"
                     >
                       {item}
                     </div>
@@ -64,7 +62,7 @@ const GetCard = ({ card, dashboardId, columnId, columnTitle }: { card: Card }) =
                     <img src="/images/calendar-icon.svg" alt="캘린더 아이콘" />
                     <div className="text-xs text-slate-400">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
                   </div>
-                  <div className="flex justify-center items-center w-6 h-6 bg-green-A3C4A2 rounded-full text-white text-xs font-semibold">
+                  <div className="flex justify-center items-center w-6 h-6 bg-blue-87CEFA rounded-full text-white text-xs font-semibold">
                     {card.assignee.nickname[0].toUpperCase()}
                   </div>
                 </div>
