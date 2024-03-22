@@ -167,7 +167,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
       </div>
       <div className="flex flex-row items-center w-fit h-full">
         {children}
-        <div className="flex flex-row justify-end items-center cursor-pointer" onClick={() => router.push('/dashboard/mydashboard')}>
+        <div className="flex flex-row justify-end items-center cursor-pointer" onClick={() => router.push('/mypage')}>
           <ProfileImage nickname={myProfile.nickname.slice(0, 1)} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
           <div className="hidden md:flex md:mr-5">{myProfile.nickname}</div>
         </div>
