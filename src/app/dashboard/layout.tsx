@@ -3,6 +3,7 @@ import DashboardProvider from '@/context/DashboardContext';
 import DashboardHeader, { FunctionalHeader } from './(components)/DashboardHeader';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const url = '/images/mokoko-bg.png';
   return (
     <>
       <DashboardProvider>

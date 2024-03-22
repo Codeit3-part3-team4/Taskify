@@ -54,7 +54,7 @@ export default function InvitationDashboard() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-slate-100/55 my-5">
       <h2 className="text-xl mb-5">초대받은 대시보드</h2>
       <div className="mb-5">
         <SearchForm onSubmit={handleSearchSubmit} />
