@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
 import { useModal } from '../hooks/useModal/useModal';
-import { deleteCardApi, detailCardApi } from '@/api/cardApi';
+import { Card, deleteCardApi, detailCardApi } from '@/api/cardApi';
 
 interface CardDetails {
   description: string;
@@ -11,7 +11,15 @@ interface CardDetails {
   dueDate: string;
 }
 
-export default function TodoCard({ cardId, dashboardId, columnId, card, columnTitle }) {
+interface TodoCardProps {
+  cardId: number;
+  dashboardId: number;
+  columnId: number;
+  card: Card;
+  columnTitle: string;
+}
+
+const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card, columnTitle }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen: isUpdateModalOpen, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModal();
   const [cardDetails, setCardDetails] = useState<CardDetails | null>(null);
@@ -27,8 +35,6 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
     };
     loadCardDetails();
   }, [cardId]);
-
-  console.log(cardDetails);
 
   const handleEditClick = async () => {
     try {
@@ -129,4 +135,6 @@ export default function TodoCard({ cardId, dashboardId, columnId, card, columnTi
       </div>
     </div>
   );
-}
+};
+
+export default TodoCard;
