@@ -160,7 +160,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
   if (myProfile === undefined) return null;
 
   return (
-    <nav className={`fixed flex flex-row justify-end lg:justify-between w-screen items-center h-24 pr-20 z-10 bg-gray-300/50 `}>
+    <nav className={`absolute flex flex-row justify-end lg:justify-between w-screen items-center h-24 pr-20 z-10 bg-gray-300/50 `}>
       <div className="hidden relative lg:flex flex-row justify-center items-center gap-2">
         {!isMydashboard && <strong>{title}</strong>}
         {ownerId === myProfile.id && !isMydashboard && <Image src="/images/crown-icon.svg" alt="Taskify" width="35" height="35" />}
@@ -169,7 +169,7 @@ export default function DashboardHeader({ children }: { children: React.ReactNod
         {children}
         <div className="flex flex-row justify-end items-center cursor-pointer" onClick={() => router.push('/mypage')}>
           <ProfileImage nickname={myProfile.nickname.slice(0, 1)} profileImageUrl={myProfile.profileImageUrl} options={'mr-5 md:mr-3'} />
-          <div className="hidden md:flex md:mr-5">{myProfile.nickname}</div>
+          <strong className="hidden md:flex md:mr-5">{myProfile.nickname}</strong>
         </div>
       </div>
     </nav>
