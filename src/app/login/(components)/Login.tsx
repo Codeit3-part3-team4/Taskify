@@ -57,8 +57,14 @@ export default function Login({ onSubmit }) {
     onSubmit(userValues);
   };
 
-  const onBlur = () => {
+  const onBlur = id => {
     validateForm();
+    if (id === 'email' || id === 'password') {
+      setErrors({
+        ...errors,
+        [id]: errors[id],
+      });
+    }
   };
 
   const handlePasswordLook = () => {
@@ -94,7 +100,7 @@ export default function Login({ onSubmit }) {
             value={userValues.email}
             placeholder={'이메일을 입력해 주세요'}
             onChange={onChangeLoginSubmit}
-            onBlur={onBlur}
+            onBlur={() => onBlur('email')}
             error={errors.email}
           />
         </div>
