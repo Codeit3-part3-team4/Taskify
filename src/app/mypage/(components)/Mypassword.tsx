@@ -174,8 +174,10 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
 
                 <div className="flex justify-end">
                   <button
+                    type="submit"
                     onClick={onSubmitForm}
-                    className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-5 md:mt-6 hover:bg-purple-500 hover:scale-105"
+                    disabled={!isButton}
+                    className={`text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 ${isButton ? 'bg-primary-BASIC  hover:scale-105' : 'bg-gray-400'}`}
                   >
                     변경
                   </button>

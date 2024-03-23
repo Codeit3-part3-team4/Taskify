@@ -3,15 +3,16 @@ import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import Image from 'next/image';
 import { UpdateUserInfo } from '../page';
+import { Url } from 'next/dist/shared/lib/router/router';
 
 interface UpdateUserValues {
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string | null | File | Url;
 }
 
 interface MyProfileProps {
   onSubmit: (value: UpdateUserInfo) => void;
-  onChangeProfileImg: (file: File) => Promise<string | null>;
+  onChangeProfileImg: (file: File) => Promise<string | null | Url>;
 }
 
 const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: MyProfileProps) => {
@@ -21,7 +22,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
     profileImageUrl: userInfo?.profileImageUrl || null,
   });
 
-  const [updateProfileImg, setUpdateProfileImg] = useState<File | null>(null);
+  const [updateProfileImg, setUpdateProfileImg] = useState<File | null | Url>(null);
 
   // const BasicImage = '/images/basic-profile.svg';
 

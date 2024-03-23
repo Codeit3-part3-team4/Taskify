@@ -10,6 +10,7 @@ import { changePasswordApi } from '@/api/AuthApi';
 import Layout from '../dashboard/layout';
 import { useRouter } from 'next/navigation';
 import MyPassword from './(components)/Mypassword';
+import Modal from '@/components/Modal/Modal';
 
 export interface UpdateUserInfo {
   email?: string;
@@ -27,6 +28,8 @@ export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState<boolean>(false);
+  const [isPwModalOpen, setIsPwModalOpen] = useState<boolean>(false);
 
   const handleGoBack = () => {
     router.back();
@@ -36,6 +39,7 @@ export default function MyPage() {
     try {
       await updateUserInfoApi(updateUserValues);
       console.log('계정관리페이지 닉넴,프로필 변경', updateUserValues);
+      setIsSaveModalOpen(true);
     } catch (error) {
       console.error('유저 정보 저장 실패:', error);
     }
@@ -60,6 +64,7 @@ export default function MyPage() {
       console.log(JSON.stringify(res));
 
       console.log('비밀번호 변경 성공:', res);
+      setIsPwModalOpen(true);
     } catch (error) {
       console.error('비밀번호 변경 실패', error);
     }
@@ -82,6 +87,13 @@ export default function MyPage() {
     fetchUserInfo();
   }, []);
 
+  const closeSaveModal = () => {
+    setIsSaveModalOpen(false);
+  };
+  const closePwModal = () => {
+    setIsPwModalOpen(false);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -101,7 +113,9 @@ export default function MyPage() {
               {/* <DashboardBack /> */}
               <div className="flex flex-col lg:flex-row items-start w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5 gap-5">
                 <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
+                {isSaveModalOpen && <Modal isOpen={isSaveModalOpen} onClose={closeSaveModal} title="My Page" children="프로필 저장 완료" />}
                 <MyPassword onSubmit={handleChangePassword} />
+                {isPwModalOpen && <Modal isOpen={isPwModalOpen} onClose={closePwModal} title="My Page" children="비밀번호 변경 완료" />}
               </div>
             </div>
           </Layout>
