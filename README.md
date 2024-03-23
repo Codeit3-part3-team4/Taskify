@@ -78,14 +78,18 @@
 
 ###  🙍‍♂️조현진
 
-페이지 :  </br>
+페이지 : mydashboard.tsx </br>
 
-공통:  </br>
+공통: </br>
+> useIntersectionObserver.ts
+- IntersectionObserver 이용한 함수 실행 커스텀훅
+</br>
 
 기능: </br> 
-- 
-- 
-- 
+> InvitationDashboard
+- 초대리스트 불러오기, 무한 스크롤 기능, 초대자 검색 기능
+> DashboarderMaker
+- 새로운 대시보드 만들기, input type color를 이용한 색 선택 기능
 
 </br>
 
