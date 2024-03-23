@@ -2,7 +2,7 @@ import MyDashboardSection from './(components)/MydashboardSection/MyDashboardSec
 
 export default function MyDashboard() {
   return (
-    <div>
+    <div className="w-full mt-24 h-[calc(100dvh-6rem)] overflow-scroll">
       <MyDashboardSection />
     </div>
   );

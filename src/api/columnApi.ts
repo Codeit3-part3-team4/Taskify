@@ -1,8 +1,5 @@
+import { authInstance } from '@/utils/functionalFetch';
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const TEAM_ID = '3-4';
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyMCwidGVhbUlkIjoiMy00IiwiaWF0IjoxNzA5OTkyNTU3LCJpc3MiOiJzcC10YXNraWZ5In0.K1rM2R-ywv-P73rUvYWw1WyWfzyk3_vMe8ZS2_84Y4c';
 
 export interface CreateColumn {
   title: string;
@@ -28,45 +25,56 @@ export interface CreateCardImage {
 }
 
 // 컬럼 생성
-export const createColumnApi = async (teamId = '3-4') => {
-  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
+export const createColumnApi = async (title: string, dashboardId: number) => {
+  const bodyData = {
+    title,
+    dashboardId,
+  };
+
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/columns`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyData),
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
       } else if (res.status === 400) {
-        throw new Error('error');
+        throw new Error('잘못된 요청입니다.');
       } else if (res.status === 404) {
-        throw new Error('404 not found');
+        throw new Error('대시보드가 존재하지 않습니다.');
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error('API 호출 중 오류 발생:', error);
       return null;
     });
+
   return res;
 };
 
 // 컬럼 목록 조회
-export const getColumnListApi = async (teamId = '3-4', dashboardId = 4685) => {
-  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/?${dashboardId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-    },
-  })
+export const getColumnListApi = async (dashboardId: number) => {
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/columns/?dashboardId=${dashboardId}`, {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: {
+        accept: 'application/json',
+      },
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
       } else if (res.status === 404) {
         throw new Error('404  not found');
+      } else if (res.status >= 400) {
+        throw new Error(`${res.status} error`);
       }
     })
     .catch(error => {
@@ -77,40 +85,48 @@ export const getColumnListApi = async (teamId = '3-4', dashboardId = 4685) => {
 };
 
 // 컬럼 수정
-export const editColumnApi = async (teamId = '3-4', columnId = 16254) => {
-  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
+export const editColumnApi = async (columnId: number, title: string) => {
+  const bodyData = {
+    title,
+  };
+
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
+      method: 'PUT',
+      cache: 'no-cache',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyData),
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
       } else if (res.status === 400) {
-        throw new Error('error');
+        throw new Error('Bad Request: Missing or invalid title');
       } else if (res.status === 404) {
-        throw new Error('404 not found');
+        throw new Error('404 Not Found: Column does not exist');
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error('API call error:', error);
       return null;
     });
+
   return res;
 };
 
 // 컬럼 삭제
-export const deleteColumnApi = async (teamId = '3-4', columnId = 16254) => {
-  const res = await fetch(`${BASE_URL}/${TEAM_ID}/columns/${columnId}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: '*/*',
-    },
-  })
+export const deleteColumnApi = async (columnId: number) => {
+  const res = await authInstance
+    .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
+      method: 'DELETE',
+      cache: 'no-cache',
+      headers: {
+        accept: '*/*',
+      },
+    })
     .then(res => {
       if (res.ok) {
         return res.json();
@@ -126,29 +142,23 @@ export const deleteColumnApi = async (teamId = '3-4', columnId = 16254) => {
 };
 
 // 카드 이미지 업로드
-export const uploadCardImage = async (teamId = '3-4', columnId = 16254) => {
-  const res = await fetch(
-    `${BASE_URL}/${TEAM_ID}/columns/${columnId}/card-image`,
-    {
+export const uploadCardImage = async (columnId: number, imageFile: File) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  try {
+    const response = await authInstance.fetch(`${BASE_URL}/3-4/columns/${columnId}/card-image`, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-    },
-  )
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error('error');
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      return null;
+      body: formData,
     });
 
-  return res;
+    if (!response.ok) {
+      throw new Error('Image upload failed: ' + response.statusText);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('API call error:', error);
+    return null;
+  }
 };
