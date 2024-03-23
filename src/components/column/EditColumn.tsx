@@ -7,7 +7,7 @@ const EditColumn = ({ columnId, initialColumnName }) => {
   const { isOpen, openModal, closeModal } = useModal();
   const [columnName, setColumnName] = useState(initialColumnName);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: any) => {
     setColumnName(e.target.value);
   };
 
@@ -24,7 +24,7 @@ const EditColumn = ({ columnId, initialColumnName }) => {
     }
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!columnName.trim()) {

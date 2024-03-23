@@ -27,7 +27,7 @@ interface TodoUpdateProps {
     title: string;
     description: string;
     deadline: Date;
-    tags: string[];
+    tags: [];
     selectedImage?: string;
   };
   closeModal: () => void;
@@ -79,7 +79,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     fetchData(1, 10);
   }, [dashboardId]);
 
-  const handleTagInputKeyDown = e => {
+  const handleTagInputKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       const newTag = e.currentTarget.value.trim();
@@ -93,7 +93,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     }
   };
 
-  const removeTag = tagToRemove => {
+  const removeTag = (tagToRemove: any) => {
     setFormData({
       ...formData,
       tags: formData.tags.filter(tag => tag !== tagToRemove),
@@ -125,7 +125,7 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!isFormValid()) {
@@ -250,8 +250,8 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
                 마감일
               </label>
               <DatePicker
-                className="input input-bordered w-2/4 mb-3"
-                dateFormat="YYYY-MM-dd HH:MM"
+                className="input input-bordered w-3/4 mb-3"
+                dateFormat="YYYY-MM-dd"
                 selected={formData.deadline}
                 onChange={date => {
                   if (date) {
