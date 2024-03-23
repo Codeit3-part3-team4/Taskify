@@ -90,25 +90,24 @@
 
 ###  🙍‍♂️조현진
 
-페이지 : mydashboard.tsx </br>
+## 마이대시보드 페이지, 사이드 바, NotFound 페이지
+- 마이대시보드에 페이지에 해당하는 대시보드를 보여줌
+- 초대 받은 대시보드 검색, 수락, 거절 기능 구현
+- 마이대시보드, 사이드바에 대시보드 추가 버튼 및 대시보드 추가 모달
+- 사이드바 대시보드 간 위치 이동 기능
+- NotFound 페이지에 뒤로가기, 메인으로가기 구현
 
-공통: </br>
-> useIntersectionObserver.ts
-- IntersectionObserver 이용한 함수 실행 커스텀훅
-> SideDashboardList
-- 대시보드리스트 불러오기, 다른 섹션과 스크롤 공간 분리를 위한 css 작업
-- react-dnd를 이용한 드래그앤 드롭 기능 구현
-> DashboardContext
+## 기능
+> 초대목록 검색
+- debounce를 이용해 입력 간 딜레이를 확인 하여 1초 사이에 입력이 없을 시 검색이 실행되게 구현
+> 초대 리스트 무한스크롤
+- IntersectionObserver 이용하여 무한 스크롤 구현
+> 대시보드 간 위치 변경
+- react-dnd를 이용한 드래그앤 드롭 기능으로 대시보드 간 위치를 바꿀 수 있게 구현
+> 사이드바와 마이대시보드 실시간 재랜더링
 - ContextApi로 DashboardData 관리하여 SideDashboard와 MydashboardSection 실시간 재랜더링
-</br>
-
-기능: </br> 
-> InvitationDashboard
-- 초대리스트 불러오기, 무한 스크롤 기능, 디바운스를 이용한 초대자 검색 기능
-> DashboarderMaker
-- 새로운 대시보드 만들기, input type color를 이용한 색 선택 기능
-> MydashboardSection
-- 대시보드리스트 불러오기, 페이지네이션 이용
+> 다른 레이아웃과 구분된 사이드 바
+- 브라우저 크기변화에 따른 레이아웃을 위해 vh사용 및 fixed로 고정하여 다른 영역과 독립적으로 레이아웃에 나올 수 있게 구현
 </br>
 
 ## 📃 배포주소
