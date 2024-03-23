@@ -18,7 +18,6 @@ export default function InvitationDashboard() {
   const handleIntersection = async () => {
     try {
       if (hasNotNext && !loading) {
-        console.log('리턴');
         return;
       }
       const { invitations, cursorId } = await getInvitationList(8, cursorIdRef.current, inputValue);
