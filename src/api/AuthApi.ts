@@ -16,13 +16,21 @@ export interface UserValues {
   };
 }
 
+export interface LoginValues {
+  email: string;
+  password: string;
+}
+
 export interface ChangePw {
   password: string;
   newPassword: string;
 }
 
+// 일반적일 때
+// export const loginApi = (userValues: LoginValues): UserValues => {
 // 로그인
-export const loginApi = async (userValues: UserValues) => {
+// 비동기적일 때
+export const loginApi = async (userValues: LoginValues): Promise<UserValues> => {
   const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
     method: 'POST',
     cache: 'no-cache',

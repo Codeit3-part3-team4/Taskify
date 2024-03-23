@@ -1,11 +1,22 @@
 import { UserContext } from '@/context/UserContext';
-import { useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import InputUserInfo from '@/components/login/InputUserInfo';
+import { MyPasswordValue } from '../page';
 
-const MyPassword: React.FC = ({ onSubmit }) => {
+interface Error {
+  password?: string;
+  newPassword?: string;
+  newPwCheck?: string;
+}
+
+interface MyPasswordProps {
+  onSubmit: (valeu: MyPasswordValue) => void;
+}
+
+const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
   const { data: userInfo } = useContext(UserContext);
 
   const [changePassword, setChangePassword] = useState({
@@ -13,16 +24,16 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     newPassword: '',
   });
 
-  const [newPwcheck, setPwCheck] = useState('');
+  const [newPwCheck, setPwCheck] = useState('');
   const [isButton, setIsButton] = useState<boolean>(false);
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Error>({
     password: '',
     newPassword: '',
     newPwCheck: '',
   });
 
-  const onChangePasswordValues = e => {
+  const onChangePasswordValues = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
     console.log('id : ' + id);
@@ -32,21 +43,24 @@ const MyPassword: React.FC = ({ onSubmit }) => {
       [id]: value,
     });
     console.log(changePassword);
+    // validateForm(id);
   };
 
-  const onChangePasswordckValues = e => {
+  const onChangePasswordckValues = (e: ChangeEvent<HTMLInputElement>) => {
+    const id = e.target.id;
     const value = e.target.value;
     setPwCheck(value);
-    console.log(newPwcheck);
-    validateForm();
+    console.log(newPwCheck);
+    validateForm(id);
   };
 
-  const validateForm = (id: string): boolean => {
+  const validateForm = (id?: 'password' | 'newPassword' | 'newPwCheck' | string): boolean => {
+    console.log('idididid', id);
     let isValid = true;
-    const newErrors = {
+    const newErrors: Error = {
       password: '',
       newPassword: '',
-      newPwcheck: '',
+      newPwCheck: '',
     };
 
     if (changePassword.password.length < 8) {
@@ -58,24 +72,28 @@ const MyPassword: React.FC = ({ onSubmit }) => {
       isValid = false;
     }
 
-    if (changePassword.newPassword !== newPwcheck) {
-      newErrors.newPwcheck = '비밀번호가 일치하지 않습니다.';
+    if (changePassword.newPassword !== newPwCheck) {
+      newErrors.newPwCheck = '비밀번호가 일치하지 않습니다.';
       isValid = false;
     }
 
-    if (id) {
+    if (id === 'password' || id === 'newPassword' || id === 'newPwCheck') {
       setErrors({
         ...errors,
         [id]: newErrors[id],
       });
     }
+    console.log('이프문 에러', id);
+    console.log('이프문 newPassword에러', errors.newPassword);
+    console.log('이프문 newPwcheck에러', errors.newPwCheck);
+    console.log('이프문 에러', errors.newPassword);
 
     setIsButton(isValid);
     // setErrors(newErrors);
     return isValid;
   };
 
-  const onSubmitForm = async e => {
+  const onSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
     try {
       if (validateForm()) {
@@ -87,7 +105,8 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     }
   };
 
-  const onBlur = (id: string) => {
+  const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    const id = e.target.id;
     validateForm(id);
   };
 
@@ -95,7 +114,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
     <div>
       <div>
         {userInfo && (
-          <div className="flex justify-center md:justify-start items-center h-[385px] md:h-[454px] rounded-lg bg-white-FFFFFF mt-3">
+          <div className="flex justify-center md:justify-start h-[385px] md:h-[454px] rounded-lg bg-white-FFFFFF mt-3">
             <div className="flex flex-col  md:ml-8">
               <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
               <div className="flex flex-col mt-6 md:mt-8">
@@ -128,6 +147,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                           onBlur={onBlur}
                           className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
                         />
+                        <div className="text-sm">{errors.newPassword && <div style={{ color: 'red' }}>{errors.newPassword}</div>} </div>
                       </div>
                     </div>
                     <div className="mt-4 md:mt-5">
@@ -138,13 +158,13 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                         <input
                           type="password"
                           id="newPwCheck"
-                          value={newPwcheck}
+                          value={newPwCheck}
                           placeholder={'새 비밀번호 입력'}
                           onChange={onChangePasswordckValues}
-                          error={errors.newPwcheck}
                           onBlur={onBlur}
                           className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
                         />
+                        <div className="text-sm">{errors.newPwCheck && <div style={{ color: 'red' }}>{errors.newPwCheck}</div>} </div>
                       </div>
                     </div>
                   </form>
@@ -155,7 +175,7 @@ const MyPassword: React.FC = ({ onSubmit }) => {
                     type="submit"
                     onClick={onSubmitForm}
                     disabled={!isButton}
-                    className={`text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 hover:scale-105 ${isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
+                    className={`text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 ${isButton ? 'bg-primary-BASIC  hover:scale-105' : 'bg-gray-400'}`}
                   >
                     변경
                   </button>

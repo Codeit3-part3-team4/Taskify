@@ -1,16 +1,24 @@
 import { UserContext } from '@/context/UserContext';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import InputUserInfo from '@/components/login/InputUserInfo';
-import DashboardBack from '@/app/dashboard/[id]/edit/(components)/DashboardBack';
+import { UpdateUserInfo } from '../page';
 
-const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
+interface UpdateUserValues {
+  nickname: string;
+  profileImageUrl: string | null;
+}
+
+interface MyProfileProps {
+  onSubmit: (value: UpdateUserInfo) => void;
+  onChangeProfileImg: (file: File) => Promise<string | null>;
+}
+
+const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: MyProfileProps) => {
   const { data: userInfo } = useContext(UserContext);
-  const [updateUserValues, setUpdateUserValues] = useState<string>({
-    nickname: userInfo?.nickname,
-    profileImageUrl: userInfo?.profileImageUrl,
+  const [updateUserValues, setUpdateUserValues] = useState<UpdateUserValues>({
+    nickname: userInfo?.nickname || '',
+    profileImageUrl: userInfo?.profileImageUrl || null,
   });
 
   const [updateProfileImg, setUpdateProfileImg] = useState<File | null>(null);
@@ -31,7 +39,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
     }
   }, []);
 
-  const onChangeUpdateUserValues = e => {
+  const onChangeUpdateUserValues = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
     console.log(value);
@@ -41,8 +49,8 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
     });
   };
 
-  const handleProfileImageChange = async e => {
-    const file = e.target.files[0];
+  const handleProfileImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     setUpdateProfileImg(file);
@@ -67,7 +75,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
     console.log('프로필 업로드해보자 : ', updateUserValues);
   };
 
-  const onSubmitForm = e => {
+  const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(updateUserValues);
     console.log('api로 프로필 변경 데이터 보내줌: ' + updateUserValues);
@@ -87,7 +95,6 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
 
   return (
     <div>
-      {/* <DashboardBack /> */}
       {userInfo && (
         <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF">
           <div className="flex flex-col">
@@ -112,7 +119,7 @@ const MyProfile: React.FC = ({ onSubmit, onChangeProfileImg }) => {
                 <div className="flex flex-col ml-2 md:ml-0 md:mt-3 lg:mt-4">
                   <button
                     onClick={handleBasicProfileImg}
-                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px]  hover:bg-purple-500"
+                    className="bg-gray-9FA6B2 rounded p-1 md:p-0 text-white text-xs md:text-sm md:h-[32px]  hover:bg-primary-BASIC"
                   >
                     기본 프로필
                   </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { signupApi } from '@/api/userApi';
+import { UserSignUp, signupApi } from '@/api/userApi';
 import SignUp from './(components)/Signup';
 import { useRouter } from 'next/navigation';
 import MainLogo from '@/components/login/MainLogo';
@@ -11,9 +11,12 @@ export default function SignUpPage() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSignUpSubmit = async newUserValues => {
+  const handleSignUpSubmit = async (newUserValues: UserSignUp): Promise<void> => {
     try {
       const res = await signupApi(newUserValues);
+      if (!res) {
+        return;
+      }
       if (res.ok) {
         alert('가입이 완료되었습니다');
         router.push('/login');

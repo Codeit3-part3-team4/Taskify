@@ -12,6 +12,7 @@ export interface UserInfo {
 }
 
 export interface UserSignUp {
+  id?: number;
   email: string;
   password: string;
   nickname: string;
@@ -21,7 +22,7 @@ export interface UserSignUp {
 export interface UpdateUserInfo {
   email?: string;
   nickname?: string;
-  profileImageUrl?: string;
+  profileImageUrl?: string | null;
 }
 
 // 회원 가입

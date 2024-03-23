@@ -1,10 +1,17 @@
 import { UserSignUp } from '@/api/userApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SignUpProps {
   onSubmit: (newUserValues: UserSignUp) => Promise<void>;
+}
+
+interface Error {
+  email: string;
+  password: string;
+  nickname: string;
+  pwCheck: string;
 }
 
 export default function SignUp({ onSubmit }: SignUpProps) {
@@ -15,7 +22,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
     pwCheck: '',
   });
 
-  const [errors, setErrors] = useState<UserSignUp>({
+  const [errors, setErrors] = useState<Error>({
     email: '',
     password: '',
     nickname: '',
@@ -33,18 +40,29 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       ...newUserValues,
       [id]: value,
     });
+    // [id]: value, 값이 비동기적으로 적용이 돼서 validateForm(id);에 newUserValues 값이 늦게 들어감
+    // state 함수는 값을 세팅할 때 비동기적으로 일어나서 validateForm(id) 이 함수 실행보다 값이 늦게 반영
     console.log(newUserValues);
     validateForm(id);
   };
 
-  const validateForm = (id: string): boolean => {
+  /*
+  validateForm 사용시 라이브러리로 관리
+  zod.js
+  @hookform/resolvers
+  react-hook-form
+  */
+
+  const validateForm = (id: 'email' | 'password' | 'nickname' | 'pwCheck' | string): boolean => {
     let isValid = true;
-    const newErrors: UserSignUp = {
+    const newErrors: Error = {
       email: '',
       password: '',
       nickname: '',
       pwCheck: '',
     };
+
+    console.log('validateForm 안 값,', newUserValues.password);
 
     const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!newUserValues.email || !emailCheck.test(newUserValues.email)) {
@@ -52,8 +70,9 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       isValid = false;
     }
 
-    if (newUserValues.nickname.length < 1) {
+    if (!newUserValues.nickname.length) {
       newErrors.nickname = '닉네임을 입력해 주세요.';
+      isValid = false;
     } else if (newUserValues.nickname.length > 10) {
       newErrors.nickname = '열 자 이하로 작성해 주세요.';
       isValid = false;
@@ -69,14 +88,18 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       isValid = false;
     }
 
-    if (id) {
+    if (id === 'email' || id === 'password' || id === 'nickname' || id === 'pwCheck') {
       setErrors({
         ...errors,
         [id]: newErrors[id],
       });
     }
 
+    console.log(errors.nickname);
+
     setIsButton(isValid);
+    console.log('이즈버튼값', isButton);
+    console.log('약관동의값', isAgreed);
     return isValid && isAgreed;
   };
 
@@ -86,7 +109,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
     onSubmit(newUserValues);
   };
 
-  const onBlur = (id: string): void => {
+  const onBlur = (id: 'email' | 'password' | 'nickname' | 'pwCheck'): void => {
     validateForm(id);
   };
 
@@ -104,7 +127,18 @@ export default function SignUp({ onSubmit }: SignUpProps) {
 
   const handleAgreedChange = () => {
     setIsAgreed(!isAgreed);
+    console.log('약관동의값', isAgreed);
   };
+
+  // useEffect(() => {
+  //   validateForm();
+  // }, [newUserValues]);
+  /*
+  validateForm('password'); 
+  setNewUsers 이게 비동기적으로 실행이 돼서 
+  validateForm('password'); 
+
+   */
 
   return (
     <div className="flex flex-col items-center t-[574px] ">
@@ -172,7 +206,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
           type="submit"
           onClick={onSubmitForm}
           disabled={!isButton || !isAgreed}
-          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton && isAgreed ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
+          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isAgreed && isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
         >
           가입하기
         </button>

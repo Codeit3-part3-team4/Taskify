@@ -1,7 +1,7 @@
 import { UserValues } from '@/api/AuthApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface Login {
   email: string;
@@ -38,7 +38,7 @@ export default function Login({ onSubmit }: Props) {
     validateForm(id);
   };
 
-  const validateForm = (id: string): boolean => {
+  const validateForm = (id: 'email' | 'password' | string): boolean => {
     let isValid = true;
     const newErrors = {
       email: '',
@@ -78,7 +78,7 @@ export default function Login({ onSubmit }: Props) {
     onSubmit(userValues);
   };
 
-  const onBlur = (id: string): void => {
+  const onBlur = (id: 'email' | 'password'): void => {
     validateForm(id);
   };
 
