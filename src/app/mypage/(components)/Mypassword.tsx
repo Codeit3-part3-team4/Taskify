@@ -114,26 +114,28 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
     <div>
       <div>
         {userInfo && (
-          <div className="flex justify-center md:justify-start items-center h-[385px] md:h-[454px] rounded-lg bg-white-FFFFFF mt-3 pr-5">
-            <div className="flex flex-col  md:ml-8">
-              <h2 className="text-xl md:text-2xl font-bold">비밀번호 변경</h2>
+          <div className="flex justify-center md:justify-start h-[385px] md:h-[435px] rounded-lg bg-white-FFFFFF mt-3 lg:mt-0 pr-5">
+            <div className="flex flex-col ml-3 md:ml-5">
+              <h2 className="text-xl mt-6 md:text-2xl font-bold">비밀번호 변경</h2>
               <div className="flex flex-col mt-6 md:mt-8">
                 <div className="">
                   <form onSubmit={onSubmitForm}>
-                    <label htmlFor="password" className="font-semibold">
-                      현재 비밀번호
-                    </label>
                     <div>
-                      <input
-                        type="password"
-                        id="password"
-                        value={changePassword.password}
-                        placeholder={'현재 비밀번호 입력'}
-                        onChange={onChangePasswordValues}
-                        className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
-                      />
+                      <label htmlFor="password" className="font-semibold">
+                        현재 비밀번호
+                      </label>
+                      <div>
+                        <input
+                          type="password"
+                          id="password"
+                          value={changePassword.password}
+                          placeholder={'현재 비밀번호 입력'}
+                          onChange={onChangePasswordValues}
+                          className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                        />
+                      </div>
                     </div>
-                    <div className="mt-4 md:mt-5">
+                    <div className="h-[75px] mt-4 md:mt-5">
                       <label htmlFor="newPassword" className="font-semibold">
                         새 비밀번호
                       </label>
@@ -150,7 +152,7 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
                         <div className="text-sm">{errors.newPassword && <div style={{ color: 'red' }}>{errors.newPassword}</div>} </div>
                       </div>
                     </div>
-                    <div className="mt-4 md:mt-5">
+                    <div className="h-[75px] mt-4 md:mt-5">
                       <label htmlFor="newPwCheck" className="font-semibold">
                         새 비밀번호 확인
                       </label>
@@ -173,7 +175,7 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
                 <div className="flex justify-end">
                   <button
                     onClick={onSubmitForm}
-                    className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-4 md:mt-6 hover:bg-purple-500 hover:scale-105"
+                    className="bg-primary-BASIC text-white w-[84px] h-[28px] md:h-[32px] rounded mt-5 md:mt-6 hover:bg-purple-500 hover:scale-105"
                   >
                     변경
                   </button>

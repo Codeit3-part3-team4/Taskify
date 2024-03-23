@@ -99,7 +99,7 @@ export default function MyPage() {
                 </div>
               </button>
               {/* <DashboardBack /> */}
-              <div className="flex flex-row items-start w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5 gap-5">
+              <div className="flex flex-col lg:flex-row items-start w-[284px] md:w-[544px] lg:w-[620px] mt-5 ml-3 md:ml-5 gap-5">
                 <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
                 <MyPassword onSubmit={handleChangePassword} />
               </div>
