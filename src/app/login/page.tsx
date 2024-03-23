@@ -16,7 +16,7 @@ interface UserValues {
 export default function LoginPage() {
   const router = useRouter();
   const [isFailLoginModalOpen, setIsFailLoginModalOpen] = useState<boolean>(false);
-  const [isModalMessage, setIsModalMessage] = useState<string>('');
+  const [isModalMessage, setIsModalMessage] = useState<any>('');
 
   const handleLoginSubmit = async (userValues: UserValues): Promise<void> => {
     const res = await loginApi(userValues);

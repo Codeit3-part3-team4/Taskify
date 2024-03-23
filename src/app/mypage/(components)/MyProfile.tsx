@@ -17,7 +17,7 @@ interface MyProfileProps {
 
 const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: MyProfileProps) => {
   const { data: userInfo } = useContext(UserContext);
-  const [updateUserValues, setUpdateUserValues] = useState<UpdateUserValues>({
+  const [updateUserValues, setUpdateUserValues] = useState<any>({
     nickname: userInfo?.nickname || '',
     profileImageUrl: userInfo?.profileImageUrl || null,
   });
