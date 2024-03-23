@@ -47,7 +47,7 @@ const Column: React.FC<ColumnProps> = ({ columnId, columnTitle, dashboardId }) =
 
   return (
     <>
-      <div className="w-80 md:w-594 lg:w-96 lg:h-dvh bg-gray-300/50 border border-slate-300" key={columnId}>
+      <div className="w-80 md:w-594 lg:w-96 h-full bg-white/50 border border-slate-300" key={columnId}>
         <div className="mx-3 h-full">
           <div className="flex justify-between py-4">
             <div className="flex items-center gap-2">
@@ -58,12 +58,7 @@ const Column: React.FC<ColumnProps> = ({ columnId, columnTitle, dashboardId }) =
             <EditColumn columnId={columnId} initialColumnName={columnTitle} />
           </div>
           <div className="flex md: justify-center">
-            <button
-              className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-200 hover:border-primary-BASIC transition duration-500"
-              onClick={openModal}
-            >
-              <TodoForm dashboardId={dashboardId} columnId={columnId} />
-            </button>
+            <TodoForm dashboardId={dashboardId} columnId={columnId} />
           </div>
           <div className="h-[calc(100%-10rem)] overflow-y-scroll">
             {cardList.length > 0 &&

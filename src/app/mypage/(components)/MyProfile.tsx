@@ -96,7 +96,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
   return (
     <div>
       {userInfo && (
-        <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF">
+        <div id="프로필컨테이너" className="flex justify-center items-center h-[422px] md:h-[385px] rounded-lg bg-white-FFFFFF pr-5">
           <div className="flex flex-col">
             <h2 className="text-xl md:text-2xl font-bold">프로필</h2>
             <div id="프로필이미지+이메일+닉넴" className="flex flex-col md:flex-row mt-6 md:mt-8">

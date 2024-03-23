@@ -129,16 +129,18 @@ export default function Landing() {
           <Title />
         </section>
         <section className="mb-16 bg-gray-300/50 text-black">
-          <MainThumb title="첫번째!!" desc="일의 우선순위를" desc2="관리하세요">
+          <MainThumb title="👍 첫번째!!" desc="일의 우선순위를" desc2="관리하세요">
             <div className="flex flex-row justify-end items-end w-full">
               <div className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} />
             </div>
           </MainThumb>
         </section>
         <section className="mb-24 bg-gray-300/50 text-black">
-          <MainThumb title="두번째!!" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
+          <MainThumb title="✌ 두번째!!" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
             <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
-              <div className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`} />
+              <div className={`w-217 h-250 rounded-lg overflow-hiddenmd:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`}>
+                <Image src={'/images/todoimage.png'} alt="할 일 이미지" width={500} height={500} className="object-cover" />
+              </div>
             </div>
           </MainThumb>
         </section>

@@ -13,6 +13,15 @@ interface TodoFormProps {
   columnId: number;
 }
 
+interface FormData {
+  assigneeUserId: string;
+  title: string;
+  description: string;
+  deadline: Date;
+  tags: string[];
+  selectedImage?: string;
+}
+
 const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -37,7 +46,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     fetchMembers().catch(error => console.error('멤버 조회 오류:', error));
   }, [dashboardId]);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -52,7 +61,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
   };
 
-  const handleTagInputKeyDown = e => {
+  const handleTagInputKeyDown = (e: any) => {
     if (e.key === 'Enter' && e.target.value.trim() !== '') {
       e.preventDefault();
       const newTag = e.target.value.trim();
@@ -66,14 +75,30 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     }
   };
 
-  const removeTag = tagToRemove => {
+  const removeTag = (tagToRemove: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       tags: prevFormData.tags.filter(tag => tag !== tagToRemove),
     }));
   };
 
-  const handleSubmit = async e => {
+  const resetFormData = () => {
+    setFormData({
+      assigneeUserId: '',
+      title: '',
+      description: '',
+      deadline: new Date(),
+      tags: [],
+      selectedImage: '',
+    });
+  };
+
+  const handleCloseModal = () => {
+    resetFormData();
+    closeModal();
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isFormValid()) {
       console.error('Form is not valid.');
@@ -102,7 +127,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     }
   };
 
-  const handleSelectAssignee = userId => {
+  const handleSelectAssignee = (userId: any) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       assigneeUserId: userId,
@@ -111,7 +136,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
 
   return (
     <div className="flex">
-      <button onClick={openModal}>
+      <button
+        onClick={openModal}
+        className="flex justify-center items-center w-72 md:w-537 lg:w-80 h-8 md:h-10 rounded-md bg-white mb-5 border-2 border-slate-200 hover:border-primary-BASIC transition duration-500"
+      >
         <img src="/images/add.svg" className="bg-violet-200 rounded-md" alt="카드 추가하기 버튼 아이콘" />
       </button>
       {isOpen && (
@@ -210,10 +238,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
               </div>
             </div>
             <div className="flex justify-end space-x-2">
-              <button type="button" className="btn w-32" onClick={closeModal}>
+              <button type="button" className="btn w-32 text-gray-500" onClick={handleCloseModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 btn-primary" disabled={!isFormValid()}>
+              <button type="submit" className="w-32 bg-primary-BASIC rounded-md text-white" disabled={!isFormValid()}>
                 생성
               </button>
             </div>

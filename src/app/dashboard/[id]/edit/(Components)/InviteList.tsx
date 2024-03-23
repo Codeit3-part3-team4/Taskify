@@ -5,7 +5,7 @@ import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
-import { LinkText, LinkImage } from './LinkComponents';
+import { LinkImage, LinkText } from './LinkComponents';
 import InviteModal from './InviteModal';
 import { redirect } from 'next/navigation';
 
@@ -80,7 +80,7 @@ export default async function InviteList({ dashboardId, searchParams }: { dashbo
   const disabledPrev = page === 1 ? 'pointer-events-none' : '';
 
   return (
-    <div className="flex flex-col rounded-md bg-white">
+    <div className="flex flex-col rounded-md bg-white/50">
       <div className="flex flex-row justify-between items-center mb-3 pt-5 px-5">
         <strong className="text-xl">초대 내역</strong>
         <div className="flex flex-row items-center gap-3">
