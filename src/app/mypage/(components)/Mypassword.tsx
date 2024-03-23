@@ -1,9 +1,6 @@
 import { UserContext } from '@/context/UserContext';
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import InputUserInfo from '@/components/login/InputUserInfo';
 import { MyPasswordValue } from '../page';
 
 interface Error {
@@ -36,26 +33,20 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
   const onChangePasswordValues = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
-    console.log('id : ' + id);
-    console.log('value :' + value);
     setChangePassword({
       ...changePassword,
       [id]: value,
     });
-    console.log(changePassword);
-    // validateForm(id);
   };
 
   const onChangePasswordckValues = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
     setPwCheck(value);
-    console.log(newPwCheck);
     validateForm(id);
   };
 
   const validateForm = (id?: 'password' | 'newPassword' | 'newPwCheck' | string): boolean => {
-    console.log('idididid', id);
     let isValid = true;
     const newErrors: Error = {
       password: '',
@@ -83,13 +74,7 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
         [id]: newErrors[id],
       });
     }
-    console.log('이프문 에러', id);
-    console.log('이프문 newPassword에러', errors.newPassword);
-    console.log('이프문 newPwcheck에러', errors.newPwCheck);
-    console.log('이프문 에러', errors.newPassword);
-
     setIsButton(isValid);
-    // setErrors(newErrors);
     return isValid;
   };
 
@@ -97,12 +82,9 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
     e.preventDefault();
     try {
       if (validateForm()) {
-        console.log('비밀번호 업뎃:', changePassword);
         await onSubmit(changePassword);
       }
-    } catch (error) {
-      console.error('비밀번호 업뎃 실패:', error);
-    }
+    } catch (error) {}
     setChangePassword({
       password: '',
       newPassword: '',

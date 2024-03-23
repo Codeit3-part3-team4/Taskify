@@ -20,7 +20,6 @@ export default function LoginPage() {
 
   const handleLoginSubmit = async (userValues: UserValues): Promise<void> => {
     const res = await loginApi(userValues);
-    console.log('로그인페이지 시도:' + res);
 
     if (res && res.accessToken) {
       authInstance.setOptions({
@@ -31,7 +30,6 @@ export default function LoginPage() {
       postRequestCookies('accessToken', res.accessToken);
       router.push('/dashboard/mydashboard');
     } else {
-      console.log('resssssssssssss', res);
       setIsModalMessage(res);
       setIsFailLoginModalOpen(true);
     }

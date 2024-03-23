@@ -1,7 +1,6 @@
-import { UserValues } from '@/api/AuthApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export interface Login {
   email: string;
@@ -29,12 +28,10 @@ export default function Login({ onSubmit }: Props) {
   const onChangeLoginSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
-    console.log(value);
     setUserValues({
       ...userValues,
       [id]: value,
     });
-    console.log(userValues);
     validateForm(id);
   };
 
@@ -74,7 +71,6 @@ export default function Login({ onSubmit }: Props) {
 
   const onSubmitForm = (e: React.FormEvent): void => {
     e.preventDefault();
-    console.log('로그인 시도:', userValues);
     onSubmit(userValues);
   };
 

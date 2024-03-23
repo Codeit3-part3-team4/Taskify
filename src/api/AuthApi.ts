@@ -1,6 +1,4 @@
 import { authInstance } from '@/utils/functionalFetch';
-import { error } from 'console';
-import { json } from 'stream/consumers';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
 const LOCAL_URL = 'http://localhost:3000';
@@ -27,10 +25,7 @@ export interface ChangePw {
   newPassword: string;
 }
 
-// 일반적일 때
-// export const loginApi = (userValues: LoginValues): UserValues => {
 // 로그인
-// 비동기적일 때
 export const loginApi = async (userValues: LoginValues): Promise<UserValues> => {
   const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
     method: 'POST',
@@ -43,14 +38,11 @@ export const loginApi = async (userValues: LoginValues): Promise<UserValues> => 
     .then(res => res.json())
     .then(data => {
       if (data.accessToken) {
-        console.log('data', data);
         return data;
       } else {
         return data.message;
       }
     });
-
-  console.log('로그인 성공', res);
   return res;
 };
 
@@ -67,10 +59,8 @@ export const changePasswordApi = async (newPasswordValue: ChangePw) => {
     })
     .then(res => {
       if (res.ok) {
-        console.log('비밀번호api 변경 성공');
         return res;
       } else if (res.status === 400) {
-        console.log(res.statusText);
         throw new Error('error');
       }
     })

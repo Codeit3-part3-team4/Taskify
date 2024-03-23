@@ -1,7 +1,7 @@
 import { UserSignUp } from '@/api/userApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface SignUpProps {
   onSubmit: (newUserValues: UserSignUp) => Promise<void>;
@@ -40,18 +40,9 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       ...newUserValues,
       [id]: value,
     });
-    // [id]: value, 값이 비동기적으로 적용이 돼서 validateForm(id);에 newUserValues 값이 늦게 들어감
-    // state 함수는 값을 세팅할 때 비동기적으로 일어나서 validateForm(id) 이 함수 실행보다 값이 늦게 반영
-    console.log(newUserValues);
+
     validateForm(id);
   };
-
-  /*
-  validateForm 사용시 라이브러리로 관리
-  zod.js
-  @hookform/resolvers
-  react-hook-form
-  */
 
   const validateForm = (id: 'email' | 'password' | 'nickname' | 'pwCheck' | string): boolean => {
     let isValid = true;
@@ -61,8 +52,6 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       nickname: '',
       pwCheck: '',
     };
-
-    console.log('validateForm 안 값,', newUserValues.password);
 
     const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!newUserValues.email || !emailCheck.test(newUserValues.email)) {
@@ -95,17 +84,12 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       });
     }
 
-    console.log(errors.nickname);
-
     setIsButton(isValid);
-    console.log('이즈버튼값', isButton);
-    console.log('약관동의값', isAgreed);
     return isValid && isAgreed;
   };
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('회원가입 시도:', newUserValues);
     onSubmit(newUserValues);
   };
 
@@ -127,18 +111,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
 
   const handleAgreedChange = () => {
     setIsAgreed(!isAgreed);
-    console.log('약관동의값', isAgreed);
   };
-
-  // useEffect(() => {
-  //   validateForm();
-  // }, [newUserValues]);
-  /*
-  validateForm('password'); 
-  setNewUsers 이게 비동기적으로 실행이 돼서 
-  validateForm('password'); 
-
-   */
 
   return (
     <div className="flex flex-col items-center t-[574px] ">

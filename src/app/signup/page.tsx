@@ -21,11 +21,8 @@ export default function SignUpPage() {
         alert('가입이 완료되었습니다');
         router.push('/login');
       } else if (res.status === 409) {
-        console.log('회원가입페이지 409');
         setIsModalOpen(true);
-        console.log('모달켜짐');
       }
-      console.log('res' + res);
     } catch (error) {
       console.error('회원가입 페이지 실패:', error);
     }
