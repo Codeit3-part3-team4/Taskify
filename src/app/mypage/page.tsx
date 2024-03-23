@@ -29,7 +29,8 @@ export default function MyPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [isSaveModalOpen, setIsSaveModalOpen] = useState<boolean>(false);
-  const [isPwModalOpen, setIsPwModalOpen] = useState<boolean>(false);
+  const [isPwSaveModalOpen, setIsPwSaveModalOpen] = useState<boolean>(false);
+  const [isFailPwSaveModalOpen, setIsFailPwSaveModalOpen] = useState<boolean>(false);
 
   const handleGoBack = () => {
     router.back();
@@ -62,9 +63,12 @@ export default function MyPage() {
       const res = await changePasswordApi(changePassword);
       console.log('지금 추가', JSON.stringify(changePassword));
       console.log(JSON.stringify(res));
-
-      console.log('비밀번호 변경 성공:', res);
-      setIsPwModalOpen(true);
+      if (res) {
+        console.log('비밀번호 변경 성공:', res);
+        setIsPwSaveModalOpen(true);
+      } else {
+        setIsFailPwSaveModalOpen(true);
+      }
     } catch (error) {
       console.error('비밀번호 변경 실패', error);
     }
@@ -90,8 +94,11 @@ export default function MyPage() {
   const closeSaveModal = () => {
     setIsSaveModalOpen(false);
   };
-  const closePwModal = () => {
-    setIsPwModalOpen(false);
+  const closeFailPwSaveModal = () => {
+    setIsFailPwSaveModalOpen(false);
+  };
+  const closePwSaveModal = () => {
+    setIsPwSaveModalOpen(false);
   };
 
   if (loading) {
@@ -115,7 +122,8 @@ export default function MyPage() {
                 <MyProfile onSubmit={handleUpdateUserSubmit} onChangeProfileImg={handleChangeProfileImg} />
                 {isSaveModalOpen && <Modal isOpen={isSaveModalOpen} onClose={closeSaveModal} title="My Page" children="프로필 저장 완료" />}
                 <MyPassword onSubmit={handleChangePassword} />
-                {isPwModalOpen && <Modal isOpen={isPwModalOpen} onClose={closePwModal} title="My Page" children="비밀번호 변경 완료" />}
+                {isPwSaveModalOpen && <Modal isOpen={isPwSaveModalOpen} onClose={closePwSaveModal} title="My Page" children="비밀번호 변경 완료" />}
+                {isFailPwSaveModalOpen && <Modal isOpen={isFailPwSaveModalOpen} onClose={closeFailPwSaveModal} title="My Page" children="비밀번호 변경 실패" />}
               </div>
             </div>
           </Layout>

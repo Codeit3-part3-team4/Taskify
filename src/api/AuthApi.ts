@@ -1,4 +1,5 @@
 import { authInstance } from '@/utils/functionalFetch';
+import { error } from 'console';
 import { json } from 'stream/consumers';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
@@ -42,9 +43,10 @@ export const loginApi = async (userValues: LoginValues): Promise<UserValues> => 
     .then(res => res.json())
     .then(data => {
       if (data.accessToken) {
+        console.log('data', data);
         return data;
       } else {
-        alert(data.message);
+        return data.message;
       }
     });
 
@@ -66,7 +68,9 @@ export const changePasswordApi = async (newPasswordValue: ChangePw) => {
     .then(res => {
       if (res.ok) {
         console.log('비밀번호api 변경 성공');
+        return res;
       } else if (res.status === 400) {
+        console.log(res.statusText);
         throw new Error('error');
       }
     })
@@ -74,6 +78,8 @@ export const changePasswordApi = async (newPasswordValue: ChangePw) => {
       console.log(error);
       return null;
     });
+
+  return res;
 };
 
 // request router handler

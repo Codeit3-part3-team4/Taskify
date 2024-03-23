@@ -103,6 +103,11 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
     } catch (error) {
       console.error('비밀번호 업뎃 실패:', error);
     }
+    setChangePassword({
+      password: '',
+      newPassword: '',
+    });
+    setPwCheck('');
   };
 
   const onBlur = (e: ChangeEvent<HTMLInputElement>) => {

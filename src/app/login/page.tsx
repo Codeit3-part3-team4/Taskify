@@ -5,6 +5,8 @@ import MainLogo from '@/components/login/MainLogo';
 import { useRouter } from 'next/navigation';
 import { authInstance } from '@/utils/functionalFetch';
 import Login, { Login as LoginProps } from './(components)/Login';
+import { useState } from 'react';
+import Modal from '@/components/Modal/Modal';
 
 interface UserValues {
   email: string;
@@ -13,6 +15,9 @@ interface UserValues {
 
 export default function LoginPage() {
   const router = useRouter();
+  const [isFailLoginModalOpen, setIsFailLoginModalOpen] = useState<boolean>(false);
+  const [isModalMessage, setIsModalMessage] = useState<string>('');
+
   const handleLoginSubmit = async (userValues: UserValues): Promise<void> => {
     const res = await loginApi(userValues);
     console.log('로그인페이지 시도:' + res);
@@ -25,7 +30,15 @@ export default function LoginPage() {
       });
       postRequestCookies('accessToken', res.accessToken);
       router.push('/dashboard/mydashboard');
+    } else {
+      console.log('resssssssssssss', res);
+      setIsModalMessage(res);
+      setIsFailLoginModalOpen(true);
     }
+  };
+
+  const closeFailLoginModal = () => {
+    setIsFailLoginModalOpen(false);
   };
 
   const url = '/images/mokoko-bg.png';
@@ -35,6 +48,7 @@ export default function LoginPage() {
       <div style={{ backgroundImage: `url(${url})`, opacity: '0.3', backgroundSize: 'cover', backgroundRepeat: 'repeat', backgroundPosition: 'center' }} />
       <MainLogo title={'오늘도 만나서 반가워요!'} />
       <Login onSubmit={handleLoginSubmit} />
+      {isFailLoginModalOpen && <Modal isOpen={isFailLoginModalOpen} onClose={closeFailLoginModal} title="Login" children={isModalMessage} />}
     </div>
   );
 }
