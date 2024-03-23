@@ -1,4 +1,4 @@
-# 📚 코드잇 스프린트 3기 4팀 Taskify
+# 📚 코드잇 스프린트 3기 4팀 Taskimo
 
 
 
@@ -86,6 +86,7 @@
 - IntersectionObserver 이용한 함수 실행 커스텀훅
 > SideDashboardList
 - 대시보드리스트 불러오기, 다른 섹션과 스크롤 공간 분리를 위한 css 작업
+- react-dnd를 이용한 드래그앤 드롭 기능 구현
 > DashboardContext
 - ContextApi로 DashboardData 관리하여 SideDashboard와 MydashboardSection 실시간 재랜더링
 </br>
