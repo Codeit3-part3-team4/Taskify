@@ -56,14 +56,14 @@
 
 ###  🙍‍♂️오영곤
 
-## 랜딩 페이지, 대시보드수정 페이지
+## 📖 랜딩 페이지, 대시보드수정 페이지
 - 랜딩 페이지에 intersection observer를 사용하여 스크롤위치에 따라 페이지 요소들의 애니메이션 동작을 보여줌
 - 대시보드 이름 및 색상 변경 및 대시보드 삭제하기 기능
 - 대시보드에 멤버 구성원 초대 및 초대 취소 구현
 - 대시보드 멤버 삭제 기능 구현
 - 대시보드 Layout을 구현하여 sidebar와 navigation영역을 layout영역으로 넣어 dashboard관련 page들이 layout을 공유하도록 구현
 
-## 기능
+## ⭐ 기능
 > Fetch Interceptor 구현
 - 내부적으로 fetch 동작을 수행하는 fetch instance를 생성하고 accessToken및 fetch시 RequestInit 옵션 설정등을 미리 셋팅 해놓고 fetch api를 호출할때
 셋팅된 options을 이용해 fetch 동작을 할 수 있도록 구현 
