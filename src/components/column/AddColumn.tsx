@@ -92,7 +92,7 @@ const AddColumn: React.FC<AddColumnProps> = ({ dashboardId }) => {
               <button type="button" className="btn w-32 text-gray-400" onClick={closeModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 bg-primary-BASIC text-white" disabled={isSubmitDisabled}>
+              <button type="submit" className="w-32 bg-primary-BASIC rounded-md text-white" disabled={isSubmitDisabled}>
                 생성
               </button>
             </div>

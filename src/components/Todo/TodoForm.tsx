@@ -241,7 +241,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
               <button type="button" className="btn w-32 text-gray-500" onClick={handleCloseModal}>
                 취소
               </button>
-              <button type="submit" className="btn w-32 bg-primary-BASIC text-white" disabled={!isFormValid()}>
+              <button type="submit" className="w-32 bg-primary-BASIC rounded-md text-white" disabled={!isFormValid()}>
                 생성
               </button>
             </div>

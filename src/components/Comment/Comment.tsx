@@ -100,7 +100,7 @@ const Comments = ({ cardId, columnId, dashboardId }: Props) => {
           onKeyDown={handleKeyPress}
           placeholder="댓글 작성하기"
         />
-        <button className="absolute w-20 right-10 bottom-3 btn btn-sm btn-outline bg-primary-BASIC text-white" onClick={handleAddComment}>
+        <button className="absolute w-20 right-10 bottom-3 btn-sm bg-primary-BASIC rounded-md text-white" onClick={handleAddComment}>
           입력
         </button>
       </div>
@@ -129,10 +129,10 @@ const Comments = ({ cardId, columnId, dashboardId }: Props) => {
                 <div>
                   <input type="text" value={editContent} onChange={e => setEditContent(e.target.value)} className="input input-bordered" autoFocus />
                   <div className="flex space-x-2 mt-2">
-                    <button className="btn btn-xs btn-primary" onClick={() => handleEditComment(comment.id, editContent)}>
+                    <button className="btn-xs bg-primary-BASIC rounded-md text-white" onClick={() => handleEditComment(comment.id, editContent)}>
                       저장
                     </button>
-                    <button className="btn btn-xs btn-accent" onClick={cancelEdit}>
+                    <button className="btn btn-xs text-gray-400" onClick={cancelEdit}>
                       취소
                     </button>
                   </div>
@@ -141,10 +141,10 @@ const Comments = ({ cardId, columnId, dashboardId }: Props) => {
                 <div>
                   <p onClick={() => startEdit(comment)}>{comment.content}</p>
                   <div className="flex space-x-2 mt-2">
-                    <button className="btn btn-xs btn-outline btn-accent" onClick={() => startEdit(comment)}>
+                    <button className="btn-xs bg-primary-BASIC rounded-md text-white" onClick={() => startEdit(comment)}>
                       수정
                     </button>
-                    <button className="btn btn-xs btn-outline btn-error" onClick={() => handleDeleteComment(comment.id)}>
+                    <button className="btn-xs bg-red-400 rounded-md text-white" onClick={() => handleDeleteComment(comment.id)}>
                       삭제
                     </button>
                   </div>
