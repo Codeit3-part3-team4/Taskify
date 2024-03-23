@@ -5,7 +5,7 @@ import { useId } from 'react';
 import { searchParamsProps } from '../page';
 import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
-import { LinkText, LinkImage } from './LinkComponents';
+import { LinkImage, LinkText } from './LinkComponents';
 import InviteModal from './InviteModal';
 import { redirect } from 'next/navigation';
 
