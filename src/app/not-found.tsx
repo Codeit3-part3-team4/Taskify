@@ -21,7 +21,7 @@ export default function notFound() {
           이전 페이지
         </button>
         <Link href="/">
-          <button className="w-44 h-14 border border-gray_D9D9D9 rounded-lg bg-purple-760DDE hover:bg-violet-5534DA text-white" type="button">
+          <button className="w-44 h-14 border border-gray_D9D9D9 rounded-lg bg-purple-760DDE hover:bg-primary-BASIC text-white" type="button">
             메인으로 가기
           </button>
         </Link>
