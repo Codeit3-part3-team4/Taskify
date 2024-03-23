@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function MainLogo({ title }) {
+interface Props {
+  title: string;
+}
+export default function MainLogo({ title }: Props) {
   return (
     <div className="flex flex-col justify-center items-center">
       <Link href={'/'}>
@@ -12,7 +15,3 @@ export default function MainLogo({ title }) {
     </div>
   );
 }
-
-/**
- * mt-[108px] md:mt-[0px] lg:mt-[153px]
- */

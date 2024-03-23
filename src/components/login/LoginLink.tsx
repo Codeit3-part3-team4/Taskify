@@ -1,6 +1,11 @@
 import Link from 'next/link';
 
-export default function LoginLink({ sentence, linktitle, link }) {
+interface Props {
+  sentence: string;
+  linktitle: string;
+  link: string;
+}
+export default function LoginLink({ sentence, linktitle, link }: Props) {
   return (
     <div className="flex gap-2 text-base leading-[19px]">
       {sentence}
