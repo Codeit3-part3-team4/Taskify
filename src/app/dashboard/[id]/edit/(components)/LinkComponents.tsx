@@ -22,7 +22,7 @@ export const LinkImage = ({ options, pathname, query, children }: LinkImageProps
 export const LinkText = ({ options, pathname, query, children }: LinkImageProps) => {
   return (
     <Link
-      className={`${options} flex justify-center items-center h-7 px-3 py-2 rounded border border-gray-D9D9D9 text-xs text-violet-5534DA hover:bg-gray-D9D9D9`}
+      className={`${options} flex justify-center items-center h-7 px-3 py-2 rounded border bg-white border-gray-D9D9D9 text-xs text-violet-5534DA hover:bg-gray-D9D9D9`}
       href={{ pathname: pathname, query: query }}
     >
       {children}

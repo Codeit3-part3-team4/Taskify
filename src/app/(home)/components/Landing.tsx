@@ -99,8 +99,8 @@ export default function Landing() {
         ref={panelRef}
       >
         <div className="flex flex-col w-full items-center md:items-start md:p-14 mt-16 md:mt-0 2xl:pt-32 transition-all duration-1000" ref={titleRef}>
-          <span className="text-5xl text-gray_9FA6B2 mb-20">{title}</span>
-          <strong className="text-7xl text-center md:text-start">
+          <span className="text-3xl md:text-5xl text-gray_9FA6B2 mb-20">{title}</span>
+          <strong className="text-5xl md:text-7xl text-center md:text-start">
             {desc}
             <br />
             {desc2}
@@ -131,16 +131,18 @@ export default function Landing() {
         <section className="mb-16 bg-gray-300/50 text-black">
           <MainThumb title="👍 첫번째!!" desc="일의 우선순위를" desc2="관리하세요">
             <div className="flex flex-row justify-end items-end w-full">
-              <div className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} />
+              <img className={`w-296 h-248 rounded-lg overflow-hidden bg-white md:w-519 md:h-435 2xl:w-594 2xl:h-497`} src={'/images/thumb_1.png'} />
             </div>
           </MainThumb>
         </section>
         <section className="mb-24 bg-gray-300/50 text-black">
           <MainThumb title="✌ 두번째!!" desc="해야 할 일을" desc2="등록하세요" options="2xl:flex-row-reverse">
             <div className="flex flex-row justify-end items-end w-full 2xl:justify-start">
-              <div className={`w-217 h-250 rounded-lg overflow-hiddenmd:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`}>
-                <Image src={'/images/todoimage.png'} alt="할 일 이미지" width={500} height={500} className="object-cover" />
-              </div>
+              <img
+                className={`w-217 h-250 rounded-lg overflow-hidden bg-white md:w-360 md:h-415 2xl:w-436 2xl:h-502 2xl:ml-28`}
+                src={'/images/thumb_2.png'}
+                alt="할 일 이미지"
+              />
             </div>
           </MainThumb>
         </section>
@@ -151,17 +153,17 @@ export default function Landing() {
           <div className="2xl:flex 2xl:flex-row 2xl:justify-between 2xl:w-1200">
             <div className="mb-10">
               <MiniThumb title="대시보드" desc="대시보드 사진과 이름을 변경할 수 있어요.">
-                <div className="w-64 h-24 rounded overflow-hidden bg-white md:w-72 md:h-32"></div>
+                <img className="w-64 h-24 rounded overflow-hidden bg-white md:w-72 md:h-32" src={'/images/thumb_3.png'} />
               </MiniThumb>
             </div>
             <div className="mb-10">
               <MiniThumb title="초대" desc="새로운 팀원을 초대할 수 있어요.">
-                <div className="w-64 h-48 rounded overflow-hidden bg-white md:w-72 md:h-56"></div>
+                <img className="w-64 h-48 rounded overflow-hidden bg-white md:w-72 md:h-56" src={'/images/thumb_4.png'} />
               </MiniThumb>
             </div>
             <div>
               <MiniThumb title="구성원" desc="구성원을 초대하고 내보낼 수 있어요.">
-                <div className="w-64 h-40 rounded overflow-hidden bg-white md:w-72 md:h-48"></div>
+                <img className="w-64 h-40 rounded overflow-hidden bg-white md:w-72 md:h-48" src={'/images/thumb_5.png'} />
               </MiniThumb>
             </div>
           </div>

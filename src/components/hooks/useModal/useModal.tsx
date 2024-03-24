@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import  { useState } from 'react';
 
 export const useModal = (initialState = false) => {
   // 모달의 열림/닫힘 상태를 관리하는 state
@@ -9,7 +9,9 @@ export const useModal = (initialState = false) => {
   const openModal = () => setIsOpen(true);
 
   // 모달을 닫기 위한 함수
-  const closeModal = (e?: React.MouseEvent | Event) => {
+
+  const closeModal = (e?: any) => {
+
     e?.stopPropagation();
     setIsOpen(false);
   };

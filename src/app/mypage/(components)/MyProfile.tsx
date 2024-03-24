@@ -112,7 +112,9 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
                   <div className="font-semibold">이메일</div>
                   <input
                     value={userInfo.email}
+                    readOnly
                     className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4 text-gray-9FA6B2"
+                    autoComplete="on"
                   />
                 </div>
                 <div className="mt-4 md:mt-5">
@@ -127,6 +129,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
                         value={updateUserValues.nickname}
                         onChange={onChangeUpdateUserValues}
                         className="w-[244px] md:w-[290px] lg:w-[366px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                        autoComplete="on"
                       />
                     </div>
                   </form>
