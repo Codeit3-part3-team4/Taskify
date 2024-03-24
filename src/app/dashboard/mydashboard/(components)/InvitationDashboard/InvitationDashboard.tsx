@@ -11,7 +11,7 @@ import Image from 'next/image';
 export default function InvitationDashboard() {
   const [processedInvitations, setProcessedInvitations] = useState<Invitation[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const cursorIdRef = useRef<number | null>(null);
   const hasNotNext = processedInvitations.length !== 0 && !cursorIdRef.current;
 
