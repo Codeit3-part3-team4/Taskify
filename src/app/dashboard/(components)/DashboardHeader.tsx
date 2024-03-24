@@ -83,7 +83,7 @@ export const FunctionalHeader = () => {
     });
   }, []);
 
-  if (pathname.split('/').includes('mydashboard') || ownerId !== myProfile?.id) return;
+  if (pathname.split('/').includes('mydashboard')) return;
 
   if (membersInf === undefined) return;
   const editPage = pathname.split('/').includes('edit') ? '' : '/edit';
