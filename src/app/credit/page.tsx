@@ -89,13 +89,13 @@ export default function Credit() {
               <div className="flex flex-col items-center  text-4xl ml-10">
                 <div className="text-5xl text-primary-BASIC">구현 컴포넌트</div>
                 <div className="flex flex-col items-center mt-2 gap-3">
-                  <div>모달 구현</div>
+                  <div>모달, 댓글 구현</div>
                 </div>
                 <div className="text-5xl text-primary-BASIC mt-5">구현 기능</div>
                 <div className="flex flex-col items-center mt-2 gap-3">
-                  <div>할일 모달 확인,생성,수정</div>
+                  <div>모달 확인,생성,수정</div>
                   <div>댓글 추가,삭제,수정</div>
-                  <div>칼럼 모달 생성,삭제,수정</div>
+                  <div>ImageUpload 구현</div>
                 </div>
               </div>
             </div>
@@ -116,13 +116,13 @@ export default function Credit() {
                 <div className="text-5xl text-primary-BASIC">구현 페이지</div>
                 <div className="flex flex-col items-center mt-2 gap-3">
                   <div>랜딩</div>
-                  <div>대시보드수정</div>
+                  <div>대시보드 수정</div>
                 </div>
                 <div className="text-5xl text-primary-BASIC mt-5">구현 기능</div>
                 <div className="flex flex-col items-center mt-2 gap-3">
                   <div>Fetch Interceptor</div>
                   <div>3D View + iframe 렌딩페이지</div>
-                  <div>레이아웃</div>
+                  <div>Redirection 구현</div>
                 </div>
               </div>
             </div>
@@ -150,8 +150,8 @@ export default function Credit() {
                 <div className="flex flex-col items-center mt-2 gap-3">
                   <div>초대목록 검색</div>
                   <div>초대 리스트 무한스크롤</div>
-                  <div>대시보드간 위치 변경</div>
-                  <div>실시간 재랜더링</div>
+                  <div>대시보드 드래그앤드롭</div>
+                  <div>Context API를 이용한 실시간 재랜더링</div>
                   <div>레이아웃과 구분된 사이드 바</div>
                 </div>
               </div>
