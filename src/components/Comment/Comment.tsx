@@ -29,7 +29,7 @@ const Comments = ({ cardId, columnId, dashboardId }: Props) => {
   useEffect(() => {
     const loadComments = async () => {
       try {
-        const { comments: commentsData, cursorId } = await fetchComments(cardId);
+        const { comments: commentsData } = await fetchComments(cardId);
 
         if (Array.isArray(commentsData)) {
           setComments(commentsData);

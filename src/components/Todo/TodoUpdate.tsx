@@ -3,33 +3,21 @@ import Modal from '@/components/Modal/Modal';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { getMembersApi } from '@/api/membersApi';
+import { Member, getMembersApi } from '@/api/membersApi';
 import { getColumnListApi } from '@/api/columnApi';
 import { editCardApi } from '@/api/cardApi';
+import { CardDetails } from './TodoCard';
+import { CardForm } from './TodoForm';
 
 interface Status {
-  id: string;
+  id: number;
   title: string;
-}
-
-interface Member {
-  id: string;
-  userId: string;
-  nickname: string;
 }
 
 interface TodoUpdateProps {
   isOpen: boolean;
   cardId: number;
-  cardDetails: {
-    assigneeUserId: string;
-    columnId: string;
-    title: string;
-    description: string;
-    deadline: Date;
-    tags: [];
-    selectedImage?: string;
-  };
+  cardDetails: CardDetails | null;
   closeModal: () => void;
   dashboardId: number;
   columnId: number;
@@ -37,28 +25,31 @@ interface TodoUpdateProps {
 
 const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal, dashboardId, columnId, cardId }) => {
   const [statuses, setStatuses] = useState<Status[]>([]);
-  const [selectedStatus, setSelectedStatus] = useState<string>(cardDetails ? cardDetails.columnId : '');
-  const [selectedAssignee, setSelectedAssignee] = useState<string>(cardDetails ? cardDetails.assigneeUserId : '');
+  const [selectedStatus, setSelectedStatus] = useState<number>(cardDetails ? cardDetails.columnId : 0);
+  const [selectedAssignee, setSelectedAssignee] = useState<number>(cardDetails ? cardDetails.assigneeUserId : 0);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    assigneeUserId: '',
+  const [formData, setFormData] = useState<CardForm>({
+    assigneeUserId: 0,
+    dashboardId: 0,
+    columnId: 0,
     title: '',
     description: '',
-    deadline: new Date(),
+    dueDate: new Date(),
     tags: [],
-    selectedImage: '',
   });
   const [members, setMembers] = useState<Member[]>([]);
 
   useEffect(() => {
     if (cardDetails) {
       setFormData({
-        assigneeUserId: cardDetails.assigneeUserId || '',
+        assigneeUserId: cardDetails.assigneeUserId || 0,
+        dashboardId: cardDetails.dashboardId || 0,
+        columnId: cardDetails.columnId || 0,
         title: cardDetails.title || '',
         description: cardDetails.description || '',
-        deadline: cardDetails.deadline ? new Date(cardDetails.deadline) : new Date(),
+        dueDate: cardDetails.dueDate ? new Date(cardDetails.dueDate) : new Date(),
         tags: cardDetails.tags || [],
-        selectedImage: cardDetails.selectedImage || '',
+        imageUrl: cardDetails.imageUrl || '',
       });
     }
   }, [cardDetails]);
@@ -105,24 +96,27 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSelectStatus = (statusId: string): void => {
+  const handleSelectStatus = (statusId: number): void => {
     setSelectedStatus(statusId);
     setFormData({ ...formData, columnId: statusId });
   };
 
-  const handleSelectAssignee = (userId: string): void => {
+  const handleSelectAssignee = (userId: number): void => {
     setSelectedAssignee(userId);
     setFormData({ ...formData, assigneeUserId: userId });
   };
 
-  const handleImageUpload = (imageUrl: string): void => {
-    setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
+  const handleImageUpload = (imageUrl: string | null): void => {
+    setFormData(prev => ({
+      ...prev,
+      imageUrl: imageUrl !== null ? imageUrl : prev.imageUrl,
+    }));
   };
 
   const isFormValid = () => {
-    const { assigneeUserId, title, description, deadline, tags } = formData;
+    const { assigneeUserId, title, description, dueDate, tags } = formData;
 
-    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
+    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!dueDate && tags.length > 0;
   };
 
   const handleSubmit = async (e: any) => {
@@ -135,21 +129,20 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
 
     setIsUpdating(true);
 
-    const formattedDeadline = formData.deadline.toISOString().slice(0, 16).replace('T', ' ');
+    const formattedDeadline = formData.dueDate.toISOString().slice(0, 16).replace('T', ' ');
 
     const formattedTags = formData.tags.map(tag => tag.trim());
 
     const cardData = {
-      columnId: parseInt(selectedStatus),
-      assigneeUserId: parseInt(selectedAssignee),
+      columnId: selectedStatus,
+      assigneeUserId: selectedAssignee,
       title: formData.title,
       description: formData.description,
       dueDate: formattedDeadline,
       tags: formattedTags,
-      ...(formData.selectedImage && { imageUrl: formData.selectedImage }),
+      ...(formData.imageUrl && { imageUrl: formData.imageUrl }),
     };
-    console.log('Card data:', cardData);
-
+    console.log(formData.imageUrl);
     try {
       await editCardApi(cardId, cardData);
       closeModal();
@@ -201,14 +194,14 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
                     <div tabIndex={0} className="dropdown">
                       {members && members.length > 0 && (
                         <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white">
-                          {members.find(member => member.userId.toString() === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
+                          {members.find(member => member.userId === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
                           <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
                         </label>
                       )}
                       {members && members.length > 0 && (
                         <ul tabIndex={0} className="dropdown-content menu p-2 bg-base-100 rounded-box w-52">
                           {members.map(member => (
-                            <li key={member.id} onClick={() => handleSelectAssignee(member.userId.toString())}>
+                            <li key={member.id} onClick={() => handleSelectAssignee(member.userId)}>
                               <a>{member.nickname}</a>
                             </li>
                           ))}
@@ -252,10 +245,10 @@ const TodoUpdate: React.FC<TodoUpdateProps> = ({ isOpen, cardDetails, closeModal
               <DatePicker
                 className="input input-bordered w-3/4 mb-3"
                 dateFormat="YYYY-MM-dd"
-                selected={formData.deadline}
+                selected={formData.dueDate}
                 onChange={date => {
                   if (date) {
-                    setFormData(prev => ({ ...prev, deadline: date }));
+                    setFormData(prev => ({ ...prev, dueDate: date }));
                   }
                 }}
               />
