@@ -1,7 +1,7 @@
 import { authInstance } from '@/utils/functionalFetch';
 
 const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const LOCAL_URL = 'http://localhost:3000';
+const DEPLOY_URL = 'https://taskimo.vercel.app/';
 
 export interface UserValues {
   accessToken: string;
@@ -74,7 +74,7 @@ export const changePasswordApi = async (newPasswordValue: ChangePw) => {
 
 // request router handler
 export const postRequestCookies = async (key: string, value: string) => {
-  const response = await fetch(`${LOCAL_URL}/api/cookies`, {
+  const response = await fetch(`${DEPLOY_URL}/api/cookies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export const postRequestCookies = async (key: string, value: string) => {
 };
 
 export const getRequestCookies = async (key: string) => {
-  const response = await fetch(`${LOCAL_URL}/api/cookies?key=${encodeURIComponent(key)}`, {
+  const response = await fetch(`${DEPLOY_URL}/api/cookies?key=${encodeURIComponent(key)}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
