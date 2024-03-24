@@ -142,6 +142,7 @@ export const deleteColumnApi = async (columnId: number) => {
 
 // 카드 이미지 업로드
 export const uploadCardImage = async (columnId: number, imageFile: File) => {
+  authInstance.clearContentType();
   const formData = new FormData();
   formData.append('image', imageFile);
   try {
