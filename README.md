@@ -15,7 +15,7 @@
 
 ## 👉🏻 멤버 소개 및 역할
 
-| <img width="100"  alt="image" src="https://github.com/Codeit3-part3-team4/Taskify/assets/126558640/6d4f4d70-1b3d-4d69-9170-60e848102c88"> | <img width="100" alt="image" src="https://avatars.githubusercontent.com/u/129745640?v=4"> | <img width="100" alt="image" src='https://avatars.githubusercontent.com/u/68732996?v=4'> | <img width="100"  alt="image" src="https://github.com/Codeit3-part3-team4/Taskify/assets/126558640/0932792e-f5de-412b-940f-5c3c8b94f6c8"> | <img width="100" alt="image" src="https://avatars.githubusercontent.com/u/126558640?v=4"> |
+| <img width="100"  alt="image" src="https://github.com/Codeit3-part3-team4/Taskify/assets/126558640/6d4f4d70-1b3d-4d69-9170-60e848102c88"> | <img width="100" alt="image" src="https://avatars.githubusercontent.com/u/129745640?v=4"> | <img width="100" alt="image" src='https://avatars.githubusercontent.com/u/68732996?v=4'> | <img width="100"  alt="image" src="https://github.com/2zzzyoung/OpenMind/assets/107063304/e6238048-4683-40ad-b147-80cf26b58ae8"> | <img width="100" alt="image" src="https://avatars.githubusercontent.com/u/126558640?v=4"> |
 | :-: | :-: | :-: | :-: | :-: |
 | [김선영](https://github.com/kimsuns) | [김성훈](https://github.com/huniiiiii) | [오영곤](https://github.com/ohddang) | [이주영](https://github.com/2zzzyoung) | [조현진](https://github.com/ahrrrl) |
 
