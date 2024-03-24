@@ -119,6 +119,7 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
                           placeholder={'현재 비밀번호 입력'}
                           onChange={onChangePasswordValues}
                           className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                          autoComplete="on"
                         />
                       </div>
                     </div>
@@ -135,6 +136,7 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
                           onChange={onChangePasswordValues}
                           onBlur={onBlur}
                           className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                          autoComplete="on"
                         />
                         <div className="text-sm">{errors.newPassword && <div style={{ color: 'red' }}>{errors.newPassword}</div>} </div>
                       </div>
@@ -152,6 +154,7 @@ const MyPassword: React.FC<MyPasswordProps> = ({ onSubmit }) => {
                           onChange={onChangePasswordckValues}
                           onBlur={onBlur}
                           className="w-[244px] md:w-[488px] lg:w-[564px] h-[42px] md:h-[48px] lg:h-[48px] mt-[10px] border-solid border-[1px] rounded-md text-sm md:text-base pl-4"
+                          autoComplete="on"
                         />
                         <div className="text-sm">{errors.newPwCheck && <div style={{ color: 'red' }}>{errors.newPwCheck}</div>} </div>
                       </div>
