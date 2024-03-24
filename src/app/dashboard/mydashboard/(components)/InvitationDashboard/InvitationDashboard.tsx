@@ -11,7 +11,7 @@ import Image from 'next/image';
 export default function InvitationDashboard() {
   const [processedInvitations, setProcessedInvitations] = useState<Invitation[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const cursorIdRef = useRef<number | null>(null);
   const hasNotNext = processedInvitations.length !== 0 && !cursorIdRef.current;
 
@@ -22,8 +22,6 @@ export default function InvitationDashboard() {
       }
       const { invitations, cursorId } = await getInvitationList(8, cursorIdRef.current, inputValue);
       cursorIdRef.current = cursorId;
-      if (!cursorId) {
-      }
       setProcessedInvitations(prevInvitations => [...prevInvitations, ...invitations]);
     } catch (error) {
       // 에러 처리
