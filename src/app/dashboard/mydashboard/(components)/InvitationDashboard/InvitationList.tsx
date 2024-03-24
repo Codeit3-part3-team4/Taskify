@@ -39,7 +39,7 @@ export default function InvitationList({ processedInvitations, setProcessedInvit
           </div>
           <div className="w-52 text-xs flex gap-2">
             <button
-              className="w-24 h-7 border border-gray-D9D9D9 rounded-lg bg-primary-BASIC hover:bg-primary-BASIC text-white"
+              className="w-24 h-7 border border-gray-D9D9D9 rounded-lg bg-primary-BASIC hover:scale-105 duration-300 text-white"
               onClick={() => handlePutInvitation(invitation.id, true)}
             >
               수락
