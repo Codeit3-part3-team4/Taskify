@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler, MouseEventHandler, useState } from 'react';
 import Image from 'next/image';
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
   placeholder: string;
   error?: string;
   onChange: ChangeEventHandler;
-  onBlur: ChangeEventHandler;
-  handlePasswordLook?: ChangeEventHandler;
+  onBlur: FocusEventHandler;
+  handlePasswordLook?: MouseEventHandler;
 }
 
 export default function InputUserInfo({ label, id, type, value, password, placeholder, error, onChange, onBlur, handlePasswordLook }: Props) {
@@ -20,9 +20,9 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
   const handleFocuse = () => {
     setIsFocused(true);
   };
-  const handleOnBlur = () => {
+  const handleOnBlur: FocusEventHandler = e => {
     setIsFocused(false);
-    onBlur({ id });
+    onBlur(e);
   };
   return (
     <div className="w-[351px] h-[77px] md:w-[520px] md:h-[77px]">
@@ -40,7 +40,8 @@ export default function InputUserInfo({ label, id, type, value, password, placeh
           onChange={onChange}
           onBlur={handleOnBlur}
           onFocus={handleFocuse}
-          className="w-full outline-none pl-4 bg-transparent"
+          className="w-full outline-none rounded-lg pl-4 bg-transparent"
+          autoComplete="on"
         />
         {password === true ? (
           <Image src="/images/password-eyes.svg" alt="비밀번호 표시" width={24} height={24} onClick={handlePasswordLook} className="mr-3" />

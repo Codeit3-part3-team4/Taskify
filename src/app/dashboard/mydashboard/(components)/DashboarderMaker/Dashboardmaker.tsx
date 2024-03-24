@@ -55,7 +55,7 @@ export default function DashboardMaker({ setIsModalOpen, closeModal }: Dashboard
           취소
         </button>
         <button
-          className="flex items-center justify-center w-32 h-12 px-11 py-3.5 border rounded-lg bg-primary-BASIC text-white hover:bg-violet-5534DA"
+          className="flex items-center justify-center w-32 h-12 px-11 py-3.5 border rounded-lg bg-purple-760DDE text-white hover:bg-primary-BASIC"
           onClick={handleCreateDashboard}
         >
           생성

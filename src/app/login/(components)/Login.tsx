@@ -1,4 +1,3 @@
-import { UserValues } from '@/api/AuthApi';
 import InputUserInfo from '@/components/login/InputUserInfo';
 import LoginLink from '@/components/login/LoginLink';
 import { useState } from 'react';
@@ -29,16 +28,14 @@ export default function Login({ onSubmit }: Props) {
   const onChangeLoginSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     const value = e.target.value;
-    console.log(value);
     setUserValues({
       ...userValues,
       [id]: value,
     });
-    console.log(userValues);
     validateForm(id);
   };
 
-  const validateForm = (id: string): boolean => {
+  const validateForm = (id: 'email' | 'password' | string): boolean => {
     let isValid = true;
     const newErrors = {
       email: '',
@@ -74,11 +71,10 @@ export default function Login({ onSubmit }: Props) {
 
   const onSubmitForm = (e: React.FormEvent): void => {
     e.preventDefault();
-    console.log('로그인 시도:', userValues);
     onSubmit(userValues);
   };
 
-  const onBlur = (id: string): void => {
+  const onBlur = (id: 'email' | 'password'): void => {
     validateForm(id);
   };
 

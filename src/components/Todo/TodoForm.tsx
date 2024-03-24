@@ -61,7 +61,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
   };
 
-  const handleTagInputKeyDown = e => {
+  const handleTagInputKeyDown = (e: any) => {
     if (e.key === 'Enter' && e.target.value.trim() !== '') {
       e.preventDefault();
       const newTag = e.target.value.trim();
@@ -127,7 +127,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     }
   };
 
-  const handleSelectAssignee = userId => {
+  const handleSelectAssignee = (userId: any) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       assigneeUserId: userId,

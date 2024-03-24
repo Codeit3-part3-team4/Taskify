@@ -7,6 +7,13 @@ interface SignUpProps {
   onSubmit: (newUserValues: UserSignUp) => Promise<void>;
 }
 
+interface Error {
+  email: string;
+  password: string;
+  nickname: string;
+  pwCheck: string;
+}
+
 export default function SignUp({ onSubmit }: SignUpProps) {
   const [newUserValues, setNewUserValues] = useState<UserSignUp>({
     email: '',
@@ -15,7 +22,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
     pwCheck: '',
   });
 
-  const [errors, setErrors] = useState<UserSignUp>({
+  const [errors, setErrors] = useState<Error>({
     email: '',
     password: '',
     nickname: '',
@@ -33,13 +40,13 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       ...newUserValues,
       [id]: value,
     });
-    console.log(newUserValues);
+
     validateForm(id);
   };
 
-  const validateForm = (id: string): boolean => {
+  const validateForm = (id: 'email' | 'password' | 'nickname' | 'pwCheck' | string): boolean => {
     let isValid = true;
-    const newErrors: UserSignUp = {
+    const newErrors: Error = {
       email: '',
       password: '',
       nickname: '',
@@ -52,8 +59,9 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       isValid = false;
     }
 
-    if (newUserValues.nickname.length < 1) {
+    if (!newUserValues.nickname.length) {
       newErrors.nickname = '닉네임을 입력해 주세요.';
+      isValid = false;
     } else if (newUserValues.nickname.length > 10) {
       newErrors.nickname = '열 자 이하로 작성해 주세요.';
       isValid = false;
@@ -69,7 +77,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
       isValid = false;
     }
 
-    if (id) {
+    if (id === 'email' || id === 'password' || id === 'nickname' || id === 'pwCheck') {
       setErrors({
         ...errors,
         [id]: newErrors[id],
@@ -82,11 +90,10 @@ export default function SignUp({ onSubmit }: SignUpProps) {
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('회원가입 시도:', newUserValues);
     onSubmit(newUserValues);
   };
 
-  const onBlur = (id: string): void => {
+  const onBlur = (id: 'email' | 'password' | 'nickname' | 'pwCheck'): void => {
     validateForm(id);
   };
 
@@ -172,7 +179,7 @@ export default function SignUp({ onSubmit }: SignUpProps) {
           type="submit"
           onClick={onSubmitForm}
           disabled={!isButton || !isAgreed}
-          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isButton && isAgreed ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
+          className={`rounded-[8px] w-full h-[50px] py-3 overflow-hidden  text-white top-[764px] mt-5 mb-6 ${isAgreed && isButton ? 'bg-primary-BASIC' : 'bg-gray-400'}`}
         >
           가입하기
         </button>

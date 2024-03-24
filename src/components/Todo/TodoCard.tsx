@@ -95,7 +95,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
               <div className="bg-blue-500 text-blue-300 w-50 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3">{columnTitle}</div>
 
               <div className="text-gray-300">|</div>
-              {card.tags.map((item, index) => (
+              {card.tags.map((item: any, index: any) => (
                 <div
                   key={index}
                   className="bg-blue-AFDDFA text-white inline-block rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3 md:mr-3.5"
