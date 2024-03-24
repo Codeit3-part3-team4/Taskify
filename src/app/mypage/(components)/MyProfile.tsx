@@ -44,31 +44,26 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
 
   const handleProfileImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return file;
+    if (!file) return;
 
     setUpdateProfileImg(file);
     const reader = new FileReader();
+    reader.readAsDataURL(file);
 
-    const readerPromise = new Promise(resolve => {
-      reader.onloadend = () => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(file);
-    });
-
+    reader.onloadend = () => {
+      const value = reader.result;
+    };
     const imageUrl = await onChangeProfileImg(file);
-
-    const [imageDataUrl] = await Promise.all([readerPromise, imageUrl]);
     setUpdateUserValues({
       ...updateUserValues,
-      profileImageUrl: imageDataUrl,
+      profileImageUrl: imageUrl,
     });
   };
 
   const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.reload();
     onSubmit(updateUserValues);
+    window.location.reload();
   };
 
   const handleBasicProfileImg = () => {
