@@ -8,6 +8,21 @@ const inter = Gamja_Flower({ weight: '400', subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'TaskiMo',
   description: '새로운 일정 관리 TaskiMo로 시작하세요!',
+  openGraph: {
+    title: 'TaskiMo',
+    description: '새로운 일정 관리 TaskiMo로 시작하세요!',
+    type: 'website',
+    locale: 'ko_KR',
+    url: 'https://taskimo.vercel.app',
+    images: [
+      {
+        url: '/images/mokoko-bg.png',
+        width: 1200,
+        height: 630,
+        alt: 'TaskiMo',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
