@@ -14,7 +14,6 @@ export interface ColumnList {
   createdAt: string;
   updatedAt: string;
 }
-[];
 
 export interface EditColumn {
   title: string;
