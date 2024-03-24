@@ -95,6 +95,7 @@ export const updateUserProfileImgApi = async (imageFile: File) => {
   formData.append('image', imageFile);
   console.log('데이터확인 : ' + JSON.stringify(imageFile));
   try {
+    authInstance.clearContentType();
     const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me/image`, {
       method: 'POST',
       headers: {
