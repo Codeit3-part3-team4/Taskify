@@ -1,10 +1,10 @@
 'use client';
 import GetCard from '../getCard/GetCard';
-import { Card, getCardListApi } from '@/api/cardApi';
+import { Card, getCardListApi } from '../../api/cardApi';
 import React, { useRef, useState } from 'react';
 import TodoForm from '../Todo/TodoForm';
 import EditColumn from './EditColumn';
-import useIntersectionObserver from '@/components/hooks/useObserver/useIntersectionObserver';
+import useIntersectionObserver from '../../components/hooks/useObserver/useIntersectionObserver';
 
 interface ColumnProps {
   columnId: number;

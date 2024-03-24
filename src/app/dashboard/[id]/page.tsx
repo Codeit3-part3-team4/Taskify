@@ -1,9 +1,9 @@
 'use client';
-import { ColumnList, getColumnListApi } from '@/api/columnApi';
-import AddColumn from '@/components/column/AddColumn';
-import Column from '@/components/column/Column';
-import { useModal } from '@/components/hooks/useModal/useModal';
-import { DashboardContext } from '@/context/DashboardContext';
+import { ColumnList, getColumnListApi } from '../../../api/columnApi';
+import AddColumn from '../../../components/column/AddColumn';
+import Column from '../../../components/column/Column';
+import { useModal } from '../../../components/hooks/useModal/useModal';
+import { DashboardContext } from '../../../context/DashboardContext';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
