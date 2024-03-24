@@ -6,8 +6,8 @@ import React from 'react';
 const inter = Gamja_Flower({ weight: '400', subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Taskify',
-  description: '새로운 일정 관리 Taskify로 시작하세요!',
+  title: 'TaskiMo',
+  description: '새로운 일정 관리 TaskiMo로 시작하세요!',
 };
 
 export default function RootLayout({
