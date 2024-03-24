@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { UpdateUserInfo } from '../page';
 import { Url } from 'next/dist/shared/lib/router/router';
+import { resolve } from 'path';
 
 interface MyProfileProps {
   onSubmit: (value: UpdateUserInfo) => void;
@@ -62,6 +63,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
   const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(updateUserValues);
+    window.location.reload();
   };
 
   const handleBasicProfileImg = () => {
