@@ -61,6 +61,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
 
   const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
+    window.location.reload();
     onSubmit(updateUserValues);
   };
 
