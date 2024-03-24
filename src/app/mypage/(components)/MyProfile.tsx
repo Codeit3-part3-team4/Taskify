@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { UpdateUserInfo } from '../page';
 import { Url } from 'next/dist/shared/lib/router/router';
+import { resolve } from 'path';
 
 interface MyProfileProps {
   onSubmit: (value: UpdateUserInfo) => void;
@@ -43,19 +44,24 @@ const MyProfile: React.FC<MyProfileProps> = ({ onSubmit, onChangeProfileImg }: M
 
   const handleProfileImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) return file;
 
     setUpdateProfileImg(file);
     const reader = new FileReader();
-    reader.readAsDataURL(file);
 
-    reader.onloadend = () => {
-      const value = reader.result;
-    };
+    const readerPromise = new Promise(resolve => {
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(file);
+    });
+
     const imageUrl = await onChangeProfileImg(file);
+
+    const [imageDataUrl] = await Promise.all([readerPromise, imageUrl]);
     setUpdateUserValues({
       ...updateUserValues,
-      profileImageUrl: imageUrl,
+      profileImageUrl: imageDataUrl,
     });
   };
 
