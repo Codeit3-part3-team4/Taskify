@@ -12,6 +12,7 @@ export interface UserInfo {
 }
 
 export interface UserSignUp {
+  id?: number;
   email: string;
   password: string;
   nickname: string;
@@ -21,7 +22,7 @@ export interface UserSignUp {
 export interface UpdateUserInfo {
   email?: string;
   nickname?: string;
-  profileImageUrl?: string;
+  profileImageUrl?: string | null;
 }
 
 // 회원 가입
@@ -35,13 +36,10 @@ export const signupApi = async (newUserValues: UserSignUp) => {
       body: JSON.stringify(newUserValues),
     });
 
-    console.log('res:', res);
-
     if (res.ok) {
       const data = await res.json();
-      console.log('회원가입api 성공', data);
     } else if (res.status === 409) {
-      console.log('409에러닷');
+      console.log('409에러');
     } else {
       console.log('다른 상태 오류');
     }
@@ -64,7 +62,6 @@ export const getUserInfo = async (): Promise<UserInfo> => {
     });
     const data = await res.json();
 
-    console.log('정보 조회 api:', data);
     return data;
   } catch (error) {
     console.error('계정 api 페이지 에러:', error);
@@ -87,8 +84,6 @@ export const updateUserInfoApi = async (updateUserValues: UpdateUserInfo) => {
     if (res.ok) {
       console.log('유저 정보 수정 도착');
     }
-    console.log('유저 정보 수정??');
-    console.log(res);
   } catch (error) {
     console.error('계정 api 페이지 수정 에러:', error);
   }

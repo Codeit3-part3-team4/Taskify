@@ -42,7 +42,7 @@ export default function DashboardMaker({ setIsModalOpen, closeModal }: Dashboard
           {dashboardName}
         </div>
       </div>
-      <div className="flex justify-between mb-3">
+      <div className="flex gap-2 mb-3">
         <ColorSamples setSelectedColor={setSelectedColor} selectedColor={selectedColor} />
         <ColorPicker setSelectedColor={setSelectedColor} />
       </div>
@@ -55,7 +55,7 @@ export default function DashboardMaker({ setIsModalOpen, closeModal }: Dashboard
           취소
         </button>
         <button
-          className="flex items-center justify-center w-32 h-12 px-11 py-3.5 border rounded-lg bg-primary-BASIC text-white hover:bg-violet-5534DA"
+          className="flex items-center justify-center w-32 h-12 px-11 py-3.5 border rounded-lg bg-purple-760DDE text-white bg-primary-BASIC hover:scale-105 duration-300"
           onClick={handleCreateDashboard}
         >
           생성

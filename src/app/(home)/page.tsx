@@ -7,10 +7,9 @@ export default function Home() {
   return (
     <div className="w-full h-[100dvh] text-white overflow-scroll">
       <div
-        className="absolute w-full h-[100dvh]"
+        className="absolute w-full h-[100vh]"
         style={{
-          backgroundImage: `url(${url})`,
-          filter: 'blur(7px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.05)',
           zIndex: -1,
         }}
       />
