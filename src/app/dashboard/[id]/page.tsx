@@ -59,7 +59,7 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
                   <Draggable draggableId={String(column.id)} index={index} key={column.id}>
                     {provided => (
                       <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} index={index} />
+                        <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} />
                       </div>
                     )}
                   </Draggable>

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, KeyboardEvent } from 'react';
 import Modal from '@/components/Modal/Modal';
 import { useModal } from '@/components/hooks/useModal/useModal';
 import ImageUpload from '../ImageUpload/ImageUpload';
@@ -13,25 +13,28 @@ interface TodoFormProps {
   columnId: number;
 }
 
-interface FormData {
-  assigneeUserId: string;
+export interface CardForm {
+  assigneeUserId: number;
+  dashboardId: number;
+  columnId: number;
   title: string;
   description: string;
-  deadline: Date;
+  dueDate: Date;
   tags: string[];
-  selectedImage?: string;
+  imageUrl?: string;
 }
 
 const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
   const { isOpen, openModal, closeModal } = useModal();
 
-  const [formData, setFormData] = useState({
-    assigneeUserId: '',
+  const [formData, setFormData] = useState<CardForm>({
+    assigneeUserId: 0,
+    dashboardId: 0,
+    columnId: 0,
     title: '',
     description: '',
-    deadline: new Date(),
+    dueDate: new Date(),
     tags: [],
-    selectedImage: '',
   });
   const [members, setMembers] = useState<Member[]>([]);
 
@@ -51,27 +54,30 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (imageUrl: string): void => {
-    setFormData(prev => ({ ...prev, selectedImage: imageUrl }));
+  const handleImageUpload = (imageUrl: string | null): void => {
+    setFormData(prev => ({
+      ...prev,
+      imageUrl: imageUrl !== null ? imageUrl : prev.imageUrl,
+    }));
   };
 
   const isFormValid = () => {
-    const { assigneeUserId, title, description, deadline, tags } = formData;
+    const { assigneeUserId, title, description, dueDate, tags } = formData;
 
-    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!deadline && tags.length > 0;
+    return !!assigneeUserId && !!title.trim() && !!description.trim() && !!dueDate && tags.length > 0;
   };
 
-  const handleTagInputKeyDown = (e: any) => {
-    if (e.key === 'Enter' && e.target.value.trim() !== '') {
+  const handleTagInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && e.currentTarget.value.trim() !== '') {
       e.preventDefault();
-      const newTag = e.target.value.trim();
+      const newTag = e.currentTarget.value.trim();
       if (!formData.tags.includes(newTag)) {
         setFormData(prevFormData => ({
           ...prevFormData,
           tags: [...prevFormData.tags, newTag],
         }));
       }
-      e.target.value = '';
+      e.currentTarget.value = '';
     }
   };
 
@@ -84,12 +90,13 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
 
   const resetFormData = () => {
     setFormData({
-      assigneeUserId: '',
+      assigneeUserId: 0,
+      dashboardId: 0,
+      columnId: 0,
       title: '',
       description: '',
-      deadline: new Date(),
+      dueDate: new Date(),
       tags: [],
-      selectedImage: '',
     });
   };
 
@@ -105,29 +112,27 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
       return;
     }
 
-    const { assigneeUserId, title, description, deadline, tags, selectedImage } = formData;
-
+    const { assigneeUserId, title, description, dueDate, imageUrl } = formData;
     const cardData = {
-      assigneeUserId: parseInt(assigneeUserId, 10),
+      assigneeUserId: assigneeUserId,
       dashboardId,
       columnId,
       title,
       description,
-      dueDate: deadline.toISOString().slice(0, 16).replace('T', ' '),
+      dueDate: dueDate.toISOString().slice(0, 16).replace('T', ' '),
       tags: formData.tags.map(tag => tag.trim()),
-      ...(selectedImage && { imageUrl: selectedImage }),
+      ...(imageUrl && { imageUrl: imageUrl }),
     };
-
     try {
       await postCardApi(cardData);
       closeModal();
-      location.reload();
+      // location.reload();
     } catch (error) {
       console.error('Error creating card:', error);
     }
   };
 
-  const handleSelectAssignee = (userId: any) => {
+  const handleSelectAssignee = (userId: number) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       assigneeUserId: userId,
@@ -152,12 +157,12 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
               <div className="flex relative w-full">
                 <div tabIndex={0} className="dropdown">
                   <label tabIndex={0} className="btn border-gray-300 font-normal mb-3 text-gray-400 bg-white w-full">
-                    {members.find(member => member.userId.toString() === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
+                    {members.find(member => member.userId === formData.assigneeUserId)?.nickname || '이름을 선택해 주세요'}
                     <img src="/images/arrow_drop_down.svg" alt="Dropdown" />
                   </label>
                   <ul tabIndex={0} className="dropdown-content menu p-2 bg-base-100 rounded-box w-52">
                     {members.map(member => (
-                      <li key={member.id} onClick={() => handleSelectAssignee(member.userId.toString())}>
+                      <li key={member.id} onClick={() => handleSelectAssignee(member.userId)}>
                         <a>{member.nickname}</a>
                       </li>
                     ))}
@@ -198,10 +203,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
               <DatePicker
                 className="flex cursor-pointer input input-bordered w-2/4 mb-3"
                 dateFormat="yyyy-MM-dd"
-                selected={formData.deadline}
+                selected={formData.dueDate}
                 onChange={date => {
                   if (date) {
-                    setFormData(prev => ({ ...prev, deadline: date }));
+                    setFormData(prev => ({ ...prev, dueDate: date }));
                   }
                 }}
               />

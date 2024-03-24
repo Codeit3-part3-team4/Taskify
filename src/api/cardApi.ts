@@ -10,7 +10,7 @@ export interface PostCard {
   description: string;
   dueDate: string;
   tags: string[];
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface CardList {
@@ -52,7 +52,7 @@ export interface DetailCard {
   title: string;
   description: string;
   tags: string[];
-  dueDate: string;
+  dueDate: string | Date;
   assignee: {
     profileImageUrl: string;
     nickname: string;
