@@ -20,8 +20,8 @@ export default function SignUpPage() {
       }
       if (res.ok) {
         setIsSignupModalOpen(true);
-        setTimeout(() => setIsSignupModalOpen(false), 1000);
-        setTimeout(() => router.push('/login'), 1000);
+        setTimeout(() => setIsSignupModalOpen(false), 500);
+        setTimeout(() => router.push('/login'), 500);
       } else if (res.status === 409) {
         setIsFailSignupModalOpen(true);
       }

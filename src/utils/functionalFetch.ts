@@ -8,6 +8,12 @@ class FunctionalFetch {
     this.init = { ...newInit };
   }
 
+  public clearContentType() {
+    if (this.init?.headers) {
+      delete (this.init?.headers as { [key: string]: string })['Content-Type'];
+    }
+  }
+
   public async fetch(url: string, newInit?: RequestInit) {
     let isAuthField = true;
     if (typeof this.init?.headers === 'undefined') {

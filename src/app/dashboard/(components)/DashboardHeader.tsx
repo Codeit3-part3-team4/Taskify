@@ -38,7 +38,7 @@ const ProfileImage = ({ nickname, profileImageUrl, options, style }: ProfileImag
           className={`flex justify-center items-center w-8 h-8 text-sm rounded-full outline outline-white text-white ${options}`}
           style={{ transform: style }}
         >
-          <Image className="w-full h-full rounded-full" src="/images/test3.svg" alt="Taskify" width="32" height="32" />
+          <Image className="w-full h-full rounded-full" src={profileImageUrl} alt="Taskify" width="32" height="32" />
           <strong className="absolute">{nickname}</strong>
         </div>
       )}

@@ -13,7 +13,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, showCloseButton = true }) => {
   if (!isOpen) return null;
 
-  const closeModal = e => {
+  const closeModal = (e: any) => {
     e.stopPropagation();
     if (onClose) onClose();
   };

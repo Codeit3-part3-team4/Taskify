@@ -7,6 +7,11 @@ interface Author {
   id: number;
 }
 
+interface fetchComments {
+  cursorId: number;
+  comments: Comment[];
+}
+
 interface Comment {
   id: number;
   content: string;
@@ -25,8 +30,6 @@ type CreateCommentProps = {
 
 // 댓글 생성
 export const createComment = async ({ content, cardId, columnId, dashboardId }: CreateCommentProps): Promise<Comment> => {
-  console.log('Sending payload:', { content, cardId, columnId, dashboardId });
-
   const response = await authInstance.fetch(`${BASE_URL}/comments`, {
     method: 'POST',
     headers: {
@@ -41,7 +44,7 @@ export const createComment = async ({ content, cardId, columnId, dashboardId }: 
 };
 
 // 댓글 목록 조회
-export const fetchComments = async (cardId: number): Promise<Comment[]> => {
+export const fetchComments = async (cardId: number): Promise<fetchComments> => {
   const response = await authInstance.fetch(`${BASE_URL}/comments?cardId=${cardId}`, {
     method: 'GET',
     headers: {

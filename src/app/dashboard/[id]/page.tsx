@@ -7,14 +7,13 @@ import { DashboardContext } from '@/context/DashboardContext';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 export default function Page({ params: { id } }: { params: { id: number } }) {
-  const [columnList, setColumnList] = useState<ColumnList[] | null>(null);
-  const { setDashboardId, data, isLoading } = useContext(DashboardContext);
+  const [columnList, setColumnList] = useState<ColumnList[]>([]);
+  const { setDashboardId, data } = useContext(DashboardContext);
   const { openModal } = useModal();
   const router = useRouter();
-
-  setDashboardId(Number(id));
 
   useEffect(() => {
     async function fetchColumnData() {
@@ -29,7 +28,17 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
       }
     }
     fetchColumnData();
+    setDashboardId(Number(id));
   }, []);
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.source || !result.destination) return;
+    const { destination, source } = result;
+    let items = [...columnList];
+    const [reorderedItem] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, reorderedItem);
+    setColumnList(items);
+  };
 
   if (!data) {
     return (
@@ -40,19 +49,34 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row w-dvw mt-24 h-[calc(100dvh-6rem)] overflow-scroll ">
+    <div className="flex flex-col lg:flex-row w-dvw mt-24 h-[calc(100dvh-6rem)] overflow-scroll">
       <div className="lg:flex lg:w-full overflow-x-scroll lg:overflow-x-scroll overflow-y-scroll">
-        {columnList?.map((column: { id: number; title: string }) => (
-          <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} />
-        ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          {columnList?.map((column: { id: number; title: string }, index: number) => (
+            <Droppable key={column.id} droppableId={String(column.id)} direction="horizontal">
+              {provided => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <Draggable draggableId={String(column.id)} index={index} key={column.id}>
+                    {provided => (
+                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <Column columnId={column.id} columnTitle={column.title} key={column.id} dashboardId={Number(id)} />
+                      </div>
+                    )}
+                  </Draggable>
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
 
-        <div className="flex items-center lg:items-start w-80 md:w-594 lg:w-96 lg:h-1080 lg:px-4 pt-4">
-          <div className="w-80 md:w-594 lg:w-96">
-            <div onClick={openModal}>
-              <AddColumn dashboardId={Number(id)} />
+          <div className="flex items-center lg:items-start w-80 md:w-594 lg:w-96 lg:h-1080 lg:px-4 pt-4">
+            <div className="w-80 md:w-594 lg:w-96">
+              <div onClick={openModal}>
+                <AddColumn dashboardId={Number(id)} />
+              </div>
             </div>
           </div>
-        </div>
+        </DragDropContext>
       </div>
     </div>
   );
