@@ -36,7 +36,7 @@ export default function Landing() {
         </div>
         <div className={`flex flex-col items-center letter leading-10 gap-1 md:flex-row md:gap-6 md:mb-6 transition-opacity duration-500 ${loginOpacity}`}>
           <strong className="text-4xl text-white drop-shadow-lg mb-3 md:text-5xl 2xl:text-7xl">새로운 일정 관리</strong>
-          <strong className="text-5xl text-primary-BASIC drop-shadow-lg mb-5 leading-12 md:text-6xl 2xl:text-7xl">Taskify</strong>
+          <strong className="text-5xl text-primary-BASIC drop-shadow-lg mb-5 leading-12 md:text-6xl 2xl:text-7xl">TaskiMo</strong>
         </div>
         <div className="text-xs mb-20 md:text-sm md:mb-16 2xl:text-base"></div>
         <div className={`rounded-lg w-60 h-11 bg-primary-BASIC md:w-72 transition-opacity duration-500 animate-bounce ${loginOpacity}`}>
