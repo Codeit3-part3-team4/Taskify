@@ -127,7 +127,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
                   <div className="ml-3 text-sm">{card.assignee.nickname}</div>
                 </div>
                 <div className="text-sm font-bold">마감일</div>
-                <div className="text-sm">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
+                <div className="text-sm">{card.dueDate.slice(0, 16).replace('T', ' ')}</div>
               </div>
             </div>
             <Comment cardId={cardId} dashboardId={dashboardId} columnId={columnId} />

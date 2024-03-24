@@ -126,7 +126,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ dashboardId, columnId }) => {
     try {
       await postCardApi(cardData);
       closeModal();
-      // location.reload();
+      location.reload();
     } catch (error) {
       console.error('Error creating card:', error);
     }
