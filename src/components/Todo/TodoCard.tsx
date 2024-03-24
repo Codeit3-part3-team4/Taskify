@@ -3,12 +3,16 @@ import Image from 'next/image';
 import Comment from '../Comment/Comment';
 import TodoUpdate from './TodoUpdate';
 import { useModal } from '../hooks/useModal/useModal';
-import { Card, deleteCardApi, detailCardApi } from '@/api/cardApi';
+import { deleteCardApi, detailCardApi } from '@/api/cardApi';
 
-interface CardDetails {
+export interface CardDetails {
+  assigneeUserId: number;
+  dashboardId: number;
+  columnId: number;
+  title: string;
   description: string;
-  assignee: { nickname: string } | null;
   dueDate: string;
+  tags: string[];
   imageUrl?: string | null;
 }
 
@@ -93,7 +97,6 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
           <>
             <div className="flex gap-5">
               <div className="bg-blue-500 text-blue-300 w-50 rounded-md py-1 px-1.5 pt-1.5 pb-1.5 text-xs text-center leading-3">{columnTitle}</div>
-
               <div className="text-gray-300">|</div>
               {card.tags.map((item: any, index: any) => (
                 <div
@@ -108,9 +111,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
               <div className="flex flex-col w-3/5">
                 <div className="flex w-full h-36 p-5 break-all">{cardDetails.description}</div>
                 <div className="flex w-full p-5">
-                  {' '}
-                  {cardDetails?.imageUrl !== 'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/asdasd.png' &&
-                    card.imageUrl !== null && <Image src={cardDetails.imageUrl} alt="Card Image" width={500} height={300} layout="responsive" />}
+                  {cardDetails?.imageUrl && <Image src={cardDetails.imageUrl} alt="Card Image" width={500} height={300} layout="responsive" />}
                 </div>
               </div>
               <div className="flex flex-col border rounded-md p-2 gap-2 w-2/5 h-1/2">
@@ -129,7 +130,6 @@ const TodoCard: React.FC<TodoCardProps> = ({ cardId, dashboardId, columnId, card
                 <div className="text-sm">{card.createdAt.slice(0, 16).replace('T', ' ')}</div>
               </div>
             </div>
-
             <Comment cardId={cardId} dashboardId={dashboardId} columnId={columnId} />
           </>
         )}

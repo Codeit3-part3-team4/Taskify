@@ -3,7 +3,12 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../hooks/useModal/useModal';
 import { editColumnApi, deleteColumnApi } from '@/api/columnApi';
 
-const EditColumn = ({ columnId, initialColumnName }) => {
+interface EditColumProps {
+  columnId: number;
+  initialColumnName: string;
+}
+
+const EditColumn = ({ columnId, initialColumnName }: EditColumProps) => {
   const { isOpen, openModal, closeModal } = useModal();
   const [columnName, setColumnName] = useState(initialColumnName);
 
