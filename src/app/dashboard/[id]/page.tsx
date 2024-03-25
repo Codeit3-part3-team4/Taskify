@@ -49,7 +49,7 @@ export default function Page({ params: { id } }: { params: { id: number } }) {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row w-dvw mt-24 h-[calc(100dvh-6rem)] overflow-scroll">
+    <div className="flex flex-col lg:flex-row mt-24 overflow-scroll">
       <div className="lg:flex lg:w-full overflow-x-scroll lg:overflow-x-scroll overflow-y-scroll">
         <DragDropContext onDragEnd={onDragEnd}>
           {columnList?.map((column: { id: number; title: string }, index: number) => (
