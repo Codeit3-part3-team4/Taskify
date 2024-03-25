@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <DashboardProvider>
         <div className="flex flex-row">
           <SideDashboardList />
-          <div className="flex flex-col w-full ml-20">
+          <div className="flex flex-col  h-[calc(100dvh-2rem)] w-[calc(100dvw-5rem)] ml-20">
             <DashboardHeader>
               <FunctionalHeader />
             </DashboardHeader>
