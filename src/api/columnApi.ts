@@ -1,5 +1,5 @@
 import { authInstance } from '@/utils/functionalFetch';
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
+const API_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface CreateColumn {
   title: string;
@@ -31,7 +31,7 @@ export const createColumnApi = async (title: string, dashboardId: number) => {
   };
 
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/columns`, {
+    .fetch(`${API_URL}/3-4/columns`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
@@ -60,7 +60,7 @@ export const createColumnApi = async (title: string, dashboardId: number) => {
 // 컬럼 목록 조회
 export const getColumnListApi = async (dashboardId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/columns/?dashboardId=${dashboardId}`, {
+    .fetch(`${API_URL}/3-4/columns/?dashboardId=${dashboardId}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
@@ -90,7 +90,7 @@ export const editColumnApi = async (columnId: number, title: string) => {
   };
 
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
+    .fetch(`${API_URL}/3-4/columns/${columnId}`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
@@ -119,7 +119,7 @@ export const editColumnApi = async (columnId: number, title: string) => {
 // 컬럼 삭제
 export const deleteColumnApi = async (columnId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/columns/${columnId}`, {
+    .fetch(`${API_URL}/3-4/columns/${columnId}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {
@@ -146,7 +146,7 @@ export const uploadCardImage = async (columnId: number, imageFile: File) => {
   const formData = new FormData();
   formData.append('image', imageFile);
   try {
-    const response = await authInstance.fetch(`${BASE_URL}/3-4/columns/${columnId}/card-image`, {
+    const response = await authInstance.fetch(`${API_URL}/3-4/columns/${columnId}/card-image`, {
       method: 'POST',
       body: formData,
     });

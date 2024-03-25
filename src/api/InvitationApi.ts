@@ -1,6 +1,6 @@
 import { authInstance } from '@/utils/functionalFetch';
 
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
+const API_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface GetInvitationList {
   cursorId: number;
@@ -31,7 +31,7 @@ export interface Invitation {
 
 export const getInvitationList = async (size: number, cursorId: number | null, inputValue: string | null): Promise<GetInvitationList> => {
   const res = await authInstance.fetch(
-    `${BASE_URL}/3-4/invitations?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}${inputValue ? `&title=${inputValue}` : ''}`,
+    `${API_URL}/3-4/invitations?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}${inputValue ? `&title=${inputValue}` : ''}`,
     {
       method: 'GET',
       headers: {
@@ -44,7 +44,7 @@ export const getInvitationList = async (size: number, cursorId: number | null, i
 };
 
 export const putInvitation = async (invitationId: number, isAccepted: boolean) => {
-  const res = await authInstance.fetch(`${BASE_URL}/3-4/invitations/${invitationId}`, {
+  const res = await authInstance.fetch(`${API_URL}/3-4/invitations/${invitationId}`, {
     method: 'PUT',
     cache: 'no-cache',
     headers: {

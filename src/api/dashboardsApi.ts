@@ -1,6 +1,6 @@
 import { authInstance } from '@/utils/functionalFetch';
 
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
+const API_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface Dashboard {
   id: number;
@@ -47,7 +47,7 @@ export interface InvitationsInf {
 
 export const addDashboardApi = async (title: string, color: string) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards`, {
+    .fetch(`${API_URL}/3-4/dashboards`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
@@ -74,7 +74,7 @@ export const addDashboardApi = async (title: string, color: string) => {
 
 export const getDashboardDetailsApi = async (id: number) => {
   const res: Dashboard = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    .fetch(`${API_URL}/3-4/dashboards/${id}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
@@ -97,7 +97,7 @@ export const getDashboardDetailsApi = async (id: number) => {
 
 export const putDashboardDetailsApi = async (id: number, title: string, color: string) => {
   const res: Dashboard = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    .fetch(`${API_URL}/3-4/dashboards/${id}`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
@@ -127,7 +127,7 @@ export const putDashboardDetailsApi = async (id: number, title: string, color: s
 
 export const deleteDashboardApi = async (id: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards/${id}`, {
+    .fetch(`${API_URL}/3-4/dashboards/${id}`, {
       method: 'DELETE',
       cache: 'no-cache',
     })
@@ -147,7 +147,7 @@ export const deleteDashboardApi = async (id: number) => {
 };
 
 export const getDashboardsByPaginationApi = async (page: number, size: number): Promise<DashboardsInf> => {
-  const res = await authInstance.fetch(`${BASE_URL}/3-4/dashboards?navigationMethod=pagination&page=${page}&size=${size}`, {
+  const res = await authInstance.fetch(`${API_URL}/3-4/dashboards?navigationMethod=pagination&page=${page}&size=${size}`, {
     method: 'GET',
     cache: 'no-cache',
     headers: {
@@ -159,7 +159,7 @@ export const getDashboardsByPaginationApi = async (page: number, size: number): 
 
 export const postDashboardInvitationsApi = async (id: number, email: string) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations`, {
+    .fetch(`${API_URL}/3-4/dashboards/${id}/invitations`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
@@ -183,7 +183,7 @@ export const postDashboardInvitationsApi = async (id: number, email: string) => 
 
 export const getDashboardInvitationsApi = async (id: number, page: number, size: number) => {
   try {
-    const res = await authInstance.fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
+    const res = await authInstance.fetch(`${API_URL}/3-4/dashboards/${id}/invitations?page=${page}&size=${size}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
@@ -200,7 +200,7 @@ export const getDashboardInvitationsApi = async (id: number, page: number, size:
 
 export const deleteDashboardInvitationsCancelApi = async (id: number, invitationId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
+    .fetch(`${API_URL}/3-4/dashboards/${id}/invitations/${invitationId}`, {
       method: 'DELETE',
       cache: 'no-cache',
     })

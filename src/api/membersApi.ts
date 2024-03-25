@@ -1,5 +1,5 @@
 import { authInstance } from '@/utils/functionalFetch';
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
+const API_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface Member {
   id: number;
@@ -19,7 +19,7 @@ export interface MembersInf {
 
 export const getMembersApi = async (id: number, page: number, size: number) => {
   const res: MembersInf = await authInstance
-    .fetch(`${BASE_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
+    .fetch(`${API_URL}/3-4/members?page=${page}&size=${size}&dashboardId=${id}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
@@ -41,7 +41,7 @@ export const getMembersApi = async (id: number, page: number, size: number) => {
 
 export const deleteMemberApi = async (memberId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/members/${memberId}`, {
+    .fetch(`${API_URL}/3-4/members/${memberId}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {

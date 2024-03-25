@@ -1,6 +1,6 @@
 import { authInstance } from '@/utils/functionalFetch';
 
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
+const API_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface PostCard {
   assigneeUserId: number;
@@ -68,7 +68,7 @@ export interface DetailCard {
 // 카드 생성
 export const postCardApi = async (cardData: PostCard) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/cards`, {
+    .fetch(`${API_URL}/3-4/cards`, {
       method: 'POST',
       cache: 'no-cache',
       headers: {
@@ -96,7 +96,7 @@ export const postCardApi = async (cardData: PostCard) => {
 // 카드 목록 조회
 export const getCardListApi = async (size: number, cursorId: number | null, columnId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/cards?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}&columnId=${columnId}`, {
+    .fetch(`${API_URL}/3-4/cards?size=${size}${cursorId ? `&cursorId=${cursorId}` : ''}&columnId=${columnId}`, {
       method: 'GET',
       headers: {
         accept: 'application/json',
@@ -118,7 +118,7 @@ export const getCardListApi = async (size: number, cursorId: number | null, colu
 
 // 카드 수정
 export const editCardApi = async (cardId: number, cardData: Partial<EditCard>) => {
-  const res = await authInstance.fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
+  const res = await authInstance.fetch(`${API_URL}/3-4/cards/${cardId}`, {
     method: 'PUT',
     body: JSON.stringify(cardData),
     headers: {
@@ -134,7 +134,7 @@ export const editCardApi = async (cardId: number, cardData: Partial<EditCard>) =
 // 카드 상세 조회
 export const detailCardApi = async (cardId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
+    .fetch(`${API_URL}/3-4/cards/${cardId}`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
@@ -158,7 +158,7 @@ export const detailCardApi = async (cardId: number) => {
 // 카드 삭제
 export const deleteCardApi = async (cardId: number) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/cards/${cardId}`, {
+    .fetch(`${API_URL}/3-4/cards/${cardId}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {

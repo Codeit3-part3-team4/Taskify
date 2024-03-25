@@ -1,7 +1,7 @@
 import { authInstance } from '@/utils/functionalFetch';
 
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
-const DEPLOY_URL = 'https://taskimo.vercel.app/';
+const API_URL = 'https://sp-taskify-api.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface UserValues {
   accessToken: string;
@@ -27,7 +27,7 @@ export interface ChangePw {
 
 // 로그인
 export const loginApi = async (userValues: LoginValues): Promise<UserValues> => {
-  const res = await fetch(`${BASE_URL}/3-4/auth/login`, {
+  const res = await fetch(`${API_URL}/3-4/auth/login`, {
     method: 'POST',
     cache: 'no-cache',
     headers: {
@@ -49,7 +49,7 @@ export const loginApi = async (userValues: LoginValues): Promise<UserValues> => 
 // 비밀번호 변경
 export const changePasswordApi = async (newPasswordValue: ChangePw) => {
   const res = await authInstance
-    .fetch(`${BASE_URL}/3-4/auth/password`, {
+    .fetch(`${API_URL}/3-4/auth/password`, {
       method: 'PUT',
       headers: {
         accept: '*/*',
@@ -74,7 +74,7 @@ export const changePasswordApi = async (newPasswordValue: ChangePw) => {
 
 // request router handler
 export const postRequestCookies = async (key: string, value: string) => {
-  const response = await fetch(`${DEPLOY_URL}/api/cookies`, {
+  const response = await fetch(`${BASE_URL}/api/cookies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export const postRequestCookies = async (key: string, value: string) => {
 };
 
 export const getRequestCookies = async (key: string) => {
-  const response = await fetch(`${DEPLOY_URL}/api/cookies?key=${encodeURIComponent(key)}`, {
+  const response = await fetch(`${BASE_URL}/api/cookies?key=${encodeURIComponent(key)}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

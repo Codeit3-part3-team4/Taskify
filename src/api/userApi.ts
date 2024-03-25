@@ -1,6 +1,6 @@
 import { authInstance } from '@/utils/functionalFetch';
 
-const BASE_URL = 'https://sp-taskify-api.vercel.app';
+const API_URL = 'https://sp-taskify-api.vercel.app';
 
 export interface UserInfo {
   id: number;
@@ -28,7 +28,7 @@ export interface UpdateUserInfo {
 // 회원 가입
 export const signupApi = async (newUserValues: UserSignUp) => {
   try {
-    const res = await fetch(`${BASE_URL}/3-4/users`, {
+    const res = await fetch(`${API_URL}/3-4/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const signupApi = async (newUserValues: UserSignUp) => {
 // 내 정보 조회
 export const getUserInfo = async (): Promise<UserInfo> => {
   try {
-    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
+    const res = await authInstance.fetch(`${API_URL}/3-4/users/me`, {
       method: 'GET',
       cache: 'no-cache',
       headers: {
@@ -72,7 +72,7 @@ export const getUserInfo = async (): Promise<UserInfo> => {
 // 유저 정보 수정
 export const updateUserInfoApi = async (updateUserValues: UpdateUserInfo) => {
   try {
-    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me`, {
+    const res = await authInstance.fetch(`${API_URL}/3-4/users/me`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
@@ -96,7 +96,7 @@ export const updateUserProfileImgApi = async (imageFile: File) => {
   console.log('데이터확인 : ' + JSON.stringify(imageFile));
   try {
     authInstance.clearContentType();
-    const res = await authInstance.fetch(`${BASE_URL}/3-4/users/me/image`, {
+    const res = await authInstance.fetch(`${API_URL}/3-4/users/me/image`, {
       method: 'POST',
       headers: {
         accept: 'application/json',

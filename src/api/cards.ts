@@ -1,4 +1,4 @@
-const BASE_URL = 'https://sp-taskify-api.vercel.app/3-4';
+const API_URL = 'https://sp-taskify-api.vercel.app/3-4';
 const token =
   // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyNywidGVhbUlkIjoiMy00IiwiaWF0IjoxNzEwMDY5MDEzLCJpc3MiOiJzcC10YXNraWZ5In0.7lmGxSaRxS_duLaTSYlBdS1G6ppDq6vs0gwx7RC1RGY';
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyMCwidGVhbUlkIjoiMy00IiwiaWF0IjoxNzA5OTkyNTU3LCJpc3MiOiJzcC10YXNraWZ5In0.K1rM2R-ywv-P73rUvYWw1WyWfzyk3_vMe8ZS2_84Y4c';
@@ -35,7 +35,7 @@ interface CardDetails {
 // 카드 생성
 export const createCards = async (cardData: CardData): Promise<CardDetails> => {
   try {
-    const response = await fetch(`${BASE_URL}/cards`, {
+    const response = await fetch(`${API_URL}/cards`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const createCards = async (cardData: CardData): Promise<CardDetails> => {
 // 카드 상세 조회
 export const searchCards = async (cardId: number): Promise<CardDetails> => {
   try {
-    const response = await fetch(`${BASE_URL}/cards/${cardId}`, {
+    const response = await fetch(`${API_URL}/cards/${cardId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export const searchCards = async (cardId: number): Promise<CardDetails> => {
 // 카드 수정
 export const updateCards = async (cardId: number, cardData: CardData): Promise<CardDetails> => {
   try {
-    const response = await fetch(`${BASE_URL}/cards/${cardId}`, {
+    const response = await fetch(`${API_URL}/cards/${cardId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export const updateCards = async (cardId: number, cardData: CardData): Promise<C
 
 // 카드 삭제
 export const deleteCards = async (cardId: number): Promise<boolean> => {
-  const response = await fetch(`${BASE_URL}/cards/${cardId}`, {
+  const response = await fetch(`${API_URL}/cards/${cardId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ export const deleteCards = async (cardId: number): Promise<boolean> => {
 
 // 카드 목록 조회
 export const searchCardlist = async (columnId: number): Promise<{ cursorId: number; totalCount: number; cards: CardDetails[] }> => {
-  const response = await fetch(`${BASE_URL}/cards?columnId=${columnId}`, {
+  const response = await fetch(`${API_URL}/cards?columnId=${columnId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
