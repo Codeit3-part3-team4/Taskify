@@ -118,7 +118,7 @@ const Laptop = ({ operateIndex }: { operateIndex: number }) => {
         setIframeUrl('https://tailwindcss.com/docs/installation');
         break;
       case 2:
-        setIframeUrl('https://ohddang.github.io/this-is-me/');
+        setIframeUrl('https://ohddang.github.io/this-is-me/cube');
         break;
     }
   }, [operateIndex]);
