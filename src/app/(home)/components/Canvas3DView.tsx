@@ -115,10 +115,10 @@ const Laptop = ({ operateIndex }: { operateIndex: number }) => {
         setIframeUrl('https://taskimo.vercel.app/credit');
         break;
       case 1:
-        setIframeUrl('https://tailwindcss.com/docs/installation');
+        setIframeUrl('https://chartjs-alpha.vercel.app/dashboard/KRW-BTC');      
         break;
       case 2:
-        setIframeUrl('https://ohddang.github.io/this-is-me/cube');
+        setIframeUrl('https://tailwindcss.com/docs/installation');
         break;
     }
   }, [operateIndex]);
